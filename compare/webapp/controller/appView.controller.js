@@ -14,6 +14,28 @@ sap.ui.define([
                 if (oEvent.getParameters("files")) {
                     var file = oEvent.getParameters("files").files[0]; 
                 }
+                reader.onload = function(oEvent) {
+                    var strCSV = oEvent.target.result;
+                    var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+                    var noOfCols = 6;
+                    var headerRow = arrCSV.splice(0, noOfCols);
+                    var data = [];
+                    while (arrCSV.length > 0) {
+                      var obj = {};
+                      var row = arrCSV.splice(0, noOfCols);
+                      for (var i = 0; i < row.length; i++) {
+                        obj[headerRow[i]] = row[i].trim();
+                      }
+                      data.push(obj);
+                    }
+                    var Len = data.length;
+                    data.reverse();
+                    params += "[";
+                    for (var j = 0; j < Len; j++) {
+                      params += JSON.stringify(data.pop()) + ", ";
+                    }
+                    params = params.substring(0, params.length - 2);
+                    params += "]";
             },
             handleUploadComplete1s: function(oEvent) {
                 if (oEvent.getParameters("files")) {
@@ -21,14 +43,8 @@ sap.ui.define([
                 }
             },
             handleUploadComplete2: function(oEvent) {
-                var sResponse = oEvent.getParameter("response"),
-                    aRegexResult = /\d{4}/.exec(sResponse),
-                    iHttpStatusCode = aRegexResult && parseInt(aRegexResult[0]),
-                    sMessage;
-    
-                if (sResponse) {
-                    sMessage = iHttpStatusCode === 200 ? sResponse + " (Upload Success)" : sResponse + " (Upload Error)";
-                    MessageToast.show(sMessage);
+                if (oEvent.getParameters("files")) {
+                    var file = oEvent.getParameters("files").files[0]; 
                 }
             }, 
     
