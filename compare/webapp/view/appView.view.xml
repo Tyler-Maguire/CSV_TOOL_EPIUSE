@@ -14,6 +14,19 @@ placeholder="Choose a CSV file" style="Emphasized"></u:FileUploader>
 <Button id="fileUpload2" text="Upload File 2" press="uploadFile2"/>
 </l:VerticalLayout>
 
+	<l:VerticalLayout id="verticleLay">
+		<u:FileUploader
+			id="fileUploader"
+			name="myFileUpload"
+			uploadUrl="upload/"
+			tooltip="Upload your file to the local server"
+			uploadComplete="handleUploadComplete"/>
+		<Button
+			text="Upload File"
+            id="fileUpload3"
+			press="handleUploadPress"/>
+	</l:VerticalLayout>
+
 <content/>
 
     </Page>
