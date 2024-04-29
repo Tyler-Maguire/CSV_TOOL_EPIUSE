@@ -9,7 +9,7 @@ sap.ui.define([
         var csrfToken;
 
         return Controller.extend("com.epiuse.compare.controller.appView", {
-            handleUploadComplete: function(oEvent) {
+            handleUploadComplete1s: function(oEvent) {
                 var sResponse = oEvent.getParameter("response"),
                     aRegexResult = /\d{4}/.exec(sResponse),
                     iHttpStatusCode = aRegexResult && parseInt(aRegexResult[0]),
@@ -20,15 +20,36 @@ sap.ui.define([
                     MessageToast.show(sMessage);
                 }
             },
+            handleUploadComplete2: function(oEvent) {
+                var sResponse = oEvent.getParameter("response"),
+                    aRegexResult = /\d{4}/.exec(sResponse),
+                    iHttpStatusCode = aRegexResult && parseInt(aRegexResult[0]),
+                    sMessage;
     
-            handleUploadPress: function() {
-                var oFileUploader = this.byId("fileUploader");
-                oFileUploader.checkFileReadable().then(function() {
-                    oFileUploader.upload();
+                if (sResponse) {
+                    sMessage = iHttpStatusCode === 200 ? sResponse + " (Upload Success)" : sResponse + " (Upload Error)";
+                    MessageToast.show(sMessage);
+                }
+            }, 
+    
+            handleUploadPress1: function() {
+                var oFileUploader1 = this.byId("fileUploader1");
+                oFileUploader1.checkFileReadable().then(function() {
+                    oFileUploader1.upload();
                 }, function(error) {
-                    MessageToast.show("The file cannot be read. It may have changed.");
+                    MessageToast.show("File 1 cannot be read. It may have changed.");
                 }).then(function() {
-                    oFileUploader.clear();
+                    oFileUploader1.clear();
+                });
+            },
+            handleUploadPress2: function() {
+                var oFileUploader2 = this.byId("fileUploader2");
+                oFileUploader2.checkFileReadable().then(function() {
+                    oFileUploader2.upload();
+                }, function(error) {
+                    MessageToast.show("File 2 cannot be read. It may have changed.");
+                }).then(function() {
+                    oFileUploader2.clear();
                 });
             }
         
