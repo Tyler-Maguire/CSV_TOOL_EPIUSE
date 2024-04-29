@@ -25,6 +25,7 @@
 			uploadUrl="upload/"
 			tooltip="Upload your file to the local server"
 			uploadComplete="handleUploadComplete2"/>
+
 		<Button
 			text="Upload File 2"
             id="fileUpload2"
@@ -35,6 +36,11 @@
             id="fileComparison"
 			press="handlefileComparison"/>	
 	</l:VerticalLayout>
+
+		<VBox id="test">
+     <u:FileUploader id="idfileUploader" typeMissmatch="handleTypeMissmatch" change="handleValueChange" maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength" multiple="false" width="50%" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
+     <Button id="fileUpload3" text="Upload your file" press="onUpload" type="Emphasized"/>
+		</VBox>
 	
 	
 
