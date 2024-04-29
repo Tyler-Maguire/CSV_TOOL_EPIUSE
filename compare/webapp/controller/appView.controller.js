@@ -11,19 +11,13 @@ sap.ui.define([
         return Controller.extend("com.epiuse.compare.controller.appView", {
             handlefileComparison: function(oEvent) {
                
-                if (oEvent) {
-                  
+                if (oEvent.getParameters("files")) {
+                    var file = oEvent.getParameters("files").files[0]; 
                 }
             },
             handleUploadComplete1s: function(oEvent) {
-                var sResponse = oEvent.getParameter("response"),
-                    aRegexResult = /\d{4}/.exec(sResponse),
-                    iHttpStatusCode = aRegexResult && parseInt(aRegexResult[0]),
-                    sMessage;
-    
-                if (sResponse) {
-                    sMessage = iHttpStatusCode === 200 ? sResponse + " (Upload Success)" : sResponse + " (Upload Error)";
-                    MessageToast.show(sMessage);
+                if (oEvent.getParameters("files")) {
+                    var file = oEvent.getParameters("files").files[0]; 
                 }
             },
             handleUploadComplete2: function(oEvent) {
