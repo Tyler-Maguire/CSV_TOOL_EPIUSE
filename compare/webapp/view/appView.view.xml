@@ -5,10 +5,15 @@
         
     <Text id="welcomeTitle" text="Please upload files for comparison."/>
 <l:VerticalLayout id="verticleLayout">
-<u:FileUploader id="idfileUploader" width="50%" sameFilenameAllowed="false" useMultipart="false" uploadUrl="/sap"
+<u:FileUploader id="idfileUploader1" width="50%" sameFilenameAllowed="false" useMultipart="false" uploadUrl="/sap"
 placeholder="Choose a CSV file" style="Emphasized"></u:FileUploader>
 <Button id="fileUpload1" text="Upload File 1" press="uploadFile1"/>
+
+<u:FileUploader id="idfileUploader2" width="50%" sameFilenameAllowed="false" useMultipart="false" uploadUrl="/sap"
+placeholder="Choose a CSV file" style="Emphasized"></u:FileUploader>
+<Button id="fileUpload2" text="Upload File 2" press="uploadFile2"/>
 </l:VerticalLayout>
+
 <content/>
 
     </Page>
