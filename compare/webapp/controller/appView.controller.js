@@ -9,6 +9,12 @@ sap.ui.define([
         var csrfToken;
 
         return Controller.extend("com.epiuse.compare.controller.appView", {
+            handlefileComparison: function(oEvent) {
+               
+                if (oEvent) {
+                  
+                }
+            },
             handleUploadComplete1s: function(oEvent) {
                 var sResponse = oEvent.getParameter("response"),
                     aRegexResult = /\d{4}/.exec(sResponse),

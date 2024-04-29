@@ -3,10 +3,10 @@
     xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout">
     <Page id="page" title="{i18n>title}">
         
-    <Text id="welcomeTitle" text="Please upload files for comparison."/>
+   
 
-<l:HorizontalLayout id="horLay">
 	<l:VerticalLayout id="verticleLay">
+	 <Text id="file1" text="Please upload file 1 for comparison."/>
 		<u:FileUploader
 			id="fileUploader"
 			name="myFileUpload"
@@ -17,9 +17,8 @@
 			text="Upload File 1"
             id="fileUpload1"
 			press="handleUploadPress1"/>
-	</l:VerticalLayout>
 
-	<l:VerticalLayout id="verticleLay2">
+		<Text id="file2" text="Please upload file 2 for comparison."/>	
 		<u:FileUploader
 			id="fileUploader2"
 			name="myFileUpload2"
@@ -30,9 +29,15 @@
 			text="Upload File 2"
             id="fileUpload2"
 			press="handleUploadPress2"/>
-	</l:VerticalLayout>
 
-	</l:HorizontalLayout>
+		<Button
+			text="Compare Files"
+            id="fileComparison"
+			press="handlefileComparison"/>	
+	</l:VerticalLayout>
+	
+	
+
 
 <content/>
 
