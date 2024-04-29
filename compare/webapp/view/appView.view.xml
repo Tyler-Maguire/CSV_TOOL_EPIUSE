@@ -8,7 +8,7 @@
 	<l:VerticalLayout id="verticleLay">
 	 <Text id="file1" text="Please upload file 1 for comparison."/>
 		<u:FileUploader
-			id="fileUploader"
+			id="fileUploader1"
 			name="myFileUpload"
 			uploadUrl="upload/"
 			tooltip="Upload your file to the local server"
