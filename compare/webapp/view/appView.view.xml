@@ -1,9 +1,15 @@
 <mvc:View controllerName="com.epiuse.compare.controller.appView"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
+    xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout">
     <Page id="page" title="{i18n>title}">
-        <content />
-
         
+    <Text id="welcomeTitle" text="Please upload files for comparison."/>
+<l:VerticalLayout id="verticleLayout">
+<u:FileUploader id="idfileUploader" width="50%" sameFilenameAllowed="false" useMultipart="false" uploadUrl="/sap"
+placeholder="Choose a CSV file" style="Emphasized"></u:FileUploader>
+<Button id="fileUpload1" text="Upload File 1" press="uploadFile1"/>
+</l:VerticalLayout>
+<content/>
+
     </Page>
 </mvc:View>
