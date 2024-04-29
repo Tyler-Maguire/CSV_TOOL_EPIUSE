@@ -47,9 +47,23 @@ modules:
       - comepiuseCSVTOOLEPIUSE.zip
       name: comepiuseCSVTOOLEPIUSE
       target-path: resources/
+    - artifacts:
+      - comepiusecompare.zip
+      name: comepiusecompare
+      target-path: resources/
 - name: comepiuseCSVTOOLEPIUSE
   type: html5
   path: .
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comepiusecompare
+  type: html5
+  path: compare
   build-parameters:
     build-result: dist
     builder: custom

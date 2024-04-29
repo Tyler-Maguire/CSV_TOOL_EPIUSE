@@ -21,14 +21,15 @@
         "@babel/eslint-parser": "7.14.7",
         "@sap/ui5-builder-webide-extension": "^1.1.8",
         "ui5-task-zipper": "^0.5.0",
-        "mbt": "^1.2.18"
+        "mbt": "^1.2.18",
+        "rimraf": "^3.0.2"
     },
     "scripts": {
         "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#comepiusecsv_tool_epiuse-display\"",
         "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#comepiusecsv_tool_epiuse-display\"",
-        "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
+        "build": "rimraf resources mta_archives && mbt build --mtar archive",
         "lint": "eslint ./",
-        "deploy": "fiori cfDeploy",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
         "deploy-config": "fiori add deploy-config",
         "start-noflp": "fiori run --open \"index.html?sap-ui-xx-viewCache=false\"",
         "start-variants-management": "fiori run --open \"preview.html?sap-ui-xx-viewCache=false&fiori-tools-rta-mode=true&sap-ui-rta-skip-flex-validation=true#preview-app\"",
