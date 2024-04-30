@@ -107,7 +107,7 @@ sap.ui.define([
               var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
               var fU = this.getView().byId("idfileUploader");
               var domRef = fU.getFocusDomRef();
-              var file = domRef.files[0];
+              var file = fU.oFileUpload.files[0]; 
               var reader = new FileReader();
               var params = "EmployeesJson=";
               reader.onload = function(oEvent) {
