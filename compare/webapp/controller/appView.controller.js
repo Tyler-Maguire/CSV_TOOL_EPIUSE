@@ -30,8 +30,7 @@ sap.ui.define([
             handleUploadPress1: function() {
                 
                 var oFileUploader1 = this.byId("fileUploader1");
-                var domRef = oFileUploader1.getFocusDomRef();
-                var file = domRef.files[0];
+                var file = oFileUploader1.oFileUpload.files[0];
                 var reader = new FileReader();
 
                 reader.onload = function(oEvent) {
@@ -62,11 +61,7 @@ sap.ui.define([
             },
             handleUploadPress2: function() {
                 var oFileUploader2 = this.byId("fileUploader2");
-                oFileUploader2.checkFileReadable().then(function() {
-                    
-                var oFileUploader1 = this.byId("fileUploader2");
-                var domRef = oFileUploader1.getFocusDomRef();
-                var file = domRef.files[0];
+                var file = oFileUploader2.oFileUpload.files[0];    
                 var reader = new FileReader();
 
                 reader.onload = function(oEvent) {
@@ -92,12 +87,8 @@ sap.ui.define([
                     params = params.substring(0, params.length - 2);
                     params += "]";
             }
-                }, function(error) {
-                    MessageToast.show("File 2 cannot be read. It may have changed.");
-                }).then(function() {
-                    oFileUploader2.clear();
-                });
-            }
+             
+        }
         
         });
     });
