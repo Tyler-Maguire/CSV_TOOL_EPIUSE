@@ -20,7 +20,7 @@ sap.ui.define([
                 
                 var file;
                 var oFileUploader1 = this.byId("fileUploader1");
-               
+                var reader1 = new FileReader();
                 file = oFileUploader1.oFileUpload.files[0];
                 reader1.onload = function(oEvent) {
                     var strCSV = oEvent.target.result;
