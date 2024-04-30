@@ -37,10 +37,10 @@
 			press="handlefileComparison"/>	
 	</l:VerticalLayout>
 
-		<VBox id="test">
+<VBox>
      <u:FileUploader id="idfileUploader" typeMissmatch="handleTypeMissmatch" change="handleValueChange" maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength" multiple="false" width="50%" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
-     <Button id="fileUpload3" text="Upload your file" press="onUpload" type="Emphasized"/>
-		</VBox>
+     <Button text="Upload your file" press="onUpload" type="Emphasized"/>
+</VBox>
 	
 	
 
