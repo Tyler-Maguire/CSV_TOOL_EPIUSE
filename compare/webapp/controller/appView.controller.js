@@ -28,9 +28,7 @@ sap.ui.define([
             }, 
     
             handleUploadPress1: function() {
-                var oFileUploader1 = this.byId("fileUploader1");
-                oFileUploader1.checkFileReadable().then(function() {
-                 
+                
                 var oFileUploader1 = this.byId("fileUploader1");
                 var domRef = oFileUploader1.getFocusDomRef();
                 var file = domRef.files[0];
@@ -39,7 +37,8 @@ sap.ui.define([
                 reader.onload = function(oEvent) {
                     var strCSV = oEvent.target.result;
                     var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                    var noOfCols = 6;
+                    var arrLen = arrCSV.length;
+                    var noOfCols = arrLen;
                     var headerRow = arrCSV.splice(0, noOfCols);
                     var data = [];
                     while (arrCSV.length > 0) {
@@ -59,11 +58,7 @@ sap.ui.define([
                     params = params.substring(0, params.length - 2);
                     params += "]";
             }
-                }, function(error) {
-                    MessageToast.show("File 1 cannot be read. It may have changed.");
-                }).then(function() {
-                    oFileUploader1.clear();
-                });
+                
             },
             handleUploadPress2: function() {
                 var oFileUploader2 = this.byId("fileUploader2");
