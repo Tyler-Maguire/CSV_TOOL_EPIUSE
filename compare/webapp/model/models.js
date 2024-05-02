@@ -19,15 +19,5 @@ sap.ui.define([
                 oModel.setDefaultBindingMode("OneWay");
                 return oModel;
         }
-
-        createCSVModel: function () {
-            var oModel = new JSONModel(Device);
-            oModel.setDefaultBindingMode("TwoWay");
-
-
-
-            
-            return oModel;
-    }
     };
 });
