@@ -34,6 +34,11 @@ sap.ui.define([
             var oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModel1");
             var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModel2");
 
+
+
+
+
+
             MessageToast.show(oCSVModelCompare1.toString());
             MessageToast.show(oCSVModelCompare2.toString());
 
@@ -142,7 +147,7 @@ sap.ui.define([
               reader.onload = function(oEvent) {
                 var strCSV = oEvent.target.result;
                 var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                var noOfCols = 6;
+                var noOfCols = 4;
                 var headerRow = arrCSV.splice(0, noOfCols);
                 var data = [];
                
@@ -207,7 +212,7 @@ sap.ui.define([
               reader.onload = function(oEvent) {
                 var strCSV = oEvent.target.result;
                 var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                var noOfCols = 6;
+                var noOfCols = 8;
                 var headerRow = arrCSV.splice(0, noOfCols);
                 var data = [];
                 while (arrCSV.length > 0) {
