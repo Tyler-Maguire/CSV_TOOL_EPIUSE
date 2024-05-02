@@ -9,13 +9,12 @@ sap.ui.define([
         var csrfToken;
 
         return Controller.extend("com.epiuse.compare.controller.appView", {
-            handlefileComparison: function(oEvent) {
+          onCompare: function(oEvent) {
+
+
                
 
-        },
-            handleUploadComplete1s: function(oEvent) {},
-            handleUploadComplete2: function(oEvent) {}, 
-    
+            },  
             handleUploadPress1: function(oEvent) {
                 
                 var file;
@@ -57,7 +56,6 @@ sap.ui.define([
                 }
                 reader2.onload = function(oEvent) {
                     file = oFileUploader2.oFileUpload.files[0];    
-                    var reader2 = new FileReader();
                     var strCSV = oEvent.target.result;
                     var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
                     var arrLen = arrCSV.length;
@@ -150,7 +148,7 @@ sap.ui.define([
                 };
                 http.open("POST", url, true);
                 http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                http.send(params);
+              //  http.send(params);
               };
               reader.readAsBinaryString(file);
             },
@@ -201,7 +199,7 @@ sap.ui.define([
                 };
                 http.open("POST", url, true);
                 http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                http.send(params);
+              //  http.send(params);
               };
               reader.readAsBinaryString(file);
             }
