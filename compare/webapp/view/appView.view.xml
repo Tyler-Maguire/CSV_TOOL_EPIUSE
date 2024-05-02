@@ -35,12 +35,20 @@
 			text="Compare Files"
             id="fileComparison"
 			press="handlefileComparison"/>	
+
+		<VBox>
+     	<u:FileUploader id="idfileUploader" typeMissmatch="handleTypeMissmatch" change="handleValueChange" maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength" multiple="false" width="50%" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
+     	<Button text="Upload your file" press="onUpload" type="Emphasized"/>
+		</VBox>
+
+		<VBox>
+     	<u:FileUploader id="idfileUploader2" typeMissmatch="handleTypeMissmatch" change="handleValueChange" maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength" multiple="false" width="50%" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
+     	<Button text="Upload your file" press="onUpload2" type="Emphasized"/>
+		</VBox>
+
 	</l:VerticalLayout>
 
-<VBox>
-     <u:FileUploader id="idfileUploader" typeMissmatch="handleTypeMissmatch" change="handleValueChange" maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength" multiple="false" width="50%" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
-     <Button text="Upload your file" press="onUpload" type="Emphasized"/>
-</VBox>
+
 	
 	
 
