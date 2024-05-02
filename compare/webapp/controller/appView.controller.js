@@ -126,7 +126,7 @@ sap.ui.define([
               MessageToast.show("The file name should be less than that.");
             },
             onUpload: function(e) {
-              var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+             // var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
               var oCSVModel1 = this.getOwnerComponent().getModel("CSVModel1");
               this.getView().setModel(oCSVModel1, "CSVModel1");
 
@@ -193,7 +193,7 @@ sap.ui.define([
               reader.readAsBinaryString(file);
             },
             onUpload2: function(e) {
-              var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+          //    var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
               var oCSVModel2 = this.getOwnerComponent().getModel("CSVModel2");
               this.getView().setModel(oCSVModel2, "CSVModel2");
               var fU = this.getView().byId("idfileUploader");
