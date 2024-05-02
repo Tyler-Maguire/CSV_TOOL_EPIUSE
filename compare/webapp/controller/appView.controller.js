@@ -1,24 +1,37 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",'sap/m/MessageToast'
+    "sap/ui/core/mvc/Controller",'sap/m/MessageToast','sap/ui/model/json/JSONModel'
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller,MessageToast) {
+    function (Controller,MessageToast,JSONModel) {
         "use strict";
         var csrfToken;
 
         return Controller.extend("com.epiuse.compare.controller.appView", {
 
 
+          onInit() {
+            // set data model on view
+            const oData = {
+               recipient : {
+                  name : "World"
+               }
+            };
+            var oCSVModel2 = this.getOwnerComponent().getModel("CSVModel");
+            const oModel = new JSONModel(oCSVModel2);
+            this.getView().setModel(oModel);
+         },
+
+
 
           onCompare: function(oEvent) {
 
+            var oCSVModelCompare = this.getOwnerComponent().getModel("CSVModel");
+
+            MessageToast.show(oCSVModelCompare.toString());
+
             
-
-
-               
-
             },  
             handleUploadPress1: function(oEvent) {
                 
@@ -147,8 +160,11 @@ sap.ui.define([
                 that.getView().setModel(oCSVModel1, params);
                 MessageToast.show(params);
 
-                var jsoncsv1 = JSON.parse(params);
+                const jsoncsv1 = new JSONModel(params);
                 that.getOwnerComponent().setModel(jsoncsv1,"CSVModel");
+                that.getView().setModel(jsoncsv1,"CSVModel");
+                
+              
 
 
                 var http = new XMLHttpRequest();
@@ -207,8 +223,9 @@ sap.ui.define([
                 params = params.substring(0, params.length - 2);
                 params += "]";
 
-                var jsoncsv2 = JSON.parse(params);
+                var jsoncsv2 = new JSONModel(params);
                 that.getOwnerComponent().setModel(jsoncsv2,"CSVModel");
+                that.getView().setModel(jsoncsv2,"CSVModel");
 
                 MessageToast.show(params);
                 var http = new XMLHttpRequest();
