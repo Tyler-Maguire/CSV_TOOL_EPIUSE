@@ -109,7 +109,7 @@ sap.ui.define([
             onUpload: function(e) {
               var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
               var oCSVModel1 = this.getOwnerComponent().getModel("CSVModel");
-              this.getView().setModel(oCSVModel, "CSVModel");
+              this.getView().setModel(oCSVModel1, "CSVModel1");
 
               var fU = this.getView().byId("idfileUploader");
               var domRef = fU.getFocusDomRef();
@@ -170,7 +170,7 @@ sap.ui.define([
             onUpload2: function(e) {
               var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
               var oCSVModel2 = this.getOwnerComponent().getModel("CSVModel");
-              this.getView().setModel(oCSVModel2, "CSVModel");
+              this.getView().setModel(oCSVModel2, "CSVModel2");
               var fU = this.getView().byId("idfileUploader");
               var domRef = fU.getFocusDomRef();
               var file = fU.oFileUpload.files[0]; 
