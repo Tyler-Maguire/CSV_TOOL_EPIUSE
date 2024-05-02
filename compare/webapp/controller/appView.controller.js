@@ -7,6 +7,7 @@ sap.ui.define([
     function (Controller,MessageToast,JSONModel) {
         "use strict";
         var csrfToken;
+        var changedLine = '';
 
         return Controller.extend("com.epiuse.compare.controller.appView", {
 
@@ -35,6 +36,23 @@ sap.ui.define([
             var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModel2");
 
 
+             // split all lines by \n to form an array for both base and secondary files
+             const internLines = oCSVModelCompare1.toString().split('\n');
+             const externLines = oCSVModelCompare2.toString().split('\n');
+
+             // Create a json object with each secondary file line as its key and value as true
+             const externLookup = {};
+             externLines.forEach(eLine => externLookup[eLine] = true);
+
+             // Iterate through each line of base file
+             internLines.forEach(iLine => {
+                 // use above formed json object and pass each line as key
+                 // value of externLookup[iLine] would be undefined if secondary file didn't have same line
+                 // in that case current line is considered as changed line and will be eventually written to output file
+                 if (!externLookup[iLine]) changedLine = changedLine + iLine + '\n'
+             })
+
+           
 
 
 
