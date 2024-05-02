@@ -158,7 +158,9 @@ sap.ui.define([
               var domRef = fU.getFocusDomRef();
               var file = fU.oFileUpload.files[0]; 
               var reader = new FileReader();
-              var params = "EmployeesJson=";
+              var params = "CSVJSON=";
+              var oCSVModel = this.getOwnerComponent().getModel("CSVModel")
+          
               reader.onload = function(oEvent) {
                 var strCSV = oEvent.target.result;
                 var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
@@ -181,6 +183,12 @@ sap.ui.define([
                 }
                 params = params.substring(0, params.length - 2);
                 params += "]";
+
+                oCSVModel.setProperty("/text/line1", "CSVJSON");
+
+               
+
+
                 // MessageBox.show(params);
                 var http = new XMLHttpRequest();
                 var url = oResourceBundle.getText("UploadEmployeesFile").toString();
