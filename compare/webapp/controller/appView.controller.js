@@ -37,8 +37,8 @@ sap.ui.define([
 
 
              // split all lines by \n to form an array for both base and secondary files
-             const internLines = oCSVModelCompare1.toString().split('\n');
-             const externLines = oCSVModelCompare2.toString().split('\n');
+             const internLines = oCSVModelCompare1.oData.toString().split('\n');
+             const externLines = oCSVModelCompare2.oData.toString().split('\n');
 
              // Create a json object with each secondary file line as its key and value as true
              const externLookup = {};
