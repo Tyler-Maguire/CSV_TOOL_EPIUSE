@@ -18,18 +18,24 @@ sap.ui.define([
                   name : "World"
                }
             };
-            var oCSVModel2 = this.getOwnerComponent().getModel("CSVModel");
-            const oModel = new JSONModel(oCSVModel2);
-            this.getView().setModel(oModel);
+            var oCSVModel1= this.getOwnerComponent().getModel("CSVModel1");
+            const oModel1 = new JSONModel(oCSVModel1);
+            this.getView().setModel(oModel1);
+
+            var oCSVModel2= this.getOwnerComponent().getModel("CSVModel2");
+            const oModel2 = new JSONModel(oCSVModel2);
+            this.getView().setModel(oModel2);
          },
 
 
 
           onCompare: function(oEvent) {
 
-            var oCSVModelCompare = this.getOwnerComponent().getModel("CSVModel");
+            var oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModel1");
+            var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModel2");
 
-            MessageToast.show(oCSVModelCompare.toString());
+            MessageToast.show(oCSVModelCompare1.toString());
+            MessageToast.show(oCSVModelCompare2.toString());
 
             
             },  
@@ -121,7 +127,7 @@ sap.ui.define([
             },
             onUpload: function(e) {
               var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
-              var oCSVModel1 = this.getOwnerComponent().getModel("CSVModel");
+              var oCSVModel1 = this.getOwnerComponent().getModel("CSVModel1");
               this.getView().setModel(oCSVModel1, "CSVModel1");
 
               var fU = this.getView().byId("idfileUploader");
@@ -160,8 +166,8 @@ sap.ui.define([
                 
                 var jsoncsv1 = new JSONModel();
                 jsoncsv1.setData(params);
-                that.getOwnerComponent().setModel(jsoncsv1,"CSVModel");
-                that.getView().setModel(jsoncsv1,"CSVModel");
+                that.getOwnerComponent().setModel(jsoncsv1,"CSVModel1");
+                that.getView().setModel(jsoncsv1,"CSVModel1");
 
             
 
@@ -188,7 +194,7 @@ sap.ui.define([
             },
             onUpload2: function(e) {
               var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
-              var oCSVModel2 = this.getOwnerComponent().getModel("CSVModel");
+              var oCSVModel2 = this.getOwnerComponent().getModel("CSVModel2");
               this.getView().setModel(oCSVModel2, "CSVModel2");
               var fU = this.getView().byId("idfileUploader");
               var domRef = fU.getFocusDomRef();
@@ -223,8 +229,8 @@ sap.ui.define([
 
                 var jsoncsv2 = new JSONModel();
                 jsoncsv2.setData(params);
-                that.getOwnerComponent().setModel(jsoncsv2,"CSVModel");
-                that.getView().setModel(jsoncsv2,"CSVModel");
+                that.getOwnerComponent().setModel(jsoncsv2,"CSVModel2");
+                that.getView().setModel(jsoncsv2,"CSVModel2");
 
                 MessageToast.show(params);
                 var http = new XMLHttpRequest();

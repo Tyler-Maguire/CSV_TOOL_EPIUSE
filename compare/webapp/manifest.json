@@ -72,9 +72,11 @@
           "bundleName": "com.epiuse.compare.i18n.i18n"
         }
       },
-      "CSVModel" : {
+      "CSVModel1" : {
         "type" : "sap.ui.model.json.JSONModel"
-    }
+    },"CSVModel2" : {
+      "type" : "sap.ui.model.json.JSONModel"
+  }
     },
     "resources": {
       "css": [
