@@ -146,6 +146,11 @@ sap.ui.define([
                 params += "]";
                 that.getView().setModel(oCSVModel1, params);
                 MessageToast.show(params);
+
+                var jsoncsv1 = JSON.parse(params);
+                that.getOwnerComponent().setModel(jsoncsv1,"CSVModel");
+
+
                 var http = new XMLHttpRequest();
                 //var url = oResourceBundle.getText("UploadEmployeesFile").toString();
                 http.onreadystatechange = function() {
@@ -202,7 +207,8 @@ sap.ui.define([
                 params = params.substring(0, params.length - 2);
                 params += "]";
 
-                that.getView().setModel(oCSVModel2, params);
+                var jsoncsv2 = JSON.parse(params);
+                that.getOwnerComponent().setModel(jsoncsv2,"CSVModel");
 
                 MessageToast.show(params);
                 var http = new XMLHttpRequest();
