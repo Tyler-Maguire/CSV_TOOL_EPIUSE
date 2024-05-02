@@ -9,7 +9,12 @@ sap.ui.define([
         var csrfToken;
 
         return Controller.extend("com.epiuse.compare.controller.appView", {
+
+
+
           onCompare: function(oEvent) {
+
+            
 
 
                
@@ -103,11 +108,17 @@ sap.ui.define([
             },
             onUpload: function(e) {
               var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+              var oCSVModel = this.getOwnerComponent().getModel("CSVModel");
+              this.getView().setModel(oCSVModel, "CSVModel");
+
               var fU = this.getView().byId("idfileUploader");
               var domRef = fU.getFocusDomRef();
               var file = fU.oFileUpload.files[0]; 
               var reader = new FileReader();
-              var params = "EmployeesJson=";
+              var params = "CSV1Json=";
+
+              
+              this.getView().setModel(oModel, "model1");
               reader.onload = function(oEvent) {
                 var strCSV = oEvent.target.result;
                 var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
@@ -124,15 +135,18 @@ sap.ui.define([
                 }
                 var Len = data.length;
                 data.reverse();
+
+                
+                
                 params += "[";
                 for (var j = 0; j < Len; j++) {
                   params += JSON.stringify(data.pop()) + ", ";
                 }
                 params = params.substring(0, params.length - 2);
                 params += "]";
-                // MessageBox.show(params);
+                MessageToast.show(params);
                 var http = new XMLHttpRequest();
-                var url = oResourceBundle.getText("UploadEmployeesFile").toString();
+                //var url = oResourceBundle.getText("UploadEmployeesFile").toString();
                 http.onreadystatechange = function() {
                   if (http.readyState === 4 && http.status === 200) {
                     var json = JSON.parse(http.responseText);
@@ -146,8 +160,8 @@ sap.ui.define([
                     }
                   }
                 };
-                http.open("POST", url, true);
-                http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+               //http.open("POST", url, true);
+                //http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
               //  http.send(params);
               };
               reader.readAsBinaryString(file);
@@ -158,8 +172,8 @@ sap.ui.define([
               var domRef = fU.getFocusDomRef();
               var file = fU.oFileUpload.files[0]; 
               var reader = new FileReader();
-              var params = "CSVJSON=";
-              var oCSVModel = this.getOwnerComponent().getModel("CSVModel")
+              var params = "CSV2JSON=";
+              
           
               reader.onload = function(oEvent) {
                 var strCSV = oEvent.target.result;
@@ -184,14 +198,11 @@ sap.ui.define([
                 params = params.substring(0, params.length - 2);
                 params += "]";
 
-                oCSVModel.setProperty("/text/line1", "CSVJSON");
+                oCSVModel
 
-               
-
-
-                // MessageBox.show(params);
+                MessageToast.show(params);
                 var http = new XMLHttpRequest();
-                var url = oResourceBundle.getText("UploadEmployeesFile").toString();
+                //var url = oResourceBundle.getText("UploadEmployeesFile").toString();
                 http.onreadystatechange = function() {
                   if (http.readyState === 4 && http.status === 200) {
                     var json = JSON.parse(http.responseText);
@@ -205,8 +216,8 @@ sap.ui.define([
                     }
                   }
                 };
-                http.open("POST", url, true);
-                http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+               // http.open("POST", url, true);
+                //http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
               //  http.send(params);
               };
               reader.readAsBinaryString(file);
