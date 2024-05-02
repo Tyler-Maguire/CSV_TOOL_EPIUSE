@@ -7,43 +7,18 @@
 
 	<l:VerticalLayout id="verticleLay">
 	 <Text id="file1" text="Please upload file 1 for comparison."/>
-		<u:FileUploader
-			id="fileUploader1"
-			name="myFileUpload"
-			uploadUrl="upload/"
-			tooltip="Upload your file to the local server"
-			uploadComplete="handleUploadComplete1"/>
-		<Button
-			text="Upload File 1"
-            id="fileUpload1"
-			press="handleUploadPress1"/>
-
-		<Text id="file2" text="Please upload file 2 for comparison."/>	
-		<u:FileUploader
-			id="fileUploader2"
-			name="myFileUpload2"
-			uploadUrl="upload/"
-			tooltip="Upload your file to the local server"
-			uploadComplete="handleUploadComplete2"/>
-
-		<Button
-			text="Upload File 2"
-            id="fileUpload2"
-			press="handleUploadPress2"/>
-
-		<Button
-			text="Compare Files"
-            id="fileComparison"
-			press="handlefileComparison"/>	
-
 		<VBox>
-     	<u:FileUploader id="idfileUploader" typeMissmatch="handleTypeMissmatch" change="handleValueChange" maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength" multiple="false" width="50%" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
-     	<Button text="Upload your file" press="onUpload" type="Emphasized"/>
+     	<u:FileUploader id="idfileUploader" typeMissmatch="handleTypeMissmatch" change="handleValueChange"
+		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
+		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
+     	<Button text="Upload your first CSV file." press="onUpload" />
 		</VBox>
-
+	<Text id="file2" text="Please upload file 2 for comparison."/>
 		<VBox>
-     	<u:FileUploader id="idfileUploader2" typeMissmatch="handleTypeMissmatch" change="handleValueChange" maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength" multiple="false" width="50%" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
-     	<Button text="Upload your file" press="onUpload2" type="Emphasized"/>
+     	<u:FileUploader id="idfileUploader2" typeMissmatch="handleTypeMissmatch" change="handleValueChange"
+		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
+		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
+     	<Button text="Upload your second CSV file." press="onUpload2" />
 		</VBox>
 
 	</l:VerticalLayout>
