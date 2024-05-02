@@ -108,7 +108,7 @@ sap.ui.define([
             },
             onUpload: function(e) {
               var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
-              var oCSVModel = this.getOwnerComponent().getModel("CSVModel");
+              var oCSVModel1 = this.getOwnerComponent().getModel("CSVModel");
               this.getView().setModel(oCSVModel, "CSVModel");
 
               var fU = this.getView().byId("idfileUploader");
@@ -116,15 +116,17 @@ sap.ui.define([
               var file = fU.oFileUpload.files[0]; 
               var reader = new FileReader();
               var params = "CSV1Json=";
+              var that = this;
 
               
-              this.getView().setModel(oModel, "model1");
+            
               reader.onload = function(oEvent) {
                 var strCSV = oEvent.target.result;
                 var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
                 var noOfCols = 6;
                 var headerRow = arrCSV.splice(0, noOfCols);
                 var data = [];
+               
                 while (arrCSV.length > 0) {
                   var obj = {};
                   var row = arrCSV.splice(0, noOfCols);
@@ -136,14 +138,13 @@ sap.ui.define([
                 var Len = data.length;
                 data.reverse();
 
-                
-                
                 params += "[";
                 for (var j = 0; j < Len; j++) {
                   params += JSON.stringify(data.pop()) + ", ";
                 }
                 params = params.substring(0, params.length - 2);
                 params += "]";
+                that.getView().setModel(oCSVModel1, params);
                 MessageToast.show(params);
                 var http = new XMLHttpRequest();
                 //var url = oResourceBundle.getText("UploadEmployeesFile").toString();
@@ -168,11 +169,14 @@ sap.ui.define([
             },
             onUpload2: function(e) {
               var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+              var oCSVModel2 = this.getOwnerComponent().getModel("CSVModel");
+              this.getView().setModel(oCSVModel2, "CSVModel");
               var fU = this.getView().byId("idfileUploader");
               var domRef = fU.getFocusDomRef();
               var file = fU.oFileUpload.files[0]; 
               var reader = new FileReader();
               var params = "CSV2JSON=";
+              var that = this;
               
           
               reader.onload = function(oEvent) {
@@ -198,7 +202,7 @@ sap.ui.define([
                 params = params.substring(0, params.length - 2);
                 params += "]";
 
-                oCSVModel
+                that.getView().setModel(oCSVModel2, params);
 
                 MessageToast.show(params);
                 var http = new XMLHttpRequest();
