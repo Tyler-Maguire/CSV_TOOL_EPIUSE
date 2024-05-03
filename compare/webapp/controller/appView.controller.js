@@ -61,7 +61,7 @@ sap.ui.define([
             //}
             MessageToast.show(oCSVModelCompare1.toString());
             MessageToast.show(oCSVModelCompare2.toString());
-            }
+            
             },
 
             handleUploadPress1: function(oEvent) {
