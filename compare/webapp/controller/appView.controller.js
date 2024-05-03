@@ -39,21 +39,24 @@ sap.ui.define([
 
             var oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModel1");
             var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModel2");
+            var pathForOutputFileName = './difference.csv';
 
 
              // split all lines by \n to form an array for both base and secondary files
              const  internLines= oCSVModelCompare1.oData.toString().split('\n');
              const externLines = oCSVModelCompare2.oData.toString().split('\n');
-             var externLookup = {};   //Added line
+             var externLookup = {};   
              var internCells;
-             externLines.forEach(function (eLine){   //Added line
-             externLookup[eLine] = true;         //Added line
+             externLines.forEach(function (eLine){  
+             externLookup[eLine] = true;         
             });   
-            internLines.forEach(function (iLine){   //Added line
+            internLines.forEach(function (iLine){  
               externLookup[iLine] = true;
               internCells = iLine.split(';');
-              if(externLookup[internCells[0]]){}         //Added line
-             });                                   //Added line
+              if(externLookup[internCells[0]]){
+
+              }        
+             });                                  
             //internLines.forEach(function(iLine){
            // var internCells = iLine.split(';');
            // if(externLookup[internCells[0]]){ 
