@@ -48,21 +48,17 @@ sap.ui.define([
              externLines.forEach(function (eLine){   //Added line
              externLookup[eLine] = true;         //Added line
             });                                     //Added line
-            internLines.forEach(function(iLine){
+            internLines.forEach(function(iLine)){
             var internCells = iLine.split(';');
-            if(externLookup[internCells[0]]){  //Changed line
-            fs.appendFileSync('public/md5-data/blacklist.csv', internCells[1] + '\n');
-            }
-
-
-
+           // if(externLookup[internCells[0]]){ 
+            //fs.appendFileSync('public/md5-data/blacklist.csv', internCells[1] + '\n');
+            //}
             MessageToast.show(oCSVModelCompare1.toString());
             MessageToast.show(oCSVModelCompare2.toString());
+            }
+            },
 
-            
-            },  
             handleUploadPress1: function(oEvent) {
-                
                 var file;
                 var oFileUploader1 = this.byId("fileUploader1");
                 var reader1 = new FileReader();
