@@ -45,11 +45,17 @@ sap.ui.define([
              const  internLines= oCSVModelCompare1.oData.toString().split('\n');
              const externLines = oCSVModelCompare2.oData.toString().split('\n');
              var externLookup = {};   //Added line
+             var internCells;
              externLines.forEach(function (eLine){   //Added line
              externLookup[eLine] = true;         //Added line
-            });                                     //Added line
-            internLines.forEach(function(iLine)){
-            var internCells = iLine.split(';');
+            });   
+            internLines.forEach(function (iLine){   //Added line
+              externLookup[iLine] = true;
+              internCells = iLine.split(';');
+              if(externLookup[internCells[0]]){}         //Added line
+             });                                   //Added line
+            //internLines.forEach(function(iLine){
+           // var internCells = iLine.split(';');
            // if(externLookup[internCells[0]]){ 
             //fs.appendFileSync('public/md5-data/blacklist.csv', internCells[1] + '\n');
             //}
