@@ -8,6 +8,9 @@ sap.ui.define([
         "use strict";
         var csrfToken;
         var changedLine = '';
+        //const Stream = require('stream');
+        //const csv = require('csvtojson');
+        //const fs = require('fs');
 
         return Controller.extend("com.epiuse.compare.controller.appView", {
 
@@ -15,8 +18,10 @@ sap.ui.define([
           onInit() {
             // set data model on view
             const oData = {
-               recipient : {
-                  name : "World"
+               Key : {
+                  Value : "",
+                  Row : "",
+                  Coloumn : "" 
                }
             };
             var oCSVModel1= this.getOwnerComponent().getModel("CSVModel1");
@@ -37,23 +42,17 @@ sap.ui.define([
 
 
              // split all lines by \n to form an array for both base and secondary files
-             const internLines = oCSVModelCompare1.oData.toString().split('\n');
+             const  internLines= oCSVModelCompare1.oData.toString().split('\n');
              const externLines = oCSVModelCompare2.oData.toString().split('\n');
-
-             // Create a json object with each secondary file line as its key and value as true
-             const externLookup = {};
-             externLines.forEach(eLine => externLookup[eLine] = true);
-
-             // Iterate through each line of base file
-             internLines.forEach(iLine => {
-                 // use above formed json object and pass each line as key
-                 // value of externLookup[iLine] would be undefined if secondary file didn't have same line
-                 // in that case current line is considered as changed line and will be eventually written to output file
-                 if (!externLookup[iLine]) changedLine = changedLine + iLine + '\n'
-             })
-
-           
-
+             var externLookup = {};   //Added line
+             externLines.forEach(function (eLine){   //Added line
+             externLookup[eLine] = true;         //Added line
+            });                                     //Added line
+            internLines.forEach(function(iLine){
+            var internCells = iLine.split(';');
+            if(externLookup[internCells[0]]){  //Changed line
+            fs.appendFileSync('public/md5-data/blacklist.csv', internCells[1] + '\n');
+            }
 
 
 
