@@ -12,14 +12,7 @@
 			id="KeySelection"
 			textFormatMode="KeyValue"
 			placeholder="Enter CSV Keys for Comparison."
-			suggestionItemSelected=".onSuggestionItemSelected">
-			<suggestionItems>
-				<core:ListItem
-					key="{Iteraor}"
-					text="{Key}"
-					additionalText="{CSVKEY}" />
-			</suggestionItems>
-		</Input>
+		/>
      	<Button text="Upload your first CSV file." press="onUpload" />
 	<Text id="file2" text="Please upload file 2 for comparison."/>
      	<u:FileUploader id="idfileUploader2" typeMissmatch="handleTypeMissmatch" change="handleValueChange"
