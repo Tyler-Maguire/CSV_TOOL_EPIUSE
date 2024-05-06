@@ -19,11 +19,15 @@
 
 	<VBox id="verticleLayKey">
 
+	<Text id="FileOut1" text="{}"/>
+
 		<Input
 			id="KeySelection"
 			textFormatMode="Key"
 			placeholder="Enter CSV Keys for Comparison."
 		/>
+
+	<Text id="FileOut2" text="Please upload file 1 for comparison."/>
 
 		<Input
 			id="RowSelection"
@@ -31,16 +35,7 @@
 			placeholder="Enter CSV Keys for Comparison."
 		/>
 
-
-
 	</VBox>
-
-
-
-
-
-
-
 
 
 

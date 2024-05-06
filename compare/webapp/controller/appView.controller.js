@@ -62,6 +62,13 @@ sap.ui.define([
            // if(externLookup[internCells[0]]){ 
             //fs.appendFileSync('public/md5-data/blacklist.csv', internCells[1] + '\n');
             //}
+
+            // this.getView().byId("FileOut1").setBindingContext()
+
+            // var fileout2 = this.byId("FileOut2");
+
+            // fileout1
+
             MessageToast.show(oCSVModelCompare1.toString());
             MessageToast.show(oCSVModelCompare2.toString());
             
