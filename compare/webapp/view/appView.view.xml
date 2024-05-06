@@ -18,6 +18,8 @@
      	<Button text="Upload your second CSV file." press="onUpload2" />
 		</VBox>
 
+		
+
 		<Button text="Compare uploaded CSV files." press="onCompare" />
 
 
