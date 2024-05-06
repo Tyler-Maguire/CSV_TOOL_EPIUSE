@@ -2,14 +2,28 @@
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout">
     <Page id="page" title="{i18n>title}">
-        
-   
 
 	<VBox id="verticleLay">
 	 <Text id="file1" text="Please upload file 1 for comparison."/>
      	<u:FileUploader id="idfileUploader" typeMissmatch="handleTypeMissmatch" change="handleValueChange"
 		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
 		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
+		<Input
+			id="productInput"
+			textFormatMode="KeyValue"
+			placeholder="Enter product"
+			showSuggestion="true"
+			showValueHelp="true"
+			valueHelpRequest=".onValueHelpRequest"
+			suggestionItems="{/ProductCollection}"
+			suggestionItemSelected=".onSuggestionItemSelected">
+			<suggestionItems>
+				<core:ListItem
+					key="{ProductId}"
+					text="{Name}"
+					additionalText="{ProductId}" />
+			</suggestionItems>
+		</Input>
      	<Button text="Upload your first CSV file." press="onUpload" />
 	<Text id="file2" text="Please upload file 2 for comparison."/>
      	<u:FileUploader id="idfileUploader2" typeMissmatch="handleTypeMissmatch" change="handleValueChange"
