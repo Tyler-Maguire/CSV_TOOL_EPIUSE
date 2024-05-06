@@ -9,19 +9,15 @@
 		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
 		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
 		<Input
-			id="productInput"
+			id="KeySelection"
 			textFormatMode="KeyValue"
-			placeholder="Enter product"
-			showSuggestion="true"
-			showValueHelp="true"
-			valueHelpRequest=".onValueHelpRequest"
-			suggestionItems="{/ProductCollection}"
+			placeholder="Enter CSV Keys for Comparison."
 			suggestionItemSelected=".onSuggestionItemSelected">
 			<suggestionItems>
 				<core:ListItem
-					key="{ProductId}"
-					text="{Name}"
-					additionalText="{ProductId}" />
+					key="{Iteraor}"
+					text="{Key}"
+					additionalText="{CSVKEY}" />
 			</suggestionItems>
 		</Input>
      	<Button text="Upload your first CSV file." press="onUpload" />
