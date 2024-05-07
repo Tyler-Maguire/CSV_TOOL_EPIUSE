@@ -11,10 +11,7 @@ sap.ui.define([
         //const Stream = require('stream');
         //const csv = require('csvtojson');
         //const fs = require('fs');
-
         return Controller.extend("com.epiuse.compare.controller.appView", {
-
-
           onInit() {
             // set data model on view
             const oData = {
@@ -73,7 +70,85 @@ sap.ui.define([
             MessageToast.show(oCSVModelCompare2.toString());
             
             },
-
+            
+            onUpload: function(e) {
+               var oCSVModel1 = this.getOwnerComponent().getModel("CSVModel1");
+               this.getView().setModel(oCSVModel1, "CSVModel1");
+               var fU = this.getView().byId("idfileUploader");
+               var domRef = fU.getFocusDomRef();
+               var file = fU.oFileUpload.files[0]; 
+               var reader = new FileReader();
+               var params = "CSV1Json=";
+               var that = this;
+               reader.onload = function(oEvent) {
+                 var strCSV = oEvent.target.result;
+                 var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+                 var noOfCols = 4;
+                 var headerRow = arrCSV.splice(0, noOfCols);
+                 var data = [];
+                
+                 while (arrCSV.length > 0) {
+                   var obj = {};
+                   var row = arrCSV.splice(0, noOfCols);
+                   for (var i = 0; i < row.length; i++) {
+                     obj[headerRow[i]] = row[i].trim();
+                   }
+                   data.push(obj);
+                 }
+                 var Len = data.length;
+                 data.reverse();
+                 params += "[";
+                 for (var j = 0; j < Len; j++) {
+                   params += JSON.stringify(data.pop()) + ", ";
+                 }
+                 params = params.substring(0, params.length - 2);
+                 params += "]";
+                 var jsoncsv1 = new JSONModel();
+                 jsoncsv1.setData(params);
+                 that.getOwnerComponent().setModel(jsoncsv1,"CSVModel1");
+                 that.getView().setModel(jsoncsv1,"CSVModel1");            
+               };
+               reader.readAsBinaryString(file);
+             },
+             onUpload2: function(e) {
+               var oCSVModel2 = this.getOwnerComponent().getModel("CSVModel2");
+               this.getView().setModel(oCSVModel2, "CSVModel2");
+               var fU = this.getView().byId("idfileUploader");
+               var domRef = fU.getFocusDomRef();
+               var file = fU.oFileUpload.files[0]; 
+               var reader = new FileReader();
+               var params = "CSV2JSON=";
+               var that = this;
+               reader.onload = function(oEvent) {
+                 var strCSV = oEvent.target.result;
+                 var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+                 var noOfCols = 8;
+                 var headerRow = arrCSV.splice(0, noOfCols);
+                 var data = [];
+                 while (arrCSV.length > 0) {
+                   var obj = {};
+                   var row = arrCSV.splice(0, noOfCols);
+                   for (var i = 0; i < row.length; i++) {
+                     obj[headerRow[i]] = row[i].trim();
+                   }
+                   data.push(obj);
+                 }
+                 var Len = data.length;
+                 data.reverse();
+                 params += "[";
+                 for (var j = 0; j < Len; j++) {
+                   params += JSON.stringify(data.pop()) + ", ";
+                 }
+                 params = params.substring(0, params.length - 2);
+                 params += "]";
+                 var jsoncsv2 = new JSONModel();
+                 jsoncsv2.setData(params);
+                 that.getOwnerComponent().setModel(jsoncsv2,"CSVModel2");
+                 that.getView().setModel(jsoncsv2,"CSVModel2");
+                 MessageToast.show(params);
+               };
+               reader.readAsBinaryString(file);
+             },
             handleUploadPress1: function(oEvent) {
                 var file;
                 var oFileUploader1 = this.byId("fileUploader1");
@@ -137,9 +212,7 @@ sap.ui.define([
                     params = params.substring(0, params.length - 2);
                     params += "]";
             }
-            
             },
-
             handleTypeMissmatch: function(oEvent) {
               var aFileTypes = oEvent.getSource().getFileType();
               jQuery.each(aFileTypes, function(key, value) {
@@ -158,136 +231,6 @@ sap.ui.define([
             },
             handleFileNameLength: function(oEvent) {
               MessageToast.show("The file name should be less than that.");
-            },
-            onUpload: function(e) {
-             // var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
-              var oCSVModel1 = this.getOwnerComponent().getModel("CSVModel1");
-              this.getView().setModel(oCSVModel1, "CSVModel1");
-
-              var fU = this.getView().byId("idfileUploader");
-              var domRef = fU.getFocusDomRef();
-              var file = fU.oFileUpload.files[0]; 
-              var reader = new FileReader();
-              var params = "CSV1Json=";
-              var that = this;
-
-              
-            
-              reader.onload = function(oEvent) {
-                var strCSV = oEvent.target.result;
-                var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                var noOfCols = 4;
-                var headerRow = arrCSV.splice(0, noOfCols);
-                var data = [];
-               
-                while (arrCSV.length > 0) {
-                  var obj = {};
-                  var row = arrCSV.splice(0, noOfCols);
-                  for (var i = 0; i < row.length; i++) {
-                    obj[headerRow[i]] = row[i].trim();
-                  }
-                  data.push(obj);
-                }
-                var Len = data.length;
-                data.reverse();
-
-                params += "[";
-                for (var j = 0; j < Len; j++) {
-                  params += JSON.stringify(data.pop()) + ", ";
-                }
-                params = params.substring(0, params.length - 2);
-                params += "]";
-                
-                var jsoncsv1 = new JSONModel();
-                jsoncsv1.setData(params);
-                that.getOwnerComponent().setModel(jsoncsv1,"CSVModel1");
-                that.getView().setModel(jsoncsv1,"CSVModel1");
-
-            
-
-                var http = new XMLHttpRequest();
-                //var url = oResourceBundle.getText("UploadEmployeesFile").toString();
-                http.onreadystatechange = function() {
-                  if (http.readyState === 4 && http.status === 200) {
-                    var json = JSON.parse(http.responseText);
-                    var status = json.status.toString();
-                    switch (status) {
-                      case "Success":
-                        MessageToast.show("Data is uploaded succesfully.");
-                        break;
-                      default:
-                        MessageToast.show("Data was not uploaded.");
-                    }
-                  }
-                };
-               //http.open("POST", url, true);
-                //http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-              //  http.send(params);
-              };
-              reader.readAsBinaryString(file);
-            },
-            onUpload2: function(e) {
-          //    var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
-              var oCSVModel2 = this.getOwnerComponent().getModel("CSVModel2");
-              this.getView().setModel(oCSVModel2, "CSVModel2");
-              var fU = this.getView().byId("idfileUploader");
-              var domRef = fU.getFocusDomRef();
-              var file = fU.oFileUpload.files[0]; 
-              var reader = new FileReader();
-              var params = "CSV2JSON=";
-              var that = this;
-              
-          
-              reader.onload = function(oEvent) {
-                var strCSV = oEvent.target.result;
-                var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                var noOfCols = 8;
-                var headerRow = arrCSV.splice(0, noOfCols);
-                var data = [];
-                while (arrCSV.length > 0) {
-                  var obj = {};
-                  var row = arrCSV.splice(0, noOfCols);
-                  for (var i = 0; i < row.length; i++) {
-                    obj[headerRow[i]] = row[i].trim();
-                  }
-                  data.push(obj);
-                }
-                var Len = data.length;
-                data.reverse();
-                params += "[";
-                for (var j = 0; j < Len; j++) {
-                  params += JSON.stringify(data.pop()) + ", ";
-                }
-                params = params.substring(0, params.length - 2);
-                params += "]";
-
-                var jsoncsv2 = new JSONModel();
-                jsoncsv2.setData(params);
-                that.getOwnerComponent().setModel(jsoncsv2,"CSVModel2");
-                that.getView().setModel(jsoncsv2,"CSVModel2");
-
-                MessageToast.show(params);
-                var http = new XMLHttpRequest();
-                //var url = oResourceBundle.getText("UploadEmployeesFile").toString();
-                http.onreadystatechange = function() {
-                  if (http.readyState === 4 && http.status === 200) {
-                    var json = JSON.parse(http.responseText);
-                    var status = json.status.toString();
-                    switch (status) {
-                      case "Success":
-                        MessageToast.show("Data is uploaded succesfully.");
-                        break;
-                      default:
-                        MessageToast.show("Data was not uploaded.");
-                    }
-                  }
-                };
-               // http.open("POST", url, true);
-                //http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-              //  http.send(params);
-              };
-              reader.readAsBinaryString(file);
             }
-        
         });
     });
