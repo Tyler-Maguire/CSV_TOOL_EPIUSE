@@ -66,6 +66,25 @@ sap.ui.define([
 
             // fileout1
 
+            let csv = oCSVModelCompare1.toString();
+            let header = ["Row1", "Row2", "Row3"];
+            function parseCsv(str) {
+              let split = str.split("\n");
+              split.shift();
+              let res = [];
+
+              split.forEach((line) => {
+                let o = {};
+                line.split(',').forEach((el, i) => {
+                  o[header[i]] = el;
+                })
+                res.push(o);
+              });
+              return res;
+            }
+
+            console.log(parseCsv(csv));
+
             MessageToast.show(oCSVModelCompare1.toString());
             MessageToast.show(oCSVModelCompare2.toString());
             
@@ -151,24 +170,6 @@ sap.ui.define([
              },
             handleUploadPress1: function(oEvent) {
 
-            let csv = `foo,bar,baz\na,b,c\nd,e,f\ng,h,i`;
-              let header = ["head1", "head2", "head3"];
-              function parseCsv(str) {
-                let split = str.split("\n");
-                split.shift();
-                let res = [];
-
-                split.forEach((line) => {
-                  let o = {};
-                  line.split(',').forEach((el, i) => {
-                    o[header[i]] = el;
-                  })
-                  res.push(o);
-                });
-                return res;
-              }
-
-              console.log(parseCsv(csv));
 
                 var file;
                 var oFileUploader1 = this.byId("fileUploader1");
