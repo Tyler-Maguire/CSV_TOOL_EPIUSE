@@ -18,6 +18,20 @@ sap.ui.define([
                 var oModel = new JSONModel(Device);
                 oModel.setDefaultBindingMode("OneWay");
                 return oModel;
-        }
+        },
+        createCSVModel: function () {
+            const oData = {
+                Key : {
+                   Value : "",
+                   Row : "",
+                   Coloumn : "" 
+                }
+             };
+            var oModel = new JSONModel(oData);
+            oModel.setDefaultBindingMode("Twoway");
+            return oModel;
+    }
+
+
     };
 });
