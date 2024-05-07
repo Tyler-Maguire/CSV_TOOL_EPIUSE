@@ -7,6 +7,7 @@ sap.ui.define(
   
       return BaseController.extend("com.epiuse.compare.controller.App", {
         onInit: function() {
+          
         }
       });
     }

@@ -31,6 +31,5 @@ sap.ui.define([
             return oModel;
     }
 
-
     };
 });
