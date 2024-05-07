@@ -28,7 +28,6 @@ sap.ui.define([
                 }
              };
             var oModel = new JSONModel(oData);
-            oModel.setDefaultBindingMode("Twoway");
             return oModel;
     }
 
