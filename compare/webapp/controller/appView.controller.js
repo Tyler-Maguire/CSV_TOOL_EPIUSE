@@ -150,6 +150,26 @@ sap.ui.define([
                reader.readAsBinaryString(file);
              },
             handleUploadPress1: function(oEvent) {
+
+            let csv = `foo,bar,baz\na,b,c\nd,e,f\ng,h,i`;
+              let header = ["head1", "head2", "head3"];
+              function parseCsv(str) {
+                let split = str.split("\n");
+                split.shift();
+                let res = [];
+
+                split.forEach((line) => {
+                  let o = {};
+                  line.split(',').forEach((el, i) => {
+                    o[header[i]] = el;
+                  })
+                  res.push(o);
+                });
+                return res;
+              }
+
+              console.log(parseCsv(csv));
+
                 var file;
                 var oFileUploader1 = this.byId("fileUploader1");
                 var reader1 = new FileReader();
