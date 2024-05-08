@@ -99,7 +99,7 @@ sap.ui.define([
                var domRef = fU.getFocusDomRef();
                var file = fU.oFileUpload.files[0]; 
                var reader = new FileReader();
-               var params = "CSV1Json=";
+               var params = "";
                var that = this;
                reader.onload = function(oEvent) {
                  var strCSV = oEvent.target.result;
@@ -118,13 +118,13 @@ sap.ui.define([
                  }
                  var Len = data.length;
                  data.reverse();
-                 params += "[";
+              
                  for (var j = 0; j < Len; j++) {
                    params += JSON.stringify(data.pop()) + ", ";
                  }
                  params = params.substring(0, params.length - 2);
-                 params += "]";
-                 var jsoncsv1 = new JSONModel();
+         
+                 var jsoncsv1 = new JSONModel({CSV1Json:''});
                  jsoncsv1.setData(params);
                  that.getOwnerComponent().setModel(jsoncsv1,"CSVModel1");
                  that.getView().setModel(jsoncsv1,"CSVModel1");            
@@ -138,7 +138,7 @@ sap.ui.define([
                var domRef = fU.getFocusDomRef();
                var file = fU.oFileUpload.files[0]; 
                var reader = new FileReader();
-               var params = "CSV2JSON=";
+               var params = "CSV2JSON:";
                var that = this;
                reader.onload = function(oEvent) {
                  var strCSV = oEvent.target.result;
@@ -156,14 +156,14 @@ sap.ui.define([
                  }
                  var Len = data.length;
                  data.reverse();
-                 params += "[";
+           
                  for (var j = 0; j < Len; j++) {
                    params += JSON.stringify(data.pop()) + ", ";
                  }
                  params = params.substring(0, params.length - 2);
-                 params += "]";
-                 var jsoncsv2 = new JSONModel();
-                 jsoncsv2.setData(params);
+                
+                 var jsoncsv2 = new JSONModel({CSV2JSON:''});
+                 jsoncsv2.setJSON(params);
                  that.getOwnerComponent().setModel(jsoncsv2,"CSVModel2");
                  that.getView().setModel(jsoncsv2,"CSVModel2");
                  MessageToast.show(params);

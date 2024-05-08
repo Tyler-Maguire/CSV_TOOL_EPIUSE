@@ -78,7 +78,8 @@
       "type" : "sap.ui.model.json.JSONModel"
     },"CSVModelCompare" : {
       "type" : "sap.ui.model.json.JSONModel"
-    },
+    }
+  },
     "resources": {
       "css": [
         {
@@ -127,3 +128,4 @@
     "service": "comepiuseCSVTOOLEPIUSE"
   }
 }
+

@@ -20,7 +20,7 @@
 	<VBox id="verticleLayKey">
 
 	<!--<Text id="FileOut1" text="{}"/>-->
-	<FormattedText id="FileOut1" htmlText="{/CSVModel1}"/>
+	<FormattedText id="FileOut1" htmlText="{/CSV1Json}"/>
 
 		<Input
 			id="KeySelection"
@@ -29,7 +29,7 @@
 		/>
 
 	<!--<Text id="FileOut2" text="Please upload file 1 for comparison."/>-->
-	<FormattedText id="FileOut2" htmlText="{/CSVModel2}"/>
+	<FormattedText id="FileOut2" htmlText="{/CSV2Json}"/>
 
 		<Input
 			id="RowSelection"
