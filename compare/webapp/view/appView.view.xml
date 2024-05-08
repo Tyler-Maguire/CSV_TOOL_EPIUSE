@@ -47,11 +47,17 @@
 		<Button text="Compare uploaded CSV files." press="onCompare" />
 
 
-	<html:div id="dropZone1" class="column-double span"></html:div>
+	<html:div id="dropZone1" class="column-double span">
+	
+	</html:div>
 
 	<html:div id="dropZone2" class="column-double span"></html:div>
 	
- 	<html:div id="result-csv-diff" class="span result-csv-diff"></html:div>
+ 	<html:div id="result-csv-diff" class="span result-csv-diff">
+	
+	<Text id="Fileout" text="{}" wrapping="true"/>
+	
+	</html:div>
 	
 
 	

@@ -101,7 +101,7 @@ sap.ui.define([
 
             // fileout1
 
-            debugger;
+            let diff= '1 column added, 1 row changed, 2 rows added, 1 row removed 1 column added surname 1 row changed id: 1 age: "4" => "5"Unchanged:name: "Cleo" 2 rows addedid: 3name: Baileyage: 1surname: king id: 5 name: Stacks age: 12 surname: just 1 row removed id: 2 name: Pancakes age: 2';
             let csv = oCSVModelCompare2.toString();
             let header = ["Username","Iaedasdasntifier","One-time password","Recovery code","First name","Last name","Department","Location"];
             function parseCsv(str) {
@@ -118,8 +118,9 @@ sap.ui.define([
               });
               return res;
             }
+            this.getView().byId("FileOut").setText(diff); 
 
-            console.log(parseCsv(csv));
+           // console.log(parseCsv(csv));
 
             MessageToast.show(oCSVModelCompare1.toString());
             MessageToast.show(oCSVModelCompare2.toString());
