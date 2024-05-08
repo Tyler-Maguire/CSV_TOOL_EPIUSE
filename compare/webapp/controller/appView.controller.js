@@ -60,9 +60,9 @@ sap.ui.define([
 
          getAllColumns: function() {
           const columns = [];
-          Array.from(this.columns.children).forEach(function (column) {
-            columns.push(csvGenerator.getColumnFromId(column.dataset.id));
-          });
+         // Array.from(this.columns.children).forEach(function (column) {
+        //    columns.push(csvGenerator.getColumnFromId(column.dataset.id));
+        //  });
           return columns;
         },
 
