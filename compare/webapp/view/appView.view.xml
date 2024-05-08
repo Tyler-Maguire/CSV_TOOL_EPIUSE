@@ -17,36 +17,21 @@
      	<Button text="Upload your second CSV file." press="onUpload2" />
 		</VBox>
 
-	<VBox id="verticleLayKey">
-
-	<!--<Text id="FileOut1" text="{}"/>-->
-	<Text id="FileOut1" text="{/CSV1Json}" wrapping="true"/>
-
-		<Input
-			id="KeySelection"
-			textFormatMode="Key"
-			placeholder="Enter CSV Keys for Comparison."
-		/>
+	<VBox id="verticleLayKey" alignItems="Center">
+	
+	<Text id="FileOut1" text="{/CSV1Json}" wrapping="true" width="700px"/>
+	<Input id="KeySelection" textFormatMode="Key" placeholder="Enter CSV Keys for Comparison." width="500px"/>
 
 	<!--<Text id="FileOut2" text="Please upload file 1 for comparison."/>-->
-	<Text id="FileOut2" text="{/CSV2Json}" wrapping="true"/>
-
-		<Input
-			id="RowSelection"
-			textFormatMode="Value"
-			placeholder="Enter CSV Keys for Comparison."
-		/>
-
-	<Text id="Fileout" text="{/CSVModelCompare}" wrapping="true"/>
-
+	<Text id="FileOut2" text="{/CSV2Json}" wrapping="true" width="700px"/>
+	<Input id="RowSelection" textFormatMode="Value" placeholder="Enter CSV Keys for Comparison." width="500px"/>
+	<Button text="Compare uploaded CSV files." press="onCompare" />
+	<Text id="Fileout" text="{/CSVModelCompare}" width="700px" wrapping="true"/>
 	</VBox>
-
-
-
 	</HBox>
 		
 
-	<Button text="Compare uploaded CSV files." press="onCompare" />
+	
 
  	
 	
