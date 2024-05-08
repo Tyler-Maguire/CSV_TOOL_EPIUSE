@@ -66,8 +66,9 @@ sap.ui.define([
 
             // fileout1
 
-            let csv = oCSVModelCompare1.toString();
-            let header = ["Row1", "Row2", "Row3"];
+            debugger;
+            let csv = oCSVModelCompare2.toString();
+            let header = ["Username","Iaedasdasntifier","One-time password","Recovery code","First name","Last name","Department","Location"];
             function parseCsv(str) {
               let split = str.split("\n");
               split.shift();
