@@ -172,7 +172,7 @@ sap.ui.define([
              onUpload2: function(e) {
                var oCSVModel2 = this.getOwnerComponent().getModel("CSVModel2");
                this.getView().setModel(oCSVModel2, "CSVModel2");
-               var fU = this.getView().byId("idfileUploader");
+               var fU = this.getView().byId("idfileUploader2");
                var domRef = fU.getFocusDomRef();
                var file = fU.oFileUpload.files[0]; 
                var reader = new FileReader();
