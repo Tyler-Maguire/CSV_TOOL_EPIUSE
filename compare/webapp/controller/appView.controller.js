@@ -124,8 +124,9 @@ sap.ui.define([
                  }
                  params = params.substring(0, params.length - 2);
          
-                 var jsoncsv1 = new JSONModel({CSV1Json:''});
-                 jsoncsv1.setData(params);
+                 var jsoncsv1 = new JSONModel();
+                 jsoncsv1.setData({CSV1Json:params});
+                 that.getView().byId("FileOut1").setText(params); 
                  that.getOwnerComponent().setModel(jsoncsv1,"CSVModel1");
                  that.getView().setModel(jsoncsv1,"CSVModel1");            
                };
@@ -138,7 +139,7 @@ sap.ui.define([
                var domRef = fU.getFocusDomRef();
                var file = fU.oFileUpload.files[0]; 
                var reader = new FileReader();
-               var params = "CSV2JSON:";
+               var params = "";
                var that = this;
                reader.onload = function(oEvent) {
                  var strCSV = oEvent.target.result;
@@ -162,8 +163,9 @@ sap.ui.define([
                  }
                  params = params.substring(0, params.length - 2);
                 
-                 var jsoncsv2 = new JSONModel({CSV2JSON:''});
-                 jsoncsv2.setJSON(params);
+                 var jsoncsv2 = new JSONModel();
+                 //jsoncsv2.setJSON(params);
+                 jsoncsv2.setData({CSV2JSON: params});
                  that.getOwnerComponent().setModel(jsoncsv2,"CSVModel2");
                  that.getView().setModel(jsoncsv2,"CSVModel2");
                  MessageToast.show(params);
