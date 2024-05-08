@@ -19,7 +19,8 @@
 
 	<VBox id="verticleLayKey">
 
-	<Text id="FileOut1" text="{}"/>
+	<!--<Text id="FileOut1" text="{}"/>-->
+	<FormattedText id="FileOut1" htmlText="{/CSVModel1}"/>
 
 		<Input
 			id="KeySelection"
@@ -27,7 +28,8 @@
 			placeholder="Enter CSV Keys for Comparison."
 		/>
 
-	<Text id="FileOut2" text="Please upload file 1 for comparison."/>
+	<!--<Text id="FileOut2" text="Please upload file 1 for comparison."/>-->
+	<FormattedText id="FileOut2" htmlText="{/CSVModel2}"/>
 
 		<Input
 			id="RowSelection"
