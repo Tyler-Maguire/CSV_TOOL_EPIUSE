@@ -66,6 +66,13 @@ sap.ui.define([
             var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModel2");
             var pathForOutputFileName = './difference.csv';
 
+            var command = "csv-diff username.csv password.csv --key=id --json";
+
+            
+
+            var fileone = set(oCSVModelCompare1.oData.toString)
+            var filetwo = set(filetwo)
+
 
              // split all lines by \n to form an array for both base and secondary files
              const  internLines= oCSVModelCompare1.oData.toString().split('\n');
@@ -286,6 +293,8 @@ sap.ui.define([
             handleFileNameLength: function(oEvent) {
               MessageToast.show("The file name should be less than that.");
             },
+
+            
 
             compare: function () {
               function a(a) {
