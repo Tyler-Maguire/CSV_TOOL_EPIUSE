@@ -168,7 +168,8 @@ sap.ui.define([
                  jsoncsv2.setData({CSV2JSON: params});
                  that.getOwnerComponent().setModel(jsoncsv2,"CSVModel2");
                  that.getView().setModel(jsoncsv2,"CSVModel2");
-                 MessageToast.show(params);
+                 that.getView().byId("FileOut2").setText(params); 
+                // MessageToast.show(params);
                };
                reader.readAsBinaryString(file);
              },
