@@ -58,6 +58,14 @@ sap.ui.define([
             this.getView().setModel(oModel2);
          },
 
+         getAllColumns: function() {
+          const columns = [];
+          Array.from(this.columns.children).forEach(function (column) {
+            columns.push(csvGenerator.getColumnFromId(column.dataset.id));
+          });
+          return columns;
+        },
+
 
 
           onCompare: function(oEvent) {
