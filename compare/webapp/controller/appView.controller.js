@@ -70,8 +70,8 @@ sap.ui.define([
 
             
 
-            var fileone = set(oCSVModelCompare1.oData.toString)
-            var filetwo = set(filetwo)
+            //var fileone = set(oCSVModelCompare1.oData.toString)
+           // var filetwo = set(filetwo)
 
 
              // split all lines by \n to form an array for both base and secondary files
@@ -103,6 +103,7 @@ sap.ui.define([
 
             let diff= '1 column added, 1 row changed, 2 rows added, 1 row removed 1 column added surname 1 row changed id: 1 age: "4" => "5"Unchanged:name: "Cleo" 2 rows addedid: 3name: Baileyage: 1surname: king id: 5 name: Stacks age: 12 surname: just 1 row removed id: 2 name: Pancakes age: 2';
             let csv = oCSVModelCompare2.toString();
+            this.getView().byId("Fileout").setText(diff); 
             let header = ["Username","Iaedasdasntifier","One-time password","Recovery code","First name","Last name","Department","Location"];
             function parseCsv(str) {
               let split = str.split("\n");
@@ -118,7 +119,7 @@ sap.ui.define([
               });
               return res;
             }
-            this.getView().byId("FileOut").setText(diff); 
+            
 
            // console.log(parseCsv(csv));
 
@@ -180,7 +181,7 @@ sap.ui.define([
                reader.onload = function(oEvent) {
                  var strCSV = oEvent.target.result;
                  var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                 var noOfCols = 8;
+                 var noOfCols = 4;
                  var headerRow = arrCSV.splice(0, noOfCols);
                  var data = [];
                  while (arrCSV.length > 0) {

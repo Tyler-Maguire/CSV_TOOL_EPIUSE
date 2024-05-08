@@ -20,7 +20,7 @@
 	<VBox id="verticleLayKey">
 
 	<!--<Text id="FileOut1" text="{}"/>-->
-	<Label id="FileOut1" text="{/CSV1Json}" wrapping="true"/>
+	<Text id="FileOut1" text="{/CSV1Json}" wrapping="true"/>
 
 		<Input
 			id="KeySelection"
@@ -37,6 +37,8 @@
 			placeholder="Enter CSV Keys for Comparison."
 		/>
 
+	<Text id="Fileout" text="{/CSVModelCompare}" wrapping="true"/>
+
 	</VBox>
 
 
@@ -44,20 +46,13 @@
 	</HBox>
 		
 
-		<Button text="Compare uploaded CSV files." press="onCompare" />
+	<Button text="Compare uploaded CSV files." press="onCompare" />
 
+ 	
+	
+	
+	
 
-	<html:div id="dropZone1" class="column-double span">
-	
-	</html:div>
-
-	<html:div id="dropZone2" class="column-double span"></html:div>
-	
- 	<html:div id="result-csv-diff" class="span result-csv-diff">
-	
-	<Text id="Fileout" text="{}" wrapping="true"/>
-	
-	</html:div>
 	
 
 	
