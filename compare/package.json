@@ -42,6 +42,6 @@
         "@types/es6-promise": "^3.3.0",
         "a11y-dialog": "^8.0.4",
         "codemirror": "^5.65.16",
-        "lib": "^5.1.0"
+        "lib": "ES2015"
     }
 }
