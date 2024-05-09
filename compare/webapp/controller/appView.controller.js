@@ -144,7 +144,10 @@ sap.ui.define([
                    var arrObje = [];
                   // var lines = csvFileInText.split('\n');
                    let lines = csvFileInText.split(/\r?\n/);
-                   var lineA = lines[0].split(',');
+
+                  let delimit = this.delimiter(csvFileInText);
+
+                   var lineA = lines[0].split(delimit);
 
                    let linesize = lineA.length;
 
@@ -169,10 +172,6 @@ sap.ui.define([
                var domRef = fU.getFocusDomRef();
                var file = fU.oFileUpload.files[0]; 
                
-
-
-               
-
                var reader = new FileReader();
                var params = "";
                var that = this;
@@ -356,6 +355,41 @@ sap.ui.define([
               };
 
             },
+
+            delimiter: function(csvText) {
+              let t = csvText.split("\n")[0];
+              let delArray = [',', ';', '|', '    '];
+              let comma,samiclon,pipe,tab = 0;
+              delArray.forEach((e, i) => {
+                  if (i === 0) {
+                      comma = t.split(e).length;
+                  } else if (i === 1) {
+                      samiclon = t.split(e).length;
+                  } else if (i === 2) {
+                      pipe = t.split(e).length;
+                  } else if (i === 3) {
+                      tab = t.split(e).length;
+                  }
+              });
+              let tmpArray1 = [comma, samiclon, pipe, tab]
+              let tmpArray = [comma, samiclon, pipe, tab];
+              let maxLen = tmpArray.sort((a, b) => b - a)[0];
+              let delimiter_i = 0;
+              tmpArray1.forEach((e, i) => {
+                  if (maxLen === e) {
+                      delimiter_i = i;
+                  }
+              });
+              if (delimiter_i === 0) {
+                  return ',';
+              } else if (delimiter_i === 1) {
+                  return ';'
+              } else if (delimiter_i === 2) {
+                  return '|'
+              } else if (delimiter_i === 3) {
+                  return '    '
+              }
+          },
 
             compare: function () {
               function a(a) {
