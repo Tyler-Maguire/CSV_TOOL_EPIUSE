@@ -36,9 +36,7 @@ sap.ui.define([
           ONLY2: 2,
           DIFF: 3
       };
-        //const Stream = require('stream');
-        //const csv = require('csvtojson');
-        //const fs = require('fs');
+   
         return Controller.extend("com.epiuse.compare.controller.appView", {
           onInit() {
             // set data model on view
@@ -303,8 +301,22 @@ sap.ui.define([
             handleFileNameLength: function(oEvent) {
               MessageToast.show("The file name should be less than that.");
             },
+            readFile: function(input){
+              let file = input.files[0];
 
+              let reader = new FileReader();
             
+              reader.readAsText(file);
+            
+              reader.onload = function() {
+                console.log(reader.result);
+              };
+            
+              reader.onerror = function() {
+                console.log(reader.error);
+              };
+
+            },
 
             compare: function () {
               function a(a) {
