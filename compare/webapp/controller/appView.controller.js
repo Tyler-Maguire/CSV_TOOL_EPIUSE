@@ -134,31 +134,32 @@ sap.ui.define([
             
             },
 
-             checkFunc: async function() {
-    
-              if (inputFile.files.length) {
-                try {
-                  var csvFileInText = await inputFile.files[0].text();
-                  console.log(csvFileInText);
-                                 
-                  var arrObje = [];
-                  var lines = csvFileInText.split('\n');
-                  var lineA = lines[0].split(',');
-      
-                  let linesize = lineA.length;
-      
-                  if (linesize == 3){
-                    alert("File uploaded successfully.");
-                  }
-                  else{
-                    alert("File was not uploaded. Please check the instructions.");
-                  }       
-      
-                } catch (e) {
-                  console.error(e);
-                }
-              }
-            },
+             checkFunc: async function (inputFile) {
+
+               if (inputFile.files.length) {
+                 try {
+                   var csvFileInText = await inputFile.files[0].text();
+                   console.log(csvFileInText);
+
+                   var arrObje = [];
+                  // var lines = csvFileInText.split('\n');
+                   let lines = csvFileInText.split(/\r?\n/);
+                   var lineA = lines[0].split(',');
+
+                   let linesize = lineA.length;
+
+                   if (linesize >= 1) {
+                     return linesize;
+                   }
+                   else {
+                     return -1;
+                   }
+
+                 } catch (e) {
+                   console.error(e);
+                 }
+               }
+             },
 
             
             onUpload: function(e) {
@@ -167,6 +168,7 @@ sap.ui.define([
                var fU = this.getView().byId("idfileUploader");
                var domRef = fU.getFocusDomRef();
                var file = fU.oFileUpload.files[0]; 
+               var LineSize = this.checkFunc(file);
                var reader = new FileReader();
                var params = "";
                var that = this;
@@ -174,7 +176,7 @@ sap.ui.define([
                  var strCSV = oEvent.target.result;
                  var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
                  var lines = strCSV.split('\n');
-                 var noOfCols = 4;
+                 var noOfCols = LineSize;
                  var headerRow = arrCSV.splice(0, noOfCols);
                  var data = [];
                 
