@@ -6,26 +6,28 @@
 	<HBox>
 	<VBox id="verticleLay">
 	 <Text id="file1" text="Please upload file 1 for comparison."/>
-     	<u:FileUploader id="idfileUploader" typeMissmatch="handleTypeMissmatch" change="handleValueChange"
+     	<u:FileUploader id="FileUploaderBase" typeMissmatch="handleTypeMissmatch" change="handleValueChange"
 		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
 		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
-     	<Button text="Upload your first CSV file." press="onUpload" />
+     	<Button text="Upload your first CSV file." press="onUploadBase" />
 	<Text id="file2" text="Please upload file 2 for comparison."/>
-     	<u:FileUploader id="idfileUploader2" typeMissmatch="handleTypeMissmatch" change="handleValueChange"
+     	<u:FileUploader id="FileUploaderCompare" typeMissmatch="handleTypeMissmatch" change="handleValueChange"
 		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
 		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
-     	<Button text="Upload your second CSV file." press="onUpload2" />
+     	<Button text="Upload your second CSV file." press="onUploadCompare" />
 		</VBox>
 	<VBox id="verticleLayKey" alignItems="Center">
 	
-	<Text id="FileOut1" text="{/CSV1Json}" wrapping="true" width="700px"/>
+	<Text id="FileOutBase" text="{/CSVBaseJson}" wrapping="true" width="700px"/>
 	<Input id="KeySelection" textFormatMode="Key" placeholder="Enter CSV Keys for Comparison." width="500px"/>
 
 	<!--<Text id="FileOut2" text="Please upload file 1 for comparison."/>-->
-	<Text id="FileOut2" text="{/CSV2Json}" wrapping="true" width="700px"/>
+	<Text id="FileOutCompare" text="{/CSVCompareJson}" wrapping="true" width="700px"/>
 	<Input id="RowSelection" textFormatMode="Value" placeholder="Enter CSV Keys for Comparison." width="500px"/>
 	<Button text="Compare uploaded CSV files." press="onCompare" />
-	<Text id="Fileout" text="{/CSVModelCompare}" width="700px" wrapping="true"/>
+	<Text id="Fileout" text="{/CSVGenDiff}" width="700px" wrapping="true"/>
+
+	<Button text="Copy Results to clipboard." press="CopyToClipboard" />
 	</VBox>
 	</HBox>
 		

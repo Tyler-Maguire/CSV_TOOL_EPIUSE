@@ -54,6 +54,8 @@ sap.ui.define([
             var oCSVModel2= this.getOwnerComponent().getModel("CSVModel2");
             const oModel2 = new JSONModel(oCSVModel2);
             this.getView().setModel(oModel2);
+
+            
          },
 
          getAllColumns: function() {
@@ -64,7 +66,21 @@ sap.ui.define([
           return columns;
         },
 
-
+        // CopyToClipboard: function () {
+        //   var text_to_copy = this.getView().byId("Fileout").get
+        //   if (!navigator.clipboard){
+        //       // use old commandExec() way
+        //   } else{
+        //       navigator.clipboard.writeText(text_to_copy).then(
+        //           function(){
+        //               alert("yeah!"); // success 
+        //           })
+        //         .catch(
+        //            function() {
+        //               alert("err"); // error
+        //         });
+        //   } 
+        // },
 
           onCompare: function(oEvent) {
 
@@ -101,11 +117,11 @@ sap.ui.define([
             //fs.appendFileSync('public/md5-data/blacklist.csv', internCells[1] + '\n');
             //}
 
-            // this.getView().byId("FileOut1").setBindingContext()
+            // this.getView().byId("FileOutBase").setBindingContext()
 
-            // var fileout2 = this.byId("FileOut2");
+            // var FileOutCompare = this.byId("FileOutCompare");
 
-            // fileout1
+            // FileOutBase
 
             let diff= '1 column added, 1 row changed, 2 rows added, 1 row removed 1 column added surname 1 row changed id: 1 age: "4" => "5"Unchanged:name: "Cleo" 2 rows addedid: 3name: Baileyage: 1surname: king id: 5 name: Stacks age: 12 surname: just 1 row removed id: 2 name: Pancakes age: 2';
             let csv = oCSVModelCompare2.toString();
@@ -165,13 +181,12 @@ sap.ui.define([
              },
 
             
-            onUpload: function(e) {
-               var oCSVModel1 = this.getOwnerComponent().getModel("CSVModel1");
-               this.getView().setModel(oCSVModel1, "CSVModel1");
-               var fU = this.getView().byId("idfileUploader");
+            onUploadBase: function(e) {
+               var oCSVModelBase = this.getOwnerComponent().getModel("CSVModelBase");
+               this.getView().setModel(oCSVModelBase, "CSVModelBase");
+               var fU = this.getView().byId("FileUploaderBase");
                var domRef = fU.getFocusDomRef();
                var file = fU.oFileUpload.files[0]; 
-               
                var reader = new FileReader();
                var params = "";
                var that = this;
@@ -183,7 +198,6 @@ sap.ui.define([
                   var noOfCols = r;
                   var headerRow = arrCSV.splice(0, noOfCols);
                   var data = [];
-                 
                   while (arrCSV.length > 0) {
                     var obj = {};
                     var row = arrCSV.splice(0, noOfCols);
@@ -194,38 +208,34 @@ sap.ui.define([
                   }
                   var Len = data.length;
                   data.reverse();
-               
                   for (var j = 0; j < Len; j++) {
                     params += JSON.stringify(data.pop()) + ", ";
                   }
                   params = params.substring(0, params.length - 2);
-          
-                  var jsoncsv1 = new JSONModel();
-                  jsoncsv1.setData({CSV1Json:params});
-                  that.getView().byId("FileOut1").setText(params); 
-                  that.getOwnerComponent().setModel(jsoncsv1,"CSVModel1");
-                  that.getView().setModel(jsoncsv1,"CSVModel1");
+                  var jsoncsvbase = new JSONModel();
+                  jsoncsvbase.setData({CSVBaseJson:params});
+                  that.getView().byId("FileOutBase").setText(params); 
+                  that.getOwnerComponent().setModel(jsoncsvbase,"CSVModelBase");
+                  that.getView().setModel(jsoncsvbase,"CSVModelBase");
                   });
-
-
                };
                reader.readAsBinaryString(file);
              },
-             onUpload2: function(e) {
-               var oCSVModel2 = this.getOwnerComponent().getModel("CSVModel2");
-               this.getView().setModel(oCSVModel2, "CSVModel2");
-               var fU = this.getView().byId("idfileUploader2");
-               var domRef = fU.getFocusDomRef();
-               var file = fU.oFileUpload.files[0]; 
-               var reader = new FileReader();
-               var params = "";
-               var that = this;
-        
-               reader.onload = function(oEvent) {
-                 var strCSV = oEvent.target.result;
-                 var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                 //var noOfCols = 4;
-                 var noOfCols = strCSV.length;
+             onUploadCompare: function(e) {
+              var oCSVModelCompare = this.getOwnerComponent().getModel("CSVModelCompare");
+              this.getView().setModel(oCSVModelCompare, "CSVModelCompare");
+              var fU = this.getView().byId("FileUploaderCompare");
+              var domRef = fU.getFocusDomRef();
+              var file = fU.oFileUpload.files[0]; 
+              var reader = new FileReader();
+              var params = "";
+              var that = this;
+              reader.onload = function(oEvent) {
+                var strCSV = oEvent.target.result;
+                var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+                var lines = strCSV.split('\n');
+                that.checkFunc(fU.oFileUpload).then(function(r){
+                 var noOfCols = r;
                  var headerRow = arrCSV.splice(0, noOfCols);
                  var data = [];
                  while (arrCSV.length > 0) {
@@ -238,22 +248,22 @@ sap.ui.define([
                  }
                  var Len = data.length;
                  data.reverse();
-           
                  for (var j = 0; j < Len; j++) {
                    params += JSON.stringify(data.pop()) + ", ";
                  }
                  params = params.substring(0, params.length - 2);
-                
-                 var jsoncsv2 = new JSONModel();
-                 //jsoncsv2.setJSON(params);
-                 jsoncsv2.setData({CSV2JSON: params});
-                 that.getOwnerComponent().setModel(jsoncsv2,"CSVModel2");
-                 that.getView().setModel(jsoncsv2,"CSVModel2");
-                 that.getView().byId("FileOut2").setText(params); 
-                // MessageToast.show(params);
-               };
-               reader.readAsBinaryString(file);
-             },
+                 var jsoncsvcompare = new JSONModel();
+                 jsoncsvcompare.setData({CSVCompareJson:params});
+                 that.getView().byId("FileOutCompare").setText(params); 
+                 that.getOwnerComponent().setModel(jsoncsvcompare,"CSVModelCompare");
+                 that.getView().setModel(jsoncsvcompare,"CSVModelCompare");
+                 });
+              };
+              reader.readAsBinaryString(file);
+            },
+
+
+
             handleUploadPress1: function(oEvent) {
 
 
@@ -338,6 +348,24 @@ sap.ui.define([
             },
             handleFileNameLength: function(oEvent) {
               MessageToast.show("The file name should be less than that.");
+            },
+            exportDiff: function (fileObject) {
+              var blob = (fileObject.blob ? fileObject.blob : new Blob([fileObject.data], { type: fileObject.mime }));
+              if (navigator.msSaveBlob) { // IE 10+
+                navigator.msSaveBlob(blob, fileObject.filename);
+              } else {
+                var link = document.createElement("a");
+                if (link.download !== undefined) { // feature detection
+                  // Browsers that support HTML5 download attribute
+                  var url = URL.createObjectURL(blob);
+                  link.setAttribute("href", url);
+                  link.setAttribute("download", fileObject.filename);
+                  link.style.visibility = 'hidden';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }
+              }
             },
             readFile: function(input){
               let file = input.files[0];
