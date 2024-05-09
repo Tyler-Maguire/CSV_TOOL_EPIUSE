@@ -168,7 +168,8 @@ sap.ui.define([
                var fU = this.getView().byId("idfileUploader");
                var domRef = fU.getFocusDomRef();
                var file = fU.oFileUpload.files[0]; 
-               var LineSize = this.checkFunc(fU.oFileUpload);
+               
+
 
                
 
@@ -179,31 +180,35 @@ sap.ui.define([
                  var strCSV = oEvent.target.result;
                  var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
                  var lines = strCSV.split('\n');
-                 var noOfCols = LineSize;
-                 var headerRow = arrCSV.splice(0, noOfCols);
-                 var data = [];
-                
-                 while (arrCSV.length > 0) {
-                   var obj = {};
-                   var row = arrCSV.splice(0, noOfCols);
-                   for (var i = 0; i < row.length; i++) {
-                     obj[headerRow[i]] = row[i].trim();
-                   }
-                   data.push(obj);
-                 }
-                 var Len = data.length;
-                 data.reverse();
-              
-                 for (var j = 0; j < Len; j++) {
-                   params += JSON.stringify(data.pop()) + ", ";
-                 }
-                 params = params.substring(0, params.length - 2);
-         
-                 var jsoncsv1 = new JSONModel();
-                 jsoncsv1.setData({CSV1Json:params});
-                 that.getView().byId("FileOut1").setText(params); 
-                 that.getOwnerComponent().setModel(jsoncsv1,"CSVModel1");
-                 that.getView().setModel(jsoncsv1,"CSVModel1");            
+                 var LineSize = that.checkFunc(fU.oFileUpload).then(function(r){
+                  var noOfCols = LineSize;
+                  var headerRow = arrCSV.splice(0, noOfCols);
+                  var data = [];
+                 
+                  while (arrCSV.length > 0) {
+                    var obj = {};
+                    var row = arrCSV.splice(0, noOfCols);
+                    for (var i = 0; i < row.length; i++) {
+                      obj[headerRow[i]] = row[i].trim();
+                    }
+                    data.push(obj);
+                  }
+                  var Len = data.length;
+                  data.reverse();
+               
+                  for (var j = 0; j < Len; j++) {
+                    params += JSON.stringify(data.pop()) + ", ";
+                  }
+                  params = params.substring(0, params.length - 2);
+          
+                  var jsoncsv1 = new JSONModel();
+                  jsoncsv1.setData({CSV1Json:params});
+                  that.getView().byId("FileOut1").setText(params); 
+                  that.getOwnerComponent().setModel(jsoncsv1,"CSVModel1");
+                  that.getView().setModel(jsoncsv1,"CSVModel1");
+                  });
+
+
                };
                reader.readAsBinaryString(file);
              },
