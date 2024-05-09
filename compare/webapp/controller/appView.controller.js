@@ -168,7 +168,10 @@ sap.ui.define([
                var fU = this.getView().byId("idfileUploader");
                var domRef = fU.getFocusDomRef();
                var file = fU.oFileUpload.files[0]; 
-               var LineSize = this.checkFunc(file);
+               var LineSize = this.checkFunc(fU.oFileUpload);
+
+               
+
                var reader = new FileReader();
                var params = "";
                var that = this;
