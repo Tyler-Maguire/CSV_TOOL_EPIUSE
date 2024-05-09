@@ -134,6 +134,32 @@ sap.ui.define([
             
             },
 
+             checkFunc: async function() {
+    
+              if (inputFile.files.length) {
+                try {
+                  var csvFileInText = await inputFile.files[0].text();
+                  console.log(csvFileInText);
+                                 
+                  var arrObje = [];
+                  var lines = csvFileInText.split('\n');
+                  var lineA = lines[0].split(',');
+      
+                  let linesize = lineA.length;
+      
+                  if (linesize == 3){
+                    alert("File uploaded successfully.");
+                  }
+                  else{
+                    alert("File was not uploaded. Please check the instructions.");
+                  }       
+      
+                } catch (e) {
+                  console.error(e);
+                }
+              }
+            },
+
             
             onUpload: function(e) {
                var oCSVModel1 = this.getOwnerComponent().getModel("CSVModel1");
@@ -147,6 +173,7 @@ sap.ui.define([
                reader.onload = function(oEvent) {
                  var strCSV = oEvent.target.result;
                  var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+                 var lines = strCSV.split('\n');
                  var noOfCols = 4;
                  var headerRow = arrCSV.splice(0, noOfCols);
                  var data = [];
@@ -184,10 +211,12 @@ sap.ui.define([
                var reader = new FileReader();
                var params = "";
                var that = this;
+        
                reader.onload = function(oEvent) {
                  var strCSV = oEvent.target.result;
                  var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                 var noOfCols = 4;
+                 //var noOfCols = 4;
+                 var noOfCols = strCSV.length;
                  var headerRow = arrCSV.splice(0, noOfCols);
                  var data = [];
                  while (arrCSV.length > 0) {

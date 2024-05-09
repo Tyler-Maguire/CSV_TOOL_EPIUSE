@@ -15,11 +15,7 @@
 		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
 		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
      	<Button text="Upload your second CSV file." press="onUpload2" />
-
-		<html:input type="file" onchange="readFile"/>
-
 		</VBox>
-
 	<VBox id="verticleLayKey" alignItems="Center">
 	
 	<Text id="FileOut1" text="{/CSV1Json}" wrapping="true" width="700px"/>
