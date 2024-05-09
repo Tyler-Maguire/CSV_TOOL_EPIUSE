@@ -180,8 +180,8 @@ sap.ui.define([
                  var strCSV = oEvent.target.result;
                  var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
                  var lines = strCSV.split('\n');
-                 var LineSize = that.checkFunc(fU.oFileUpload).then(function(r){
-                  var noOfCols = LineSize;
+                 that.checkFunc(fU.oFileUpload).then(function(r){
+                  var noOfCols = r;
                   var headerRow = arrCSV.splice(0, noOfCols);
                   var data = [];
                  
