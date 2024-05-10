@@ -66,22 +66,22 @@ sap.ui.define([
           return columns;
         },
 
-        CopyToClipboard: function () {
-          var test = this.getView().byId("Fileout").getText();
-          var text_to_copy = sap.ui.getCore().byId("Fileout").getText();
-          if (!navigator.clipboard){
-              // use old commandExec() way
-          } else{
-              navigator.clipboard.writeText(text_to_copy).then(
-                  function(){
-                      alert("yeah!"); // success 
-                  })
-                .catch(
-                   function() {
-                      alert("err"); // error
-                });
-          } 
-        },
+        // CopyToClipboard: function () {
+        //   var text_to_copy = this.getView().byId("Fileout").getText();
+      
+        //   if (!navigator.clipboard){
+        //       // use old commandExec() way
+        //   } else{
+        //       navigator.clipboard.writeText(text_to_copy).then(
+        //           function(){
+        //               alert("yeah!"); // success 
+        //           })
+        //         .catch(
+        //            function() {
+        //               alert("err"); // error
+        //         });
+        //   } 
+        // },
 
           onCompare: function(oEvent) {
 
