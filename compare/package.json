@@ -17,7 +17,8 @@
         "ui5-task-zipper": "^0.5.0"
     },
     "scripts": {
-        "compareformatted": "csv-diff username.csv password.csv --key=id --json",
+        "compareformatted": "csv-diff username.csv newpassword.csv --key=id --json",
+        "compareSteyn": "csv-diff username.csv newpassword.csv --key=id --show-unchanged",
         "compareunformatted": "csv-diff username.csv password.csv --key=id --show-unchanged",
         "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#comepiusecompare-display\"",
         "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#comepiusecompare-display\"",
