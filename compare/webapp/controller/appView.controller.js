@@ -537,7 +537,25 @@ sap.ui.define([
         sel.removeAllRanges();
         document.body.removeChild(b)
     },
-      
+
+    showTable :function() {
+
+    var myTable= "<table><tr><td style='width: 100px; color: red;'>Col Head 1</td>";
+    myTable+= "<td style='width: 100px; color: red; text-align: right;'>Col Head 2</td>";
+    myTable+="<td style='width: 100px; color: red; text-align: right;'>Col Head 3</td></tr>";
+
+    myTable+="<tr><td style='width: 100px;                   '>---------------</td>";
+    myTable+="<td     style='width: 100px; text-align: right;'>---------------</td>";
+    myTable+="<td     style='width: 100px; text-align: right;'>---------------</td></tr>";
+
+    myTable+="</table>";
+
+    document.write( myTable);
+
+    document.getElementById('tablePrint').innerHTML = myTable;
+
+
+    },
       showDiff: function (delimit) {
 
       //  var resultContainer = this.getView().byId("result-diff");
@@ -577,13 +595,13 @@ sap.ui.define([
           //services.billboard.emptyAndHide(["editor-error1", "editor-valid1"]);
          // for (services.billboard.emptyAndHide(["editor-error2", "editor-valid2"]); resultContainer.firstChild; )
           //    resultContainer.removeChild(resultContainer.firstChild);
-         // for (var p = a(), l = 0; l <= result.maxColumn; l++) {
-         //     var g = document.createElement("div");
-         //     g.classList.add("diff-col");
-         //     g.classList.add("diff-col-field");
-         //     0 < l && g.appendChild(document.createTextNode("Field " + l));
-         //     p.appendChild(g)
-          //}
+         for (var p = a(), l = 0; l <= result.maxColumn; l++) {
+             var g = document.createElement("div");
+             g.classList.add("diff-col");
+             g.classList.add("diff-col-field");
+             0 < l && g.appendChild(document.createTextNode("Field " + l));
+             p.appendChild(g)
+          }
           result.csv.forEach(function(e, g) {
               if ("diff" != b || e.diff) {
                   var d = a(g + 1);
@@ -595,11 +613,11 @@ sap.ui.define([
                   for (e = e.columns.length + 1; e <= result.maxColumn; e++)
                       c(d, ""),
                       result.maxColumn != e + 1 && (result.text += f);
-                  result.csv.length != g + 1 && (result.text += "\n")
+                  result.csv.length != g + 1 && (result.text += "")
               }
           });
-          resultContainer.appendChild(document.createElement("br"));
-          resultContainer.appendChild(document.createElement("br"))
+      //    resultContainer.appendChild(document.createElement("br"));
+      //     resultContainer.appendChild(document.createElement("br"));
       }
 
      

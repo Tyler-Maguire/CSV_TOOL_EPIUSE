@@ -28,13 +28,14 @@
 	<!--<html:input type="button" Value="Compare files test" onclick="compare(); showDiff();" />-->
 
 	<Text id="Fileout" text="{/CSVGenDiff}" width="700px" wrapping="true"/>
-
-	<html:div id="result-diff" class="span result-diff" wrapping="true" width="700px">
-	</html:div>
-
 	<Button text="Copy Results to clipboard." press="copyToClipBoard" />
+	
+	<html:div id="tablePrint"> </html:div>
 	</VBox>
 	</HBox>
+	<html:div id="result" class="container-center container-action" style="" width="800px">
+	<html:div id="result-diff" class="span result-diff" wrapping="true" width="800px">
+	</html:div></html:div>
 		
 
 	
