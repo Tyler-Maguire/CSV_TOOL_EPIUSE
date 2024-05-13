@@ -66,22 +66,7 @@ sap.ui.define([
           return columns;
         },
 
-        // CopyToClipboard: function () {
-        //   var text_to_copy = this.getView().byId("Fileout").getText();
-      
-        //   if (!navigator.clipboard){
-        //       // use old commandExec() way
-        //   } else{
-        //       navigator.clipboard.writeText(text_to_copy).then(
-        //           function(){
-        //               alert("yeah!"); // success 
-        //           })
-        //         .catch(
-        //            function() {
-        //               alert("err"); // error
-        //         });
-        //   } 
-        // },
+       
 
           onCompare: function(oEvent) {
 
@@ -91,13 +76,6 @@ sap.ui.define([
 
             var command = "csv-diff username.csv password.csv --key=id --json";
 
-            
-
-            //var fileone = set(oCSVModelCompare1.oData.toString)
-           // var filetwo = set(filetwo)
-
-
-             // split all lines by \n to form an array for both base and secondary files
              const  internLines= oCSVModelCompare1.oData.toString().split('\n');
              const externLines = oCSVModelCompare2.oData.toString().split('\n');
              var externLookup = {};   
@@ -112,17 +90,7 @@ sap.ui.define([
 
               }        
              });                                  
-            //internLines.forEach(function(iLine){
-           // var internCells = iLine.split(';');
-           // if(externLookup[internCells[0]]){ 
-            //fs.appendFileSync('public/md5-data/blacklist.csv', internCells[1] + '\n');
-            //}
-
-            // this.getView().byId("FileOutBase").setBindingContext()
-
-            // var FileOutCompare = this.byId("FileOutCompare");
-
-            // FileOutBase
+          
 
             let diff= '1 column added, 1 row changed, 2 rows added, 1 row removed 1 column added surname 1 row changed id: 1 age: "4" => "5"Unchanged:name: "Cleo" 2 rows addedid: 3name: Baileyage: 1surname: king id: 5 name: Stacks age: 12 surname: just 1 row removed id: 2 name: Pancakes age: 2';
             let csv = oCSVModelCompare2.toString();
@@ -420,155 +388,159 @@ sap.ui.define([
               }
           },
 
-            compare: function () {
-              function a(a) {
-                  for (var e = [], d = a.split(c), h = 0; h < d.length; h++) {
-                      a = !1;
-                      var k = d[h];
-                      k.length && k[0] == f && (2 <= k.length ? k[k.length - 1] !== f ? a = !0 : 2 < k.length && k[k.length - 2] === b && (a = !0) : a = !0);
-                      a && h !== d.length - 1 ? d[h + 1] = k + c + d[h + 1] : e.push(k)
-                  }
-                  return e
-              }
-              var c = separatorSelect.value
-                , f = quoteSelect.value
-                , b = escapeSelect.value
-                , n = myCodeMirrorText1.getValue("\n")
-                , p = myCodeMirrorText2.getValue("\n")
-                , l = n.split(/\r?\n/)
-                , g = p.split(/\r?\n/);
-              result.csv = [];
-              result.text = "";
-              result.maxColumn = 0;
-              result.nbLineDiff = 0;
-              result.nbColumnDiff = 0;
-              l.forEach(function(e, b) {
-                  a(e).length > result.maxColumn && (result.maxColumn = a(e).length)
-              });
-              g.forEach(function(b, c) {
-                  a(b).length > result.maxColumn && (result.maxColumn = a(b).length)
-              });
-              l.forEach(function(b, c) {
-                  var d = {
-                      columns: [],
-                      diff: !1
-                  };
-                  result.csv.push(d);
-                  var h = a(b);
-                  if (g.length > c) {
-                      var e = a(g[c])
-                        , m = 0;
-                      h.forEach(function(a, b) {
-                          e.length > b ? (b = e[b],
-                          a == b ? d.columns.push(a) : (d.columns.push({
-                              data: a + " != " + b,
-                              diff: Compare.DIFF
-                          }),
-                          result.nbColumnDiff++,
-                          m = 1)) : (d.columns.push({
-                              data: a,
-                              diff: Compare.ONLY1
-                          }),
-                          result.nbColumnDiff++,
-                          m = 1)
-                      });
-                      e.forEach(function(a, b) {
-                          b >= h.length && (d.columns.push({
-                              data: a,
-                              diff: Compare.ONLY2
-                          }),
-                          result.nbColumnDiff++,
-                          m = 1)
-                      });
-                      result.nbLineDiff += m;
-                      0 < m && (d.diff = !0)
-                  } else
-                      h.forEach(function(a, b) {
-                          d.columns.push({
-                              data: a,
-                              diff: Compare.ONLY1
-                          });
-                          result.nbColumnDiff++
-                      }),
-                      result.nbLineDiff += 1,
-                      d.diff = !0
-              });
-              g.forEach(function(b, c) {
-                  if (c >= l.length) {
-                      var d = {
-                          columns: [],
-                          diff: !0
-                      };
-                      result.csv.push(d);
-                      result.nbLineDiff += 1;
-                      a(b).forEach(function(a, b) {
-                          d.columns.push({
-                              data: a,
-                              diff: Compare.ONLY2
-                          });
-                          result.nbColumnDiff++
-                      })
-                  }
-              });
-              return result
-          },
-          showDiff: function () {
-              function a(a) {
-                  var b = document.createElement("div");
-                  resultContainer.appendChild(b);
-                  b.classList.add("csv-diff-line");
-                  if (a) {
-                      var d = document.createElement("div");
-                      d.classList.add("csv-diff-column");
-                      d.classList.add("csv-diff-column-row");
-                      d.appendChild(document.createTextNode("Row " + a));
-                      b.appendChild(d)
-                  }
-                  return b
-              }
-              function c(a, b, d) {
-                  d = void 0 === d ? null : d;
-                  var c = document.createElement("div");
-                  a.appendChild(c);
-                  c.classList.add("csv-diff-column");
-                  d === Compare.ONLY1 ? c.classList.add("csv-diff-column-only-column1") : d === Compare.ONLY2 ? c.classList.add("csv-diff-column-only-column2") : d === Compare.DIFF && c.classList.add("csv-diff-column-different");
-                  c.appendChild(document.createTextNode(null === b ? "" : b));
-                  result.text += null === b ? "" : b;
-                  return a
-              }
-              var f = separatorSelect.value
-                , b = compareSelect.value
-                , n = compareLineSelect.checked;
-              document.getElementById("result").style.display = "";
-              window.location.href = "#result";
-              result.text = "";
-              services.billboard.emptyAndHide(["editor-error1", "editor-valid1"]);
-              for (services.billboard.emptyAndHide(["editor-error2", "editor-valid2"]); resultContainer.firstChild; )
-                  resultContainer.removeChild(resultContainer.firstChild);
-              for (var p = a(), l = 0; l <= result.maxColumn; l++) {
-                  var g = document.createElement("div");
-                  g.classList.add("csv-diff-column");
-                  g.classList.add("csv-diff-column-field");
-                  0 < l && g.appendChild(document.createTextNode("Field " + l));
-                  p.appendChild(g)
-              }
-              result.csv.forEach(function(e, g) {
-                  if ("diff" != b || e.diff) {
-                      var d = a(g + 1);
-                      "diff" == b && n && (result.text += (g + 1).toString() + f);
-                      e.columns.forEach(function(a, b) {
-                          "string" == typeof a ? c(d, a) : c(d, a.data, a.diff);
-                          result.maxColumn != b + 1 && (result.text += f)
-                      });
-                      for (e = e.columns.length + 1; e <= result.maxColumn; e++)
-                          c(d, ""),
-                          result.maxColumn != e + 1 && (result.text += f);
-                      result.csv.length != g + 1 && (result.text += "\n")
-                  }
-              });
-              resultContainer.appendChild(document.createElement("br"));
-              resultContainer.appendChild(document.createElement("br"))
-          }
+         
+          dynamicCSVcompare: function(json1,json2,delimit,nocol1,nocol2,){
+            function a(a) {
+                for (var e = [], d = a.split(c), h = 0; h < d.length; h++) {
+                    a = !1;
+                    var k = d[h];
+                    k.length && k[0] == f && (2 <= k.length ? k[k.length - 1] !== f ? a = !0 : 2 < k.length && k[k.length - 2] === b && (a = !0) : a = !0);
+                    a && h !== d.length - 1 ? d[h + 1] = k + c + d[h + 1] : e.push(k)
+                }
+                return e
+            }
+            var c = separatorSelect.value
+              , f = quoteSelect.value
+              , b = escapeSelect.value
+              , n = myCodeMirrorText1.getValue("\n")
+              , p = myCodeMirrorText2.getValue("\n")
+              , l = n.split(/\r?\n/)
+              , g = p.split(/\r?\n/);
+            result.csv = [];
+            result.text = "";
+            result.maxColumn = 0;
+            result.nbLineDiff = 0;
+            result.nbColumnDiff = 0;
+            l.forEach(function(e, b) {
+                a(e).length > result.maxColumn && (result.maxColumn = a(e).length)
+            });
+            g.forEach(function(b, c) {
+                a(b).length > result.maxColumn && (result.maxColumn = a(b).length)
+            });
+            l.forEach(function(b, c) {
+                var d = {
+                    columns: [],
+                    diff: !1
+                };
+                result.csv.push(d);
+                var h = a(b);
+                if (g.length > c) {
+                    var e = a(g[c])
+                      , m = 0;
+                    h.forEach(function(a, b) {
+                        e.length > b ? (b = e[b],
+                        a == b ? d.columns.push(a) : (d.columns.push({
+                            data: a + " != " + b,
+                            diff: Compare.DIFF
+                        }),
+                        result.nbColumnDiff++,
+                        m = 1)) : (d.columns.push({
+                            data: a,
+                            diff: Compare.ONLY1
+                        }),
+                        result.nbColumnDiff++,
+                        m = 1)
+                    });
+                    e.forEach(function(a, b) {
+                        b >= h.length && (d.columns.push({
+                            data: a,
+                            diff: Compare.ONLY2
+                        }),
+                        result.nbColumnDiff++,
+                        m = 1)
+                    });
+                    result.nbLineDiff += m;
+                    0 < m && (d.diff = !0)
+                } else
+                    h.forEach(function(a, b) {
+                        d.columns.push({
+                            data: a,
+                            diff: Compare.ONLY1
+                        });
+                        result.nbColumnDiff++
+                    }),
+                    result.nbLineDiff += 1,
+                    d.diff = !0
+            });
+            g.forEach(function(b, c) {
+                if (c >= l.length) {
+                    var d = {
+                        columns: [],
+                        diff: !0
+                    };
+                    result.csv.push(d);
+                    result.nbLineDiff += 1;
+                    a(b).forEach(function(a, b) {
+                        d.columns.push({
+                            data: a,
+                            diff: Compare.ONLY2
+                        });
+                        result.nbColumnDiff++
+                    })
+                }
+            });
+            return result;   
+        },
 
-        });
+          showDiff: function () {
+            function a(a) {
+                var b = document.createElement("div");
+                resultContainer.appendChild(b);
+                b.classList.add("csv-diff-line");
+                if (a) {
+                    var d = document.createElement("div");
+                    d.classList.add("csv-diff-column");
+                    d.classList.add("csv-diff-column-row");
+                    d.appendChild(document.createTextNode("Row " + a));
+                    b.appendChild(d)
+                }
+                return b
+            }
+            function c(a, b, d) {
+                d = void 0 === d ? null : d;
+                var c = document.createElement("div");
+                a.appendChild(c);
+                c.classList.add("csv-diff-column");
+                d === Compare.ONLY1 ? c.classList.add("csv-diff-column-only-column1") : d === Compare.ONLY2 ? c.classList.add("csv-diff-column-only-column2") : d === Compare.DIFF && c.classList.add("csv-diff-column-different");
+                c.appendChild(document.createTextNode(null === b ? "" : b));
+                result.text += null === b ? "" : b;
+                return a
+            }
+            var f = separatorSelect.value
+              , b = compareSelect.value
+              , n = compareLineSelect.checked;
+            document.getElementById("result").style.display = "";
+            window.location.href = "#result";
+            result.text = "";
+            services.billboard.emptyAndHide(["editor-error1", "editor-valid1"]);
+            for (services.billboard.emptyAndHide(["editor-error2", "editor-valid2"]); resultContainer.firstChild; )
+                resultContainer.removeChild(resultContainer.firstChild);
+            for (var p = a(), l = 0; l <= result.maxColumn; l++) {
+                var g = document.createElement("div");
+                g.classList.add("csv-diff-column");
+                g.classList.add("csv-diff-column-field");
+                0 < l && g.appendChild(document.createTextNode("Field " + l));
+                p.appendChild(g)
+            }
+            result.csv.forEach(function(e, g) {
+                if ("diff" != b || e.diff) {
+                    var d = a(g + 1);
+                    "diff" == b && n && (result.text += (g + 1).toString() + f);
+                    e.columns.forEach(function(a, b) {
+                        "string" == typeof a ? c(d, a) : c(d, a.data, a.diff);
+                        result.maxColumn != b + 1 && (result.text += f)
+                    });
+                    for (e = e.columns.length + 1; e <= result.maxColumn; e++)
+                        c(d, ""),
+                        result.maxColumn != e + 1 && (result.text += f);
+                    result.csv.length != g + 1 && (result.text += "\n")
+                }
+            });
+            resultContainer.appendChild(document.createElement("br"));
+            resultContainer.appendChild(document.createElement("br"))
+        }
+
+     
     });
+
+  });

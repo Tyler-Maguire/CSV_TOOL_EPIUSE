@@ -25,7 +25,11 @@
 	<Text id="FileOutCompare" text="{/CSVCompareJson}" wrapping="true" width="700px"/>
 	<Input id="RowSelection" textFormatMode="Value" placeholder="Enter CSV Keys for Comparison." width="500px"/>
 	<Button text="Compare uploaded CSV files." press="onCompare" />
+	
 	<Text id="Fileout" text="{/CSVGenDiff}" width="700px" wrapping="true"/>
+
+	<html:div id="result-csv-diff" class="span result-csv-diff">
+	</html:div>
 
 	<Button text="Copy Results to clipboard." press="CopyToClipboard" />
 	</VBox>
