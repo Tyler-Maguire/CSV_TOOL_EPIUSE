@@ -32,7 +32,7 @@
 	<html:div id="result-diff" class="span result-diff" wrapping="true" width="700px">
 	</html:div>
 
-	<Button text="Copy Results to clipboard." press="CopyToClipboard" />
+	<Button text="Copy Results to clipboard." press="copyToClipBoard" />
 	</VBox>
 	</HBox>
 		

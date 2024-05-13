@@ -522,6 +522,22 @@ sap.ui.define([
           return result;
           
       },
+
+      copyToClipBoard :function() {
+        var a = result.text;
+        var b = document.createElement("textarea");
+        b.textContent = a;
+        document.body.appendChild(b);
+        let sel = document.getSelection();
+        var c = document.createRange();
+        c.selectNode(b);
+        sel.removeAllRanges();
+        sel.addRange(c);
+        document.execCommand("copy");
+        sel.removeAllRanges();
+        document.body.removeChild(b)
+    },
+      
       showDiff: function (delimit) {
 
       //  var resultContainer = this.getView().byId("result-diff");
