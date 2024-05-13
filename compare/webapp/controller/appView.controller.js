@@ -70,8 +70,8 @@ sap.ui.define([
 
           onCompare: function(oEvent) {
 
-            var oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModel1");
-            var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModel2");
+            var oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModelBase");
+            var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModelCompare");
             var pathForOutputFileName = './difference.csv';
 
             var command = "csv-diff username.csv password.csv --key=id --json";
@@ -81,46 +81,40 @@ sap.ui.define([
 
 
 
-            this.dynamicCSVcompare(oCSVModelCompare1.oData.toString(),oCSVModelCompare2.oData.toString(),delimit_1,delimit_2)
+            this.dynamicCSVcompare(oCSVModelCompare1.oData.CSVBaseJson.toString(),oCSVModelCompare2.oData.CSVCompareJson.toString(),delimit_1,delimit_2);
 
+            //  var externLookup = {};   
+            //  var internCells;
+            //  externLines.forEach(function (eLine){  
+            //  externLookup[eLine] = true;         
+            // });   
+            // internLines.forEach(function (iLine){  
+            //   externLookup[iLine] = true;
+            //   internCells = iLine.split(';');
+            //   if(externLookup[internCells[0]]){
 
-
-
-
-
-
-             var externLookup = {};   
-             var internCells;
-             externLines.forEach(function (eLine){  
-             externLookup[eLine] = true;         
-            });   
-            internLines.forEach(function (iLine){  
-              externLookup[iLine] = true;
-              internCells = iLine.split(';');
-              if(externLookup[internCells[0]]){
-
-              }        
-             });                                  
+            //   }        
+            //  });                                  
           
 
-            let diff= '1 column added, 1 row changed, 2 rows added, 1 row removed 1 column added surname 1 row changed id: 1 age: "4" => "5"Unchanged:name: "Cleo" 2 rows addedid: 3name: Baileyage: 1surname: king id: 5 name: Stacks age: 12 surname: just 1 row removed id: 2 name: Pancakes age: 2';
-            let csv = oCSVModelCompare2.toString();
-            this.getView().byId("Fileout").setText(diff); 
-            let header = ["Username","Iaedasdasntifier","One-time password","Recovery code","First name","Last name","Department","Location"];
-            function parseCsv(str) {
-              let split = str.split("\n");
-              split.shift();
-              let res = [];
+           // let diff= '1 column added, 1 row changed, 2 rows added, 1 row removed 1 column added surname 1 row changed id: 1 age: "4" => "5"Unchanged:name: "Cleo" 2 rows addedid: 3name: Baileyage: 1surname: king id: 5 name: Stacks age: 12 surname: just 1 row removed id: 2 name: Pancakes age: 2';
+            // let csv = oCSVModelCompare2.toString();
+            // this.getView().byId("Fileout").setText(diff); 
+            // let header = ["Username","Iaedasdasntifier","One-time password","Recovery code","First name","Last name","Department","Location"];
+            // function parseCsv(str) {
+            //   let split = str.split("\n");
+            //   split.shift();
+            //   let res = [];
 
-              split.forEach((line) => {
-                let o = {};
-                line.split(',').forEach((el, i) => {
-                  o[header[i]] = el;
-                })
-                res.push(o);
-              });
-              return res;
-            }
+            //   split.forEach((line) => {
+            //     let o = {};
+            //     line.split(',').forEach((el, i) => {
+            //       o[header[i]] = el;
+            //     })
+            //     res.push(o);
+            //   });
+            //   return res;
+            // }
             
 
            // console.log(parseCsv(csv));
@@ -226,7 +220,7 @@ sap.ui.define([
                   }
                   params = params.substring(0, params.length - 2);
                   var jsoncsvbase = new JSONModel();
-                  jsoncsvbase.setData({CSVBaseJson:params});
+                  jsoncsvbase.setData({CSVBaseJson:strCSV});
                   that.getView().byId("FileOutBase").setText(params); 
                   that.getOwnerComponent().setModel(jsoncsvbase,"CSVModelBase");
                   that.getView().setModel(jsoncsvbase,"CSVModelBase");
@@ -266,7 +260,7 @@ sap.ui.define([
                  }
                  params = params.substring(0, params.length - 2);
                  var jsoncsvcompare = new JSONModel();
-                 jsoncsvcompare.setData({CSVCompareJson:params});
+                 jsoncsvcompare.setData({CSVCompareJson:strCSV});
                  that.getView().byId("FileOutCompare").setText(params); 
                  that.getOwnerComponent().setModel(jsoncsvcompare,"CSVModelCompare");
                  that.getView().setModel(jsoncsvcompare,"CSVModelCompare");
@@ -524,8 +518,9 @@ sap.ui.define([
                   })
               }
           });
+          this.showDiff(delimit_1);
           return result;
-          this.showDiff(delimit);
+          
       },
       showDiff: function (delimit) {
 
