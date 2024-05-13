@@ -554,16 +554,16 @@ sap.ui.define([
             //'diff' 'all'
             , n = true;
             //false true
-          document.getElementById("result").style.display = "";
-          window.location.href = "#result";
+          //document.getElementById("result").style.display = "";
+         // window.location.href = "#result";
           result.text = "";
-          services.billboard.emptyAndHide(["editor-error1", "editor-valid1"]);
-          for (services.billboard.emptyAndHide(["editor-error2", "editor-valid2"]); resultContainer.firstChild; )
-              resultContainer.removeChild(resultContainer.firstChild);
+          //services.billboard.emptyAndHide(["editor-error1", "editor-valid1"]);
+         // for (services.billboard.emptyAndHide(["editor-error2", "editor-valid2"]); resultContainer.firstChild; )
+          //    resultContainer.removeChild(resultContainer.firstChild);
           for (var p = a(), l = 0; l <= result.maxColumn; l++) {
               var g = document.createElement("div");
-              g.classList.add("csv-diff-column");
-              g.classList.add("csv-diff-column-field");
+              g.classList.add("diff-col");
+              g.classList.add("diff-col-field");
               0 < l && g.appendChild(document.createTextNode("Field " + l));
               p.appendChild(g)
           }
