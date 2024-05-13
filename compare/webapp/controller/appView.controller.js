@@ -524,8 +524,8 @@ sap.ui.define([
       },
       showDiff: function (delimit) {
 
-        var resultContainer = this.getView().byId("result-diff");
-        var resCon = document.getElementById('result-diff');
+      //  var resultContainer = this.getView().byId("result-diff");
+        var resultContainer = document.getElementsByClassName('result-diff')[0];
 
           function a(a) {
               var b = document.createElement("div");
