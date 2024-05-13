@@ -551,7 +551,7 @@ sap.ui.define([
               return a
           }
           var f = delimit
-            , b = 'diff'
+            , b = 'all'
             //'diff' 'all'
             , n = true;
             //false true
@@ -561,13 +561,13 @@ sap.ui.define([
           //services.billboard.emptyAndHide(["editor-error1", "editor-valid1"]);
          // for (services.billboard.emptyAndHide(["editor-error2", "editor-valid2"]); resultContainer.firstChild; )
           //    resultContainer.removeChild(resultContainer.firstChild);
-          for (var p = a(), l = 0; l <= result.maxColumn; l++) {
-              var g = document.createElement("div");
-              g.classList.add("diff-col");
-              g.classList.add("diff-col-field");
-              0 < l && g.appendChild(document.createTextNode("Field " + l));
-              p.appendChild(g)
-          }
+         // for (var p = a(), l = 0; l <= result.maxColumn; l++) {
+         //     var g = document.createElement("div");
+         //     g.classList.add("diff-col");
+         //     g.classList.add("diff-col-field");
+         //     0 < l && g.appendChild(document.createTextNode("Field " + l));
+         //     p.appendChild(g)
+          //}
           result.csv.forEach(function(e, g) {
               if ("diff" != b || e.diff) {
                   var d = a(g + 1);

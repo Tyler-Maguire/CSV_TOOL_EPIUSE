@@ -29,7 +29,7 @@
 
 	<Text id="Fileout" text="{/CSVGenDiff}" width="700px" wrapping="true"/>
 
-	<html:div id="result-diff" class="span result-diff">
+	<html:div id="result-diff" class="span result-diff" wrapping="true" width="700px">
 	</html:div>
 
 	<Button text="Copy Results to clipboard." press="CopyToClipboard" />
