@@ -25,11 +25,11 @@ sap.ui.define([
           nbLineDiff: 0,
           nbColumnDiff: 0
       };
-      var resultContainer = document.getElementById("result-csv-diff")
-        , separatorSelect = document.getElementById("separatorRow")
-        , quoteSelect = document.getElementById("quoteRow")
-        , escapeSelect = document.getElementById("escapeRow")
-        , compareSelect = document.getElementById("line-export")
+      var delimit_1 = '';
+      var delimit_2 = '';
+
+      var compareSelect = 'all'
+        //'all' or 'diff'
         , compareLineSelect = document.getElementById("id-line-export")
         , Compare = {
           ONLY1: 1,
@@ -78,6 +78,17 @@ sap.ui.define([
 
              const  internLines= oCSVModelCompare1.oData.toString().split('\n');
              const externLines = oCSVModelCompare2.oData.toString().split('\n');
+
+
+
+            this.dynamicCSVcompare(oCSVModelCompare1.oData.toString(),oCSVModelCompare2.oData.toString(),delimit_1,delimit_2)
+
+
+
+
+
+
+
              var externLookup = {};   
              var internCells;
              externLines.forEach(function (eLine){  
@@ -132,6 +143,8 @@ sap.ui.define([
 
                   let delimit = this.delimiter(csvFileInText);
 
+                  delimit_1 = delimit;
+
                    var lineA = lines[0].split(delimit);
 
                    let linesize = lineA.length;
@@ -148,6 +161,37 @@ sap.ui.define([
                  }
                }
              },
+             checkFuncCompare: async function (inputFile) {
+
+              if (inputFile.files.length) {
+                try {
+                  var csvFileInText = await inputFile.files[0].text();
+                  console.log(csvFileInText);
+
+                  var arrObje = [];
+                 // var lines = csvFileInText.split('\n');
+                  let lines = csvFileInText.split(/\r?\n/);
+
+                 let delimit = this.delimiter(csvFileInText);
+
+                 delimit_2 = delimit;
+
+                  var lineA = lines[0].split(delimit);
+
+                  let linesize = lineA.length;
+
+                  if (linesize >= 1) {
+                    return linesize;
+                  }
+                  else {
+                    return -1;
+                  }
+
+                } catch (e) {
+                  console.error(e);
+                }
+              }
+            },
 
             
             onUploadBase: function(e) {
@@ -389,7 +433,7 @@ sap.ui.define([
           },
 
          
-          dynamicCSVcompare: function(json1,json2,delimit,nocol1,nocol2,){
+          dynamicCSVcompare: function(json1,json2,delimit_1,delimit_2){
           function a(a) {
               for (var e = [], d = a.split(c), h = 0; h < d.length; h++) {
                   a = !1;
@@ -399,7 +443,8 @@ sap.ui.define([
               }
               return e
           }
-          var c = delimit
+          
+          var c = delimit_1
             , f = ""
             , b = ''
             , n = json1
@@ -479,17 +524,21 @@ sap.ui.define([
                   })
               }
           });
-          return result
+          return result;
+          this.showDiff(delimit);
       },
-      showDiff: function () {
+      showDiff: function (delimit) {
+
+        var resultContainer = this.getView().byId("result-diff");
+
           function a(a) {
               var b = document.createElement("div");
               resultContainer.appendChild(b);
-              b.classList.add("csv-diff-line");
+              b.classList.add("diff-line");
               if (a) {
                   var d = document.createElement("div");
-                  d.classList.add("csv-diff-column");
-                  d.classList.add("csv-diff-column-row");
+                  d.classList.add("diff-col");
+                  d.classList.add("diff-col-row");
                   d.appendChild(document.createTextNode("Row " + a));
                   b.appendChild(d)
               }
@@ -499,15 +548,17 @@ sap.ui.define([
               d = void 0 === d ? null : d;
               var c = document.createElement("div");
               a.appendChild(c);
-              c.classList.add("csv-diff-column");
-              d === Compare.ONLY1 ? c.classList.add("csv-diff-column-only-column1") : d === Compare.ONLY2 ? c.classList.add("csv-diff-column-only-column2") : d === Compare.DIFF && c.classList.add("csv-diff-column-different");
+              c.classList.add("diff-col");
+              d === Compare.ONLY1 ? c.classList.add("column1") : d === Compare.ONLY2 ? c.classList.add("column2") : d === Compare.DIFF && c.classList.add("col-diff");
               c.appendChild(document.createTextNode(null === b ? "" : b));
               result.text += null === b ? "" : b;
               return a
           }
-          var f = separatorSelect.value
-            , b = compareSelect.value
-            , n = compareLineSelect.checked;
+          var f = delimit
+            , b = 'diff'
+            //'diff' 'all'
+            , n = true;
+            //false true
           document.getElementById("result").style.display = "";
           window.location.href = "#result";
           result.text = "";
