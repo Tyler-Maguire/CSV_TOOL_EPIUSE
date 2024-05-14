@@ -177,27 +177,6 @@ sap.ui.define([
             },
 
             reOrderCSV: function(LinesCSV1,LinesCSV2){
-
-             /*  var csvBaseKeys = [];
-             //todo strip {} from Header
-              var csvBaseHeader = '';
-              var csvBaseHeadArr = [];
-              var csvBaseHeadCnt = 0;
-              var csvBaseKeysCnt = 0;
-        
-              var csvCompareKeys = [];
-              //todo strip {} from Header
-              var csvCompareHeader = '';
-              var csvCompHeadArr = [];
-              var csvCompHeadCnt = 0;
-              var csvCompareKeysCnt = 0; 
-              
-              check matching keys1 vs keys2 
-              loop through keys1 confirm in headerline 1
-              loop through keys2 confirm in headerline 2
-              loop through keys1 check in headerline 2
-              loop through keys2 check in headerline 1
-              */
               
               var Body1 = LinesCSV1.shift();
               var Body2 = LinesCSV2.shift();
@@ -206,13 +185,8 @@ sap.ui.define([
               var tempcol = '';
               var newheadcnt1 = 0;
               var newheadcnt2 = 0;
-
-
               if(csvBaseHeader == csvCompareHeader){
               }else{
-
-
-                 
               for(var i=0;i<csvBaseHeadCnt;i++){
                 for(var j=0;j<csvCompHeadCnt;j++){
            
