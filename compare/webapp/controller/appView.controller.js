@@ -6,8 +6,6 @@ sap.ui.define([
      */
     function (Controller,MessageToast,JSONModel) {
         "use strict";
-        var csrfToken;
-        var changedLine = '';
         var resultToDraw = {
           json1: "",
           json2: "",
@@ -16,8 +14,6 @@ sap.ui.define([
           currentLine: 0,
           tab: ""
       };
-      var myCodeMirrorText1 = null;
-      var myCodeMirrorText2 = null;
       var result = {
           csv: [],
           text: "",
@@ -30,7 +26,6 @@ sap.ui.define([
 
       var compareSelect = 'all'
         //'all' or 'diff'
-        , compareLineSelect = document.getElementById("id-line-export")
         , Compare = {
           ONLY1: 1,
           ONLY2: 2,
@@ -39,9 +34,6 @@ sap.ui.define([
    
         return Controller.extend("com.epiuse.compare.controller.appView", {
           onInit() {
-
-            
-
             // set data model on view
             const oData = {
                Key : {
@@ -53,19 +45,13 @@ sap.ui.define([
             var oCSVModel1= this.getOwnerComponent().getModel("CSVModel1");
             const oModel1 = new JSONModel(oCSVModel1);
             this.getView().setModel(oModel1);
-
             var oCSVModel2= this.getOwnerComponent().getModel("CSVModel2");
             const oModel2 = new JSONModel(oCSVModel2);
             this.getView().setModel(oModel2);
-
-            
          },
 
          getAllColumns: function() {
           const columns = [];
-         // Array.from(this.columns.children).forEach(function (column) {
-        //    columns.push(csvGenerator.getColumnFromId(column.dataset.id));
-        //  });
           return columns;
         },
 
@@ -75,52 +61,13 @@ sap.ui.define([
 
             var oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModelBase");
             var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModelCompare");
-            var pathForOutputFileName = './difference.csv';
-
-            var command = "csv-diff username.csv password.csv --key=id --json";
 
              const  internLines= oCSVModelCompare1.oData.toString().split('\n');
              const externLines = oCSVModelCompare2.oData.toString().split('\n');
 
 
-
             this.dynamicCSVcompare(oCSVModelCompare1.oData.CSVBaseJson.toString(),oCSVModelCompare2.oData.CSVCompareJson.toString(),delimit_1,delimit_2);
 
-            //  var externLookup = {};   
-            //  var internCells;
-            //  externLines.forEach(function (eLine){  
-            //  externLookup[eLine] = true;         
-            // });   
-            // internLines.forEach(function (iLine){  
-            //   externLookup[iLine] = true;
-            //   internCells = iLine.split(';');
-            //   if(externLookup[internCells[0]]){
-
-            //   }        
-            //  });                                  
-          
-
-           // let diff= '1 column added, 1 row changed, 2 rows added, 1 row removed 1 column added surname 1 row changed id: 1 age: "4" => "5"Unchanged:name: "Cleo" 2 rows addedid: 3name: Baileyage: 1surname: king id: 5 name: Stacks age: 12 surname: just 1 row removed id: 2 name: Pancakes age: 2';
-            // let csv = oCSVModelCompare2.toString();
-            // this.getView().byId("Fileout").setText(diff); 
-            // let header = ["Username","Iaedasdasntifier","One-time password","Recovery code","First name","Last name","Department","Location"];
-            // function parseCsv(str) {
-            //   let split = str.split("\n");
-            //   split.shift();
-            //   let res = [];
-
-            //   split.forEach((line) => {
-            //     let o = {};
-            //     line.split(',').forEach((el, i) => {
-            //       o[header[i]] = el;
-            //     })
-            //     res.push(o);
-            //   });
-            //   return res;
-            // }
-            
-
-           // console.log(parseCsv(csv));
 
             MessageToast.show(oCSVModelCompare1.toString());
             MessageToast.show(oCSVModelCompare2.toString());
@@ -359,7 +306,7 @@ sap.ui.define([
             handleFileNameLength: function(oEvent) {
               MessageToast.show("The file name should be less than that.");
             },
-            exportDiff: function (fileObject) {
+            exportResultstoFile: function (fileObject) {
               var blob = (fileObject.blob ? fileObject.blob : new Blob([fileObject.data], { type: fileObject.mime }));
               if (navigator.msSaveBlob) { // IE 10+
                 navigator.msSaveBlob(blob, fileObject.filename);
