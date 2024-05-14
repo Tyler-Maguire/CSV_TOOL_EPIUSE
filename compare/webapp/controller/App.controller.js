@@ -7,6 +7,8 @@ sap.ui.define(
   
       return BaseController.extend("com.epiuse.compare.controller.App", {
         onInit: function() {
+
+          sap.ui.getCore().applyTheme('sap_horizon_dark');
           
         }
       });

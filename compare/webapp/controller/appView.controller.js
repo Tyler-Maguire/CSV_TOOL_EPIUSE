@@ -39,6 +39,9 @@ sap.ui.define([
    
         return Controller.extend("com.epiuse.compare.controller.appView", {
           onInit() {
+
+            
+
             // set data model on view
             const oData = {
                Key : {
