@@ -78,18 +78,18 @@ sap.ui.define([
 
             if(keyInput.toString() != ''){
               csvBaseKeys = keyInput.toString().split(','); 
-              csvBaseKeysCnt = csvBaseKeys.count();        
+              csvBaseKeysCnt = csvBaseKeys.length;        
             }
             if(keyInput.toString() != ''){
               csvCompareKeys = rowInput.toString().split(','); 
-              csvCompareKeysCnt =  csvCompareKeys.count();             
+              csvCompareKeysCnt =  csvCompareKeys.length;             
             }
 
             var oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModelBase");
             var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModelCompare");
 
-             const internLines = oCSVModelCompare1.oData.toString().split('\n');
-             const externLines = oCSVModelCompare2.oData.toString().split('\n');
+             const internLines = oCSVModelCompare1.oData.CSVBaseJson.toString().split('\n');
+             const externLines = oCSVModelCompare2.oData.CSVCompareJson.toString().split('\n');
 
              this.reOrderCSV(internLines,externLines);
 
@@ -178,12 +178,14 @@ sap.ui.define([
             reOrderCSV: function(LinesCSV1,LinesCSV2){
 
              /*  var csvBaseKeys = [];
+             //todo strip {} from Header
               var csvBaseHeader = '';
               var csvBaseHeadArr = [];
               var csvBaseHeadCnt = 0;
               var csvBaseKeysCnt = 0;
         
               var csvCompareKeys = [];
+              //todo strip {} from Header
               var csvCompareHeader = '';
               var csvCompHeadArr = [];
               var csvCompHeadCnt = 0;
@@ -195,9 +197,9 @@ sap.ui.define([
               loop through keys1 check in headerline 2
               loop through keys2 check in headerline 1
               */
-
-              var Body1 = LinesCSV1[0].shift();
-              var Body2 = LinesCSV2[0].shift();
+              
+              var Body1 = LinesCSV1.shift();
+              var Body2 = LinesCSV2.shift();
 
               if(csvBaseHeader == csvCompareHeader){
               }else{
