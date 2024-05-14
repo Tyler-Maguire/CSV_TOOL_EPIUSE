@@ -59,6 +59,25 @@ sap.ui.define([
 
           onCompare: function(oEvent) {
 
+            var rowInput = this.getView().byId("RowSelection").getValue();
+            var keyInput = this.getView().byId("KeySelection").getValue();
+
+            var csvBaseKeys = [];
+            var csvCompareKeys = [];
+
+
+            if(keyInput.toString() != ''){
+              csvBaseKeys = keyInput.toString().split(',');          
+            }
+            if(keyInput.toString() != ''){
+              csvCompareKeys = rowInput.toString().split(',');               
+            }
+
+
+
+
+            
+
             var oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModelBase");
             var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModelCompare");
 
