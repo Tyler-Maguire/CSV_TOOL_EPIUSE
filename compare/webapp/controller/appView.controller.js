@@ -14,6 +14,20 @@ sap.ui.define([
           currentLine: 0,
           tab: ""
       };
+
+      
+      var csvBaseKeys = [];
+      var csvBaseHeader = '';
+      var csvBaseHeadArr = [];
+      var csvBaseHeadCnt = 0;
+      var csvBaseKeysCnt = 0;
+
+      var csvCompareKeys = [];
+      var csvCompareHeader = '';
+      var csvCompHeadArr = [];
+      var csvCompHeadCnt = 0;
+      var csvCompareKeysCnt = 0;
+
       var result = {
           csv: [],
           text: "",
@@ -62,27 +76,22 @@ sap.ui.define([
             var rowInput = this.getView().byId("RowSelection").getValue();
             var keyInput = this.getView().byId("KeySelection").getValue();
 
-            var csvBaseKeys = [];
-            var csvCompareKeys = [];
-
-
             if(keyInput.toString() != ''){
-              csvBaseKeys = keyInput.toString().split(',');          
+              csvBaseKeys = keyInput.toString().split(','); 
+              csvBaseKeysCnt = csvBaseKeys.count();        
             }
             if(keyInput.toString() != ''){
-              csvCompareKeys = rowInput.toString().split(',');               
+              csvCompareKeys = rowInput.toString().split(','); 
+              csvCompareKeysCnt =  csvCompareKeys.count();             
             }
-
-
-
-
-            
 
             var oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModelBase");
             var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModelCompare");
 
-             const  internLines= oCSVModelCompare1.oData.toString().split('\n');
+             const internLines = oCSVModelCompare1.oData.toString().split('\n');
              const externLines = oCSVModelCompare2.oData.toString().split('\n');
+
+             this.reOrderCSV(internLines,externLines);
 
 
             this.dynamicCSVcompare(oCSVModelCompare1.oData.CSVBaseJson.toString(),oCSVModelCompare2.oData.CSVCompareJson.toString(),delimit_1,delimit_2);
@@ -110,7 +119,11 @@ sap.ui.define([
 
                    var lineA = lines[0].split(delimit);
 
+                   csvBaseHeader = lines[0];
+                   csvBaseHeadArr = lineA;
+
                    let linesize = lineA.length;
+                   csvBaseHeadCnt = linesize;
 
                    if (linesize >= 1) {
                      return linesize;
@@ -141,7 +154,13 @@ sap.ui.define([
 
                   var lineA = lines[0].split(delimit);
 
+                  csvCompareHeader = lines[0];
+
                   let linesize = lineA.length;
+                  csvCompHeadCnt = linesize;
+                  
+
+                  csvCompHeadArr = lineA;
 
                   if (linesize >= 1) {
                     return linesize;
@@ -156,7 +175,52 @@ sap.ui.define([
               }
             },
 
-            
+            reOrderCSV: function(LinesCSV1,LinesCSV2){
+
+             /*  var csvBaseKeys = [];
+              var csvBaseHeader = '';
+              var csvBaseHeadArr = [];
+              var csvBaseHeadCnt = 0;
+              var csvBaseKeysCnt = 0;
+        
+              var csvCompareKeys = [];
+              var csvCompareHeader = '';
+              var csvCompHeadArr = [];
+              var csvCompHeadCnt = 0;
+              var csvCompareKeysCnt = 0; 
+              
+              check matching keys1 vs keys2 
+              loop through keys1 confirm in headerline 1
+              loop through keys2 confirm in headerline 2
+              loop through keys1 check in headerline 2
+              loop through keys2 check in headerline 1
+              */
+
+              var Body1 = LinesCSV1[0].shift();
+              var Body2 = LinesCSV2[0].shift();
+
+              if(csvBaseHeader == csvCompareHeader){
+              }else{
+              
+              var data = [];
+              var count = csvBaseKeysCnt;
+              while (count > 0) {
+                var obj = {};
+                var keys = csvBaseKeys;
+                for (var i = 0; i < keys.length; i++) {
+                 
+                }
+                data.push(obj);
+                count--;
+              }
+
+
+              
+            }
+
+
+            },
+
             onUploadBase: function(e) {
                var oCSVModelBase = this.getOwnerComponent().getModel("CSVModelBase");
                this.getView().setModel(oCSVModelBase, "CSVModelBase");
@@ -210,7 +274,7 @@ sap.ui.define([
                 var strCSV = oEvent.target.result;
                 var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
                 var lines = strCSV.split('\n');
-                that.checkFunc(fU.oFileUpload).then(function(r){
+                that.checkFuncCompare(fU.oFileUpload).then(function(r){
                  var noOfCols = r;
                  var headerRow = arrCSV.splice(0, noOfCols);
                  var data = [];
