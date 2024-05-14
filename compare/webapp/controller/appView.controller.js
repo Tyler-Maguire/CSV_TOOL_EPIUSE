@@ -202,23 +202,53 @@ sap.ui.define([
               var Body1 = LinesCSV1.shift();
               var Body2 = LinesCSV2.shift();
 
+              var tempheader = '';
+              var tempcol = '';
+              var newheadcnt1 = 0;
+              var newheadcnt2 = 0;
+
+
               if(csvBaseHeader == csvCompareHeader){
               }else{
+
+
+                 
+              for(var i=0;i<csvBaseHeadCnt;i++){
+                for(var j=0;j<csvCompHeadCnt;j++){
+           
+                  if(csvBaseHeadArr[i]==csvCompHeadArr[j]){
+                    
+
+                    tempheader = csvBaseHeadArr[i];
+
+                    csvBaseHeadArr[i] = csvBaseHeadArr[newheadcnt1];
+                    csvBaseHeadArr[newheadcnt1] = tempheader;
+
+                    csvCompHeadArr[j] = csvCompHeadArr[newheadcnt2];
+                    csvCompHeadArr[newheadcnt2] = tempheader;
+
+
+                    //TO-DO Shift Cols at the same index.
+
+                    newheadcnt1++;
+                    newheadcnt2++;
+                  }
+                }
+
+              }
               
-              var data = [];
+              /* var data = [];
               var count = csvBaseKeysCnt;
               while (count > 0) {
                 var obj = {};
                 var keys = csvBaseKeys;
                 for (var i = 0; i < keys.length; i++) {
-
-
-                 
                 }
                 data.push(obj);
                 count--;
-              }
+              } */
 
+              //return...
 
               
             }
