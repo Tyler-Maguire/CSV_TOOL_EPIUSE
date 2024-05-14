@@ -111,6 +111,7 @@ sap.ui.define([
 
                    var arrObje = [];
                   // var lines = csvFileInText.split('\n');
+                  csvFileInText = csvFileInText.replace(/{/g, '').replace(/}/g, '');
                    let lines = csvFileInText.split(/\r?\n/);
 
                   let delimit = this.delimiter(csvFileInText);
@@ -210,6 +211,8 @@ sap.ui.define([
                 var obj = {};
                 var keys = csvBaseKeys;
                 for (var i = 0; i < keys.length; i++) {
+
+
                  
                 }
                 data.push(obj);
