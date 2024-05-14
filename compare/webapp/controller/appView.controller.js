@@ -617,8 +617,9 @@ sap.ui.define([
               }
           });
       //    resultContainer.appendChild(document.createElement("br"));
-      //     resultContainer.appendChild(document.createElement("br"));
+           resultContainer.appendChild(document.createElement("br"));
       }
+      
 
      
     });
