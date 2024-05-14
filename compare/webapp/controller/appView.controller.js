@@ -307,6 +307,8 @@ sap.ui.define([
               MessageToast.show("The file name should be less than that.");
             },
             exportResultstoFile: function (fileObject) {
+              fileObject.data = result.text;
+              fileObject.filename = 'results.csv';
               var blob = (fileObject.blob ? fileObject.blob : new Blob([fileObject.data], { type: fileObject.mime }));
               if (navigator.msSaveBlob) { // IE 10+
                 navigator.msSaveBlob(blob, fileObject.filename);
@@ -323,6 +325,7 @@ sap.ui.define([
                   document.body.removeChild(link);
                 }
               }
+            
             },
             readFile: function(input){
               let file = input.files[0];
