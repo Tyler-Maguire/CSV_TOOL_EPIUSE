@@ -520,6 +520,7 @@ sap.ui.define([
               };
               result.csv.push(d);
               OrderCSV.preCSV.push(colmap);
+              debugger;
 
               var h = a(b);
               if (g.length > c) {
@@ -575,6 +576,7 @@ sap.ui.define([
                   };
                   result.csv.push(d);
                   OrderCSV.preCSV.push(line);
+                  debugger;
                   result.nbLineDiff += 1;
                   a(b).forEach(function(a, b) {
                       d.columns.push({
@@ -591,6 +593,7 @@ sap.ui.define([
               }
           });
           this.showDiff(delimit_1);
+          debugger;
           return result;
           
       },
