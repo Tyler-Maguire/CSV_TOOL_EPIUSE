@@ -200,8 +200,29 @@ sap.ui.define([
 
             csvSplitCol: function(){
 
-
-
+              newCSV1json = '';
+              newCSV2json = '';
+          
+              for(var i = 1; i < Body1[0].length; i++) { 
+                var obj = {}; 
+                for(var j=0; j < Body1.length; j++) { 
+                  obj[Body1[j][0]] = Body1[j][i];  
+                }
+               
+                NewCSV.newCSV1.push(obj);
+              }
+          
+              for(var i = 1; i < Body2[0].length; i++) {
+                  var obj2 = {};
+                  for(var j=0; j < Body2.length; j++) { 
+                    obj2[Body2[j][0]] = Body2[j][i]; 
+                  }
+                
+                  NewCSV.newCSV2.push(obj2);
+          
+                }
+          
+                return NewCSV; 
 
             },
 
@@ -212,6 +233,8 @@ sap.ui.define([
 
               Body1 = LinesCSV1;
               Body2 = LinesCSV2;
+
+              var testcol = this.csvSplitCol();
 
               var tempheader = '';
               var tempcol = '';
