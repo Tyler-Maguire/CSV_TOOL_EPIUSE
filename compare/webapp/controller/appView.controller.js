@@ -35,6 +35,12 @@ sap.ui.define([
           nbLineDiff: 0,
           nbColumnDiff: 0
       };
+
+      var OrderCSV = {
+          preCSV:[],
+          postCSV:[]
+      };
+
       var delimit_1 = '';
       var delimit_2 = '';
 
@@ -490,6 +496,9 @@ sap.ui.define([
             , l = n.split(/\r?\n/)
             , g = p.split(/\r?\n/);
           result.csv = [];
+          OrderCSV.preCSV = [];
+          OrderCSV.postCSV = [];
+    
           result.text = "";
           result.maxColumn = 0;
           result.nbLineDiff = 0;
@@ -505,7 +514,13 @@ sap.ui.define([
                   columns: [],
                   diff: !1
               };
+              var colmap = {
+                columns: [],
+                rows: []
+              };
               result.csv.push(d);
+              OrderCSV.preCSV.push(colmap);
+
               var h = a(b);
               if (g.length > c) {
                   var e = a(g[c])
@@ -533,6 +548,7 @@ sap.ui.define([
                       m = 1)
                   });
                   result.nbLineDiff += m;
+                  debugger;
                   0 < m && (d.diff = !0)
               } else
                   h.forEach(function(a, b) {
@@ -544,6 +560,7 @@ sap.ui.define([
                   }),
                   result.nbLineDiff += 1,
                   d.diff = !0
+                  debugger;
           });
           g.forEach(function(b, c) {
               if (c >= l.length) {
@@ -551,13 +568,24 @@ sap.ui.define([
                       columns: [],
                       diff: !0
                   };
+                  var line = {
+                    columns: [],
+                    col: 0,
+                    row: 0
+                  };
                   result.csv.push(d);
+                  OrderCSV.preCSV.push(line);
                   result.nbLineDiff += 1;
                   a(b).forEach(function(a, b) {
                       d.columns.push({
                           data: a,
                           diff: Compare.ONLY2
                       });
+                      line.columns.push({
+                        data: a,
+                        col: result.nbColumnDiff,
+                        row : result.nbLineDiff
+                    });
                       result.nbColumnDiff++
                   })
               }
@@ -584,14 +612,12 @@ sap.ui.define([
 
     showTable :function() {
 
-    var myTable= "<table><tr><td style='width: 100px; color: red;'>Col Head 1</td>";
-    myTable+= "<td style='width: 100px; color: red; text-align: right;'>Col Head 2</td>";
-    myTable+="<td style='width: 100px; color: red; text-align: right;'>Col Head 3</td></tr>";
-
+    var myTable= "<table><tr><td style='width: 100px; color: red;'>VARR1</td>";
+    myTable+= "<td style='width: 100px; color: red; text-align: right;'>VARR2</td>";
+    myTable+="<td style='width: 100px; color: red; text-align: right;'>VARR3</td></tr>";
     myTable+="<tr><td style='width: 100px;                   '>---------------</td>";
     myTable+="<td     style='width: 100px; text-align: right;'>---------------</td>";
     myTable+="<td     style='width: 100px; text-align: right;'>---------------</td></tr>";
-
     myTable+="</table>";
 
     document.write( myTable);
