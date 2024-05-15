@@ -15,7 +15,8 @@ sap.ui.define([
           tab: ""
       };
 
-      
+      var Body1 = [];
+      var Body2 = []; 
       var csvBaseKeys = [];
       var csvBaseHeader = '';
       var csvBaseHeadArr = [];
@@ -97,9 +98,10 @@ sap.ui.define([
              const internLines = oCSVModelCompare1.oData.CSVBaseJson.toString().split('\n');
              const externLines = oCSVModelCompare2.oData.CSVCompareJson.toString().split('\n');
 
+            this.reOrderCSV(internLines,externLines);
             this.dynamicCSVcompare(oCSVModelCompare1.oData.CSVBaseJson.toString(),oCSVModelCompare2.oData.CSVCompareJson.toString(),delimit_1,delimit_2);
 
-            this.reOrderCSV(internLines,externLines);
+            
             MessageToast.show(oCSVModelCompare1.toString());
             MessageToast.show(oCSVModelCompare2.toString());
             
@@ -180,9 +182,8 @@ sap.ui.define([
             },
 
             reOrderCSV: function(LinesCSV1,LinesCSV2){
-              
-              var Body1 = LinesCSV1.shift();
-              var Body2 = LinesCSV2.shift();
+              Body1 = LinesCSV1.shift();
+              Body2 = LinesCSV2.shift();
 
               var tempheader = '';
               var tempcol = '';
@@ -500,12 +501,18 @@ sap.ui.define([
           result.maxColumn = 0;
           result.nbLineDiff = 0;
           result.nbColumnDiff = 0;
+
+
+          l=Body1;
+          g=Body2;
+
           l.forEach(function(e, b) {
               file(e).length > result.maxColumn && (result.maxColumn = file(e).length)
           });
           g.forEach(function(b, c) {
               file(b).length > result.maxColumn && (result.maxColumn = file(b).length)
           });
+
           l.forEach(function(b, c) {
               var d = {
                   columns: [],
