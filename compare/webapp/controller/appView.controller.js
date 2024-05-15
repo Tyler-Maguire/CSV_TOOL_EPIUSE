@@ -15,8 +15,8 @@ sap.ui.define([
           tab: ""
       };
 
-      var Body1 = [];
-      var Body2 = [];
+      var Body1;
+      var Body2;
       
       var newCSV1 = [];
       var newCSV2 = [];
@@ -202,20 +202,23 @@ sap.ui.define([
 
               newCSV1json = '';
               newCSV2json = '';
+
+              var newsplit1  = Body1.split("\n").map((x) => x.split(","));
+              var newsplit2  = Body2.split("\n").map((x) => x.split(","));
           
-              for(var i = 1; i < Body1[0].length; i++) { 
+              for(var i = 1; i < newsplit1[0].length; i++) { 
                 var obj = {}; 
-                for(var j=0; j < Body1.length; j++) { 
-                  obj[Body1[j][0]] = Body1[j][i];  
+                for(var j=0; j < newsplit1.length; j++) { 
+                  obj[newsplit1[j][0]] = newsplit1[j][i];  
                 }
                
                 NewCSV.newCSV1.push(obj);
               }
           
-              for(var i = 1; i < Body2[0].length; i++) {
+              for(var i = 1; i < newsplit2[0].length; i++) {
                   var obj2 = {};
-                  for(var j=0; j < Body2.length; j++) { 
-                    obj2[Body2[j][0]] = Body2[j][i]; 
+                  for(var j=0; j < newsplit2.length; j++) { 
+                    obj2[newsplit2[j][0]] = newsplit2[j][i]; 
                   }
                 
                   NewCSV.newCSV2.push(obj2);
