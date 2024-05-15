@@ -216,6 +216,7 @@ sap.ui.define([
                     //Shifting CSV1
                     csvBaseHeadArr[i] = csvBaseHeadArr[newheadcnt1];
                     csvBaseHeadArr[newheadcnt1] = tempheader;
+                    
 
 
                     //Shifting CSV2
