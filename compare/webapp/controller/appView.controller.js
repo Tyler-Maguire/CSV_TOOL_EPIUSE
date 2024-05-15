@@ -53,6 +53,11 @@ sap.ui.define([
           postCSV:[]
       };
 
+      var NewCSV = {
+        newCSV1:[],
+        newCSV2:[]
+    };
+
       var delimit_1 = '';
       var delimit_2 = '';
 
@@ -216,7 +221,6 @@ sap.ui.define([
                     //Shifting CSV1
                     csvBaseHeadArr[i] = csvBaseHeadArr[newheadcnt1];
                     csvBaseHeadArr[newheadcnt1] = tempheader;
-                    
 
 
                     //Shifting CSV2
