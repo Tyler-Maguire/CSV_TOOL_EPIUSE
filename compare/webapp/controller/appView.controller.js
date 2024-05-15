@@ -91,12 +91,9 @@ sap.ui.define([
              const internLines = oCSVModelCompare1.oData.CSVBaseJson.toString().split('\n');
              const externLines = oCSVModelCompare2.oData.CSVCompareJson.toString().split('\n');
 
-             this.reOrderCSV(internLines,externLines);
-
-
             this.dynamicCSVcompare(oCSVModelCompare1.oData.CSVBaseJson.toString(),oCSVModelCompare2.oData.CSVCompareJson.toString(),delimit_1,delimit_2);
 
-
+            this.reOrderCSV(internLines,externLines);
             MessageToast.show(oCSVModelCompare1.toString());
             MessageToast.show(oCSVModelCompare2.toString());
             
@@ -200,6 +197,8 @@ sap.ui.define([
 
                     csvCompHeadArr[j] = csvCompHeadArr[newheadcnt2];
                     csvCompHeadArr[newheadcnt2] = tempheader;
+
+                    debugger;
 
 
                     //TO-DO Shift Cols at the same index.
