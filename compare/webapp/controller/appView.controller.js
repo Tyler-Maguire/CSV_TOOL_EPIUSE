@@ -235,13 +235,22 @@ sap.ui.define([
 
             reOrderCSV: function(LinesCSV1,LinesCSV2){
 
+              var len1 = LinesCSV1[0].length;
+              len1--;
+              for(var w = 0; w <= len1; w++){
 
-              for(var w = 0; w < LinesCSV1[0].length-1; w++){
-                LinesCSV1[w].replace(/{/g, '').replace(/}/g, '').replace(/ï»¿/g, '').replace(/\r/g, '');
+                if(LinesCSV1[w]){
+                  LinesCSV1[w].replace(/{/g, '').replace(/}/g, '').replace(/ï»¿/g, '').replace(/\r/g, '');
+                }
+              
               }
 
-              for(var d = 0; d < LinesCSV1[0].length-1; d++){
+              var len2 = LinesCSV2[0].length;
+              len2--;
+              for(var d = 0; d <= len2; d++){
+                if(LinesCSV2[d]){
                 LinesCSV2[d].replace(/{/g, '').replace(/}/g, '').replace(/ï»¿/g, '').replace(/\r/g, '');
+                }
               }
 
               FullCSV1 = LinesCSV1;
