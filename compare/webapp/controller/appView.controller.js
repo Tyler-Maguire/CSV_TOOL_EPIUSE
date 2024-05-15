@@ -197,6 +197,15 @@ sap.ui.define([
               }
             },
 
+
+            csvSplitCol: function(){
+
+
+
+
+            },
+
+
             reOrderCSV: function(LinesCSV1,LinesCSV2){
               var header1 = LinesCSV1.shift();
               var header2 = LinesCSV2.shift();
