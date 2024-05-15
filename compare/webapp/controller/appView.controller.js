@@ -16,18 +16,29 @@ sap.ui.define([
       };
 
       var Body1 = [];
-      var Body2 = []; 
+      var Body2 = [];
+      
+      var newCSV1 = [];
+      var newCSV2 = [];
+      var newCSV1json = '';
+      var newCSV2json = '';
+
+      
       var csvBaseKeys = [];
       var csvBaseHeader = '';
       var csvBaseHeadArr = [];
       var csvBaseHeadCnt = 0;
       var csvBaseKeysCnt = 0;
+      var csvBaseNewHeader = '';
+      var csvBaseNewHeadArr = [];
 
       var csvCompareKeys = [];
       var csvCompareHeader = '';
       var csvCompHeadArr = [];
       var csvCompHeadCnt = 0;
       var csvCompareKeysCnt = 0;
+      var csvCompNewHeader = '';
+      var csvCompNewHeadArr = [];
 
       var result = {
           csv: [],
@@ -182,8 +193,11 @@ sap.ui.define([
             },
 
             reOrderCSV: function(LinesCSV1,LinesCSV2){
-              Body1 = LinesCSV1.shift();
-              Body2 = LinesCSV2.shift();
+              var header1 = LinesCSV1.shift();
+              var header2 = LinesCSV2.shift();
+
+              Body1 = LinesCSV1;
+              Body2 = LinesCSV2;
 
               var tempheader = '';
               var tempcol = '';
@@ -199,9 +213,12 @@ sap.ui.define([
 
                     tempheader = csvBaseHeadArr[i];
 
+                    //Shifting CSV1
                     csvBaseHeadArr[i] = csvBaseHeadArr[newheadcnt1];
                     csvBaseHeadArr[newheadcnt1] = tempheader;
 
+
+                    //Shifting CSV2
                     csvCompHeadArr[j] = csvCompHeadArr[newheadcnt2];
                     csvCompHeadArr[newheadcnt2] = tempheader;
 
@@ -213,19 +230,7 @@ sap.ui.define([
                 }
 
               }
-              
-              /* var data = [];
-              var count = csvBaseKeysCnt;
-              while (count > 0) {
-                var obj = {};
-                var keys = csvBaseKeys;
-                for (var i = 0; i < keys.length; i++) {
-                }
-                data.push(obj);
-                count--;
-              } */
-
-              //return...
+          
 
               
             }
