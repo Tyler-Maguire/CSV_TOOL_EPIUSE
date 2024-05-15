@@ -20,6 +20,9 @@ sap.ui.define([
 
       var FullCSV1;
       var FullCSV2;
+
+      var csvFile1;
+      var csvFile2;
       
       var newCSV1 = [];
       var newCSV2 = [];
@@ -206,8 +209,8 @@ sap.ui.define([
               newCSV1json = '';
               newCSV2json = '';
 
-              var newsplit1  = FullCSV1.map((x) => x.split(delimit_1));
-              var newsplit2  = FullCSV2.map((x) => x.split(delimit_2));
+              var newsplit1  = csvFile1.map((x) => x.split(delimit_1));
+              var newsplit2  = csvFile2.map((x) => x.split(delimit_2));
           
               for(var i = 1; i < newsplit1[0].length; i++) { 
                 var obj = {}; 
@@ -235,29 +238,32 @@ sap.ui.define([
 
             reOrderCSV: function(LinesCSV1,LinesCSV2){
 
-              var len1 = LinesCSV1[0].length;
+              var len1 = LinesCSV1.length;
               len1--;
               for(var w = 0; w <= len1; w++){
-
                 if(LinesCSV1[w]){
-                  LinesCSV1[w].replace(/{/g, '').replace(/}/g, '').replace(/ï»¿/g, '').replace(/\r/g, '');
+                  LinesCSV1[w]=LinesCSV1[w].replaceAll('\r','').replaceAll('ï»¿','');
                 }
               
               }
 
-              var len2 = LinesCSV2[0].length;
+              csvFile1 = LinesCSV1;
+
+              var len2 = LinesCSV2.length;
               len2--;
               for(var d = 0; d <= len2; d++){
                 if(LinesCSV2[d]){
-                LinesCSV2[d].replace(/{/g, '').replace(/}/g, '').replace(/ï»¿/g, '').replace(/\r/g, '');
+                  LinesCSV2[d]=LinesCSV2[d].replaceAll('\r','').replaceAll('ï»¿','');
                 }
               }
+              csvFile2 = LinesCSV2;
 
               FullCSV1 = LinesCSV1;
               FullCSV2 = LinesCSV2;
 
-              Body1 = LinesCSV1;
-              Body2 = LinesCSV2;
+
+              Body1 = JSON.parse(JSON.stringify(LinesCSV1));
+              Body2 = JSON.parse(JSON.stringify(LinesCSV2));
 
               var header1 = Body1.shift();
               var header2 = Body2.shift();
