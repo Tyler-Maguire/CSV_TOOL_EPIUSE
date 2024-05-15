@@ -458,7 +458,7 @@ sap.ui.define([
               });
               let tmpArray1 = [comma, samiclon, pipe, tab]
               let tmpArray = [comma, samiclon, pipe, tab];
-              let maxLen = tmpArray.sort((a, b) => b - a)[0];
+              let maxLen = tmpArray.sort((file, b) => b - file)[0];
               let delimiter_i = 0;
               tmpArray1.forEach((e, i) => {
                   if (maxLen === e) {
@@ -478,12 +478,12 @@ sap.ui.define([
 
          
           dynamicCSVcompare: function(json1,json2,delimit_1,delimit_2){
-          function a(a) {
-              for (var e = [], d = a.split(c), h = 0; h < d.length; h++) {
-                  a = !1;
+          function file(file) {
+              for (var e = [], d = file.split(c), h = 0; h < d.length; h++) {
+                  file = !1;
                   var k = d[h];
-                  k.length && k[0] == f && (2 <= k.length ? k[k.length - 1] !== f ? a = !0 : 2 < k.length && k[k.length - 2] === b && (a = !0) : a = !0);
-                  a && h !== d.length - 1 ? d[h + 1] = k + c + d[h + 1] : e.push(k)
+                  k.length && k[0] == f && (2 <= k.length ? k[k.length - 1] !== f ? file = !0 : 2 < k.length && k[k.length - 2] === b && (file = !0) : file = !0);
+                  file && h !== d.length - 1 ? d[h + 1] = k + c + d[h + 1] : e.push(k)
               }
               return e
           }
@@ -504,10 +504,10 @@ sap.ui.define([
           result.nbLineDiff = 0;
           result.nbColumnDiff = 0;
           l.forEach(function(e, b) {
-              a(e).length > result.maxColumn && (result.maxColumn = a(e).length)
+              file(e).length > result.maxColumn && (result.maxColumn = file(e).length)
           });
           g.forEach(function(b, c) {
-              a(b).length > result.maxColumn && (result.maxColumn = a(b).length)
+              file(b).length > result.maxColumn && (result.maxColumn = file(b).length)
           });
           l.forEach(function(b, c) {
               var d = {
@@ -520,29 +520,37 @@ sap.ui.define([
               };
               result.csv.push(d);
               OrderCSV.preCSV.push(colmap);
-              debugger;
 
-              var h = a(b);
+
+              //to do reorder file coloumns -> next section is comparison headers are done
+     
+
+              //var h = file(b);
+              //Reordered col insert csv1
+              var h = csvBaseHeadArr;
               if (g.length > c) {
-                  var e = a(g[c])
-                    , m = 0;
-                  h.forEach(function(a, b) {
+              //Reordered col insert csv2 
+                  /* var e = file(g[c])
+                    , m = 0; */
+                    var e = csvCompHeadArr
+                    , m = 0; 
+                  h.forEach(function(file, b) {
                       e.length > b ? (b = e[b],
-                      a == b ? d.columns.push(a) : (d.columns.push({
-                          data: a + " != " + b,
+                      file == b ? d.columns.push(file) : (d.columns.push({
+                          data: file + " != " + b,
                           diff: Compare.DIFF
                       }),
                       result.nbColumnDiff++,
                       m = 1)) : (d.columns.push({
-                          data: a,
+                          data: file,
                           diff: Compare.ONLY1
                       }),
                       result.nbColumnDiff++,
                       m = 1)
                   });
-                  e.forEach(function(a, b) {
+                  e.forEach(function(file, b) {
                       b >= h.length && (d.columns.push({
-                          data: a,
+                          data: file,
                           diff: Compare.ONLY2
                       }),
                       result.nbColumnDiff++,
@@ -552,9 +560,9 @@ sap.ui.define([
                   debugger;
                   0 < m && (d.diff = !0)
               } else
-                  h.forEach(function(a, b) {
+                  h.forEach(function(file, b) {
                       d.columns.push({
-                          data: a,
+                          data: file,
                           diff: Compare.ONLY1
                       });
                       result.nbColumnDiff++
@@ -578,13 +586,13 @@ sap.ui.define([
                   OrderCSV.preCSV.push(line);
                   debugger;
                   result.nbLineDiff += 1;
-                  a(b).forEach(function(a, b) {
+                  file(b).forEach(function(file, b) {
                       d.columns.push({
-                          data: a,
+                          data: file,
                           diff: Compare.ONLY2
                       });
                       line.columns.push({
-                        data: a,
+                        data: file,
                         col: result.nbColumnDiff,
                         row : result.nbLineDiff
                     });
@@ -599,9 +607,9 @@ sap.ui.define([
       },
 
       copyToClipBoard :function() {
-        var a = result.text;
+        var file = result.text;
         var b = document.createElement("textarea");
-        b.textContent = a;
+        b.textContent = file;
         document.body.appendChild(b);
         let sel = document.getSelection();
         var c = document.createRange();
@@ -634,28 +642,28 @@ sap.ui.define([
       //  var resultContainer = this.getView().byId("result-diff");
         var resultContainer = document.getElementsByClassName('result-diff')[0];
 
-          function a(a) {
+          function file(file) {
               var b = document.createElement("div");
               resultContainer.appendChild(b);
               b.classList.add("diff-line");
-              if (a) {
+              if (file) {
                   var d = document.createElement("div");
                   d.classList.add("diff-col");
                   d.classList.add("diff-col-row");
-                  d.appendChild(document.createTextNode("Row " + a));
+                  d.appendChild(document.createTextNode("Row " + file));
                   b.appendChild(d)
               }
               return b
           }
-          function c(a, b, d) {
+          function c(file, b, d) {
               d = void 0 === d ? null : d;
               var c = document.createElement("div");
-              a.appendChild(c);
+              file.appendChild(c);
               c.classList.add("diff-col");
               d === Compare.ONLY1 ? c.classList.add("column1") : d === Compare.ONLY2 ? c.classList.add("column2") : d === Compare.DIFF && c.classList.add("col-diff");
               c.appendChild(document.createTextNode(null === b ? "" : b));
               result.text += null === b ? "" : b;
-              return a
+              return file
           }
           var f = delimit
             , b = 'all'
@@ -668,7 +676,7 @@ sap.ui.define([
           //services.billboard.emptyAndHide(["editor-error1", "editor-valid1"]);
          // for (services.billboard.emptyAndHide(["editor-error2", "editor-valid2"]); resultContainer.firstChild; )
           //    resultContainer.removeChild(resultContainer.firstChild);
-         for (var p = a(), l = 0; l <= result.maxColumn; l++) {
+         for (var p = file(), l = 0; l <= result.maxColumn; l++) {
              var g = document.createElement("div");
              g.classList.add("diff-col");
              g.classList.add("diff-col-field");
@@ -677,10 +685,10 @@ sap.ui.define([
           }
           result.csv.forEach(function(e, g) {
               if ("diff" != b || e.diff) {
-                  var d = a(g + 1);
+                  var d = file(g + 1);
                   "diff" == b && n && (result.text += (g + 1).toString() + f);
-                  e.columns.forEach(function(a, b) {
-                      "string" == typeof a ? c(d, a) : c(d, a.data, a.diff);
+                  e.columns.forEach(function(file, b) {
+                      "string" == typeof file ? c(d, file) : c(d, file.data, file.diff);
                       result.maxColumn != b + 1 && (result.text += f)
                   });
                   for (e = e.columns.length + 1; e <= result.maxColumn; e++)
