@@ -204,9 +204,6 @@ sap.ui.define([
                     csvCompHeadArr[j] = csvCompHeadArr[newheadcnt2];
                     csvCompHeadArr[newheadcnt2] = tempheader;
 
-                    debugger;
-
-
                     //TO-DO Shift Cols at the same index.
 
                     newheadcnt1++;
@@ -557,7 +554,7 @@ sap.ui.define([
                       m = 1)
                   });
                   result.nbLineDiff += m;
-                  debugger;
+                  
                   0 < m && (d.diff = !0)
               } else
                   h.forEach(function(file, b) {
@@ -569,7 +566,7 @@ sap.ui.define([
                   }),
                   result.nbLineDiff += 1,
                   d.diff = !0
-                  debugger;
+                
           });
           g.forEach(function(b, c) {
               if (c >= l.length) {
@@ -584,7 +581,7 @@ sap.ui.define([
                   };
                   result.csv.push(d);
                   OrderCSV.preCSV.push(line);
-                  debugger;
+       
                   result.nbLineDiff += 1;
                   file(b).forEach(function(file, b) {
                       d.columns.push({
@@ -601,7 +598,7 @@ sap.ui.define([
               }
           });
           this.showDiff(delimit_1);
-          debugger;
+    
           return result;
           
       },
