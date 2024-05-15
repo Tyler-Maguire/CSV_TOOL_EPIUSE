@@ -17,6 +17,9 @@ sap.ui.define([
 
       var Body1;
       var Body2;
+
+      var FullCSV1;
+      var FullCSV2;
       
       var newCSV1 = [];
       var newCSV2 = [];
@@ -203,8 +206,8 @@ sap.ui.define([
               newCSV1json = '';
               newCSV2json = '';
 
-              var newsplit1  = Body1.split("\n").map((x) => x.split(","));
-              var newsplit2  = Body2.split("\n").map((x) => x.split(","));
+              var newsplit1  = FullCSV1.map((x) => x.split(delimit_1));
+              var newsplit2  = FullCSV2.map((x) => x.split(delimit_2));
           
               for(var i = 1; i < newsplit1[0].length; i++) { 
                 var obj = {}; 
@@ -231,6 +234,13 @@ sap.ui.define([
 
 
             reOrderCSV: function(LinesCSV1,LinesCSV2){
+
+              LinesCSV1[0].replace(/{/g, '').replace(/}/g, '');
+              LinesCSV2[0].replace(/{/g, '').replace(/}/g, '');
+
+              FullCSV1 = LinesCSV1;
+              FullCSV2 = LinesCSV2;
+
               var header1 = LinesCSV1.shift();
               var header2 = LinesCSV2.shift();
 
