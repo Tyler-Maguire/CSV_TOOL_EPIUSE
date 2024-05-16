@@ -260,8 +260,8 @@ sap.ui.define([
               var tempcol = '';
               var newheadcnt1 = 0;
               var newheadcnt2 = 0;
-              if(csvBaseHeader == csvCompareHeader){
-              }else{
+             // if(csvBaseHeader == csvCompareHeader){
+             // }else{
               for(var i=0;i<csvBaseHeadCnt;i++){
                 for(var j=0;j<csvCompHeadCnt;j++){  
                   var obj = {};
@@ -289,8 +289,8 @@ sap.ui.define([
                     //Loop through rows newsplit2
                     
                     for(var b2=0; b2<newsplit2.length;b2++){
-                      temparray2 = JSON.parse(JSON.stringify(newsplit2[b2][i]));
-                      newsplit2[b2][i] = JSON.parse(JSON.stringify(newsplit2[b2][newheadcnt2]));
+                      temparray2 = JSON.parse(JSON.stringify(newsplit2[b2][j]));
+                      newsplit2[b2][j] = JSON.parse(JSON.stringify(newsplit2[b2][newheadcnt2]));
                       newsplit2[b2][newheadcnt2] = JSON.parse(JSON.stringify(temparray2));;
                       }
 
@@ -307,7 +307,7 @@ sap.ui.define([
               } 
               
               //
-            }
+            //}
 
               
             //////////////////Needs to be formatted already////////////////////
