@@ -287,7 +287,8 @@ sap.ui.define([
 
                     //obj2[newsplit2[j][newheadcnt2]] = newsplit2[newheadcnt2][i];
                     //Loop through rows newsplit2
-                    for(var b2=0; b1<newsplit2.length;b2++){
+                    
+                    for(var b2=0; b2<newsplit2.length;b2++){
                       temparray2 = JSON.parse(JSON.stringify(newsplit2[b2][i]));
                       newsplit2[b2][i] = JSON.parse(JSON.stringify(newsplit2[b2][newheadcnt2]));
                       newsplit2[b2][newheadcnt2] = JSON.parse(JSON.stringify(temparray2));;
@@ -310,7 +311,7 @@ sap.ui.define([
 
               
             //////////////////Needs to be formatted already////////////////////
-              for(var i = 1; i < newsplit1[0].length; i++) { 
+      /*         for(var i = 1; i < newsplit1[0].length; i++) { 
                 var obj = {}; 
                 for(var j=0; j < newsplit1.length; j++) { 
                   obj[newsplit1[j][0]] = newsplit1[j][i];  
@@ -323,7 +324,7 @@ sap.ui.define([
                     obj2[newsplit2[j][0]] = newsplit2[j][i]; 
                   }
                   NewCSV.newCSV2.push(obj2);
-                }
+                } */
 
 
 
