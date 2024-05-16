@@ -253,8 +253,48 @@ sap.ui.define([
               for (var i = 0; i < newsplit2.length; i++) {
                 if(newsplit2[i]==''){newsplit2.splice(i, 1);}
               }
-            //////////////////Needs to be formatted already////////////////////
+
+              var tempheader = '';
+              var tempcol = '';
+              var newheadcnt1 = 0;
+              var newheadcnt2 = 0;
+              if(csvBaseHeader == csvCompareHeader){
+              }else{
+              for(var i=0;i<csvBaseHeadCnt;i++){
+                for(var j=0;j<csvCompHeadCnt;j++){  
+                  var obj = {};         
+                  if(csvBaseHeadArr[i]==csvCompHeadArr[j]){
+                    
+                    tempheader = csvBaseHeadArr[i];
+
+                    //Shifting CSV1
+                    csvBaseHeadArr[i] = csvBaseHeadArr[newheadcnt1];
+                    csvBaseHeadArr[newheadcnt1] = tempheader;
+
+                    obj[newsplit1[i][newheadcnt1]] = newsplit1[newheadcnt1][j];
+
+
+
+                    //Shifting CSV2
+                    csvCompHeadArr[j] = csvCompHeadArr[newheadcnt2];
+                    csvCompHeadArr[newheadcnt2] = tempheader;
+
+                    obj[newsplit2[j][newheadcnt2]] = newsplit2[newheadcnt2][i];
+
+                    //TO-DO Shift Cols at the same index.
+                    newheadcnt1++;
+                    newheadcnt2++;
+                  }
+                }
+                NewCSV.newCSV1.push(obj);
+                NewCSV.newCSV2.push(obj2);
+              } 
               
+              //
+            }
+
+              
+            //////////////////Needs to be formatted already////////////////////
               for(var i = 1; i < newsplit1[0].length; i++) { 
                 var obj = {}; 
                 for(var j=0; j < newsplit1.length; j++) { 
@@ -270,35 +310,7 @@ sap.ui.define([
                   NewCSV.newCSV2.push(obj2);
                 }
 
-              var tempheader = '';
-              var tempcol = '';
-              var newheadcnt1 = 0;
-              var newheadcnt2 = 0;
-              if(csvBaseHeader == csvCompareHeader){
-              }else{
-              for(var i=0;i<csvBaseHeadCnt;i++){
-                for(var j=0;j<csvCompHeadCnt;j++){          
-                  if(csvBaseHeadArr[i]==csvCompHeadArr[j]){
-                    
-                    tempheader = csvBaseHeadArr[i];
-                    //Shifting CSV1
-                    csvBaseHeadArr[i] = csvBaseHeadArr[newheadcnt1];
-                    csvBaseHeadArr[newheadcnt1] = tempheader;
 
-                    //Shifting CSV2
-                    csvCompHeadArr[j] = csvCompHeadArr[newheadcnt2];
-                    csvCompHeadArr[newheadcnt2] = tempheader;
-
-                    //TO-DO Shift Cols at the same index.
-                    newheadcnt1++;
-                    newheadcnt2++;
-                  }
-                }
-
-              }
-      
-              
-            }
 
 
             },
