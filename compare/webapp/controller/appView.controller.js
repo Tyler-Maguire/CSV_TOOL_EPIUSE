@@ -119,7 +119,7 @@ sap.ui.define([
 
              const internLines = oCSVModelCompare1.oData.CSVBaseJson.toString().split('\n');
              const externLines = oCSVModelCompare2.oData.CSVCompareJson.toString().split('\n');
-
+   
             this.reOrderCSV(internLines,externLines);
             this.dynamicCSVcompare(oCSVModelCompare1.oData.CSVBaseJson.toString(),oCSVModelCompare2.oData.CSVCompareJson.toString(),delimit_1,delimit_2);
 
@@ -204,36 +204,7 @@ sap.ui.define([
             },
 
 
-            csvSplitCol: function(){
 
-              newCSV1json = '';
-              newCSV2json = '';
-
-              var newsplit1  = csvFile1.map((x) => x.split(delimit_1));
-              var newsplit2  = csvFile2.map((x) => x.split(delimit_2));
-          
-              for(var i = 1; i < newsplit1[0].length; i++) { 
-                var obj = {}; 
-                for(var j=0; j < newsplit1.length; j++) { 
-                  obj[newsplit1[j][0]] = newsplit1[j][i];  
-                }
-               
-                NewCSV.newCSV1.push(obj);
-              }
-          
-              for(var i = 1; i < newsplit2[0].length; i++) {
-                  var obj2 = {};
-                  for(var j=0; j < newsplit2.length; j++) { 
-                    obj2[newsplit2[j][0]] = newsplit2[j][i]; 
-                  }
-                
-                  NewCSV.newCSV2.push(obj2);
-          
-                }
-          
-                return NewCSV; 
-
-            },
 
 
             reOrderCSV: function(LinesCSV1,LinesCSV2){
@@ -256,11 +227,49 @@ sap.ui.define([
               csvFile2 = LinesCSV2;
               FullCSV1 = LinesCSV1;
               FullCSV2 = LinesCSV2;
+
               Body1 = JSON.parse(JSON.stringify(LinesCSV1));
               Body2 = JSON.parse(JSON.stringify(LinesCSV2));
+
               var header1 = Body1.shift();
               var header2 = Body2.shift();
-              var testcol = this.csvSplitCol();
+          
+              newCSV1json = '';
+              newCSV2json = '';
+
+              Body1 = Body1.filter(Boolean);
+              Body2 = Body2.filter(Boolean);
+
+              var newsplit1  = csvFile1.map((x) => x.split(delimit_1));
+              var newsplit2  = csvFile2.map((x) => x.split(delimit_2));   
+              
+              newsplit1 = newsplit1.filter(Boolean);
+              newsplit2 = newsplit2.filter(Boolean);
+
+              for (var i = 0; i < newsplit1.length; i++) {
+                if(newsplit1[i]==''){newsplit1.splice(i, 1);}
+              }
+
+              for (var i = 0; i < newsplit2.length; i++) {
+                if(newsplit2[i]==''){newsplit2.splice(i, 1);}
+              }
+            //////////////////Needs to be formatted already////////////////////
+              
+              for(var i = 1; i < newsplit1[0].length; i++) { 
+                var obj = {}; 
+                for(var j=0; j < newsplit1.length; j++) { 
+                  obj[newsplit1[j][0]] = newsplit1[j][i];  
+                }
+                NewCSV.newCSV1.push(obj);
+              }
+              for(var i = 1; i < newsplit2[0].length; i++) {
+                  var obj2 = {};
+                  for(var j=0; j < newsplit2.length; j++) { 
+                    obj2[newsplit2[j][0]] = newsplit2[j][i]; 
+                  }
+                  NewCSV.newCSV2.push(obj2);
+                }
+
               var tempheader = '';
               var tempcol = '';
               var newheadcnt1 = 0;
