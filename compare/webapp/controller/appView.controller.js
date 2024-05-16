@@ -255,6 +255,8 @@ sap.ui.define([
               }
 
               var tempheader = '';
+              var temparray1;
+              var temparray2;
               var tempcol = '';
               var newheadcnt1 = 0;
               var newheadcnt2 = 0;
@@ -262,7 +264,8 @@ sap.ui.define([
               }else{
               for(var i=0;i<csvBaseHeadCnt;i++){
                 for(var j=0;j<csvCompHeadCnt;j++){  
-                  var obj = {};         
+                  var obj = {};
+                  var obj2 = {};         
                   if(csvBaseHeadArr[i]==csvCompHeadArr[j]){
                     
                     tempheader = csvBaseHeadArr[i];
@@ -271,23 +274,35 @@ sap.ui.define([
                     csvBaseHeadArr[i] = csvBaseHeadArr[newheadcnt1];
                     csvBaseHeadArr[newheadcnt1] = tempheader;
 
-                    obj[newsplit1[i][newheadcnt1]] = newsplit1[newheadcnt1][j];
-
-
-
+                    //obj[newsplit1[newheadcnt1][i]] = newsplit1[newheadcnt1][j];
+                    //Loop through rows newsplit1
+                    for(var b1=0; b1<newsplit1.length;b1++){
+                    temparray1 = JSON.parse(JSON.stringify(newsplit1[b1][i]));
+                    newsplit1[b1][i] = JSON.parse(JSON.stringify(newsplit1[b1][newheadcnt1]));
+                    newsplit1[b1][newheadcnt1] = JSON.parse(JSON.stringify(temparray1));;
+                    }
                     //Shifting CSV2
                     csvCompHeadArr[j] = csvCompHeadArr[newheadcnt2];
                     csvCompHeadArr[newheadcnt2] = tempheader;
 
-                    obj[newsplit2[j][newheadcnt2]] = newsplit2[newheadcnt2][i];
+                    //obj2[newsplit2[j][newheadcnt2]] = newsplit2[newheadcnt2][i];
+                    //Loop through rows newsplit2
+                    for(var b2=0; b1<newsplit2.length;b2++){
+                      temparray2 = JSON.parse(JSON.stringify(newsplit2[b2][i]));
+                      newsplit2[b2][i] = JSON.parse(JSON.stringify(newsplit2[b2][newheadcnt2]));
+                      newsplit2[b2][newheadcnt2] = JSON.parse(JSON.stringify(temparray2));;
+                      }
 
                     //TO-DO Shift Cols at the same index.
                     newheadcnt1++;
                     newheadcnt2++;
+
+                    NewCSV.newCSV1.push(obj);
+                    NewCSV.newCSV2.push(obj2);
                   }
+        
                 }
-                NewCSV.newCSV1.push(obj);
-                NewCSV.newCSV2.push(obj2);
+                
               } 
               
               //
