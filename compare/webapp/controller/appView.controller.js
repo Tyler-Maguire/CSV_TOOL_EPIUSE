@@ -237,7 +237,6 @@ sap.ui.define([
 
 
             reOrderCSV: function(LinesCSV1,LinesCSV2){
-
               var len1 = LinesCSV1.length;
               len1--;
               for(var w = 0; w <= len1; w++){
@@ -246,9 +245,7 @@ sap.ui.define([
                 }
               
               }
-
               csvFile1 = LinesCSV1;
-
               var len2 = LinesCSV2.length;
               len2--;
               for(var d = 0; d <= len2; d++){
@@ -257,19 +254,13 @@ sap.ui.define([
                 }
               }
               csvFile2 = LinesCSV2;
-
               FullCSV1 = LinesCSV1;
               FullCSV2 = LinesCSV2;
-
-
               Body1 = JSON.parse(JSON.stringify(LinesCSV1));
               Body2 = JSON.parse(JSON.stringify(LinesCSV2));
-
               var header1 = Body1.shift();
               var header2 = Body2.shift();
-
               var testcol = this.csvSplitCol();
-
               var tempheader = '';
               var tempcol = '';
               var newheadcnt1 = 0;
@@ -277,24 +268,19 @@ sap.ui.define([
               if(csvBaseHeader == csvCompareHeader){
               }else{
               for(var i=0;i<csvBaseHeadCnt;i++){
-                for(var j=0;j<csvCompHeadCnt;j++){
-           
+                for(var j=0;j<csvCompHeadCnt;j++){          
                   if(csvBaseHeadArr[i]==csvCompHeadArr[j]){
                     
-
                     tempheader = csvBaseHeadArr[i];
-
                     //Shifting CSV1
                     csvBaseHeadArr[i] = csvBaseHeadArr[newheadcnt1];
                     csvBaseHeadArr[newheadcnt1] = tempheader;
-
 
                     //Shifting CSV2
                     csvCompHeadArr[j] = csvCompHeadArr[newheadcnt2];
                     csvCompHeadArr[newheadcnt2] = tempheader;
 
                     //TO-DO Shift Cols at the same index.
-
                     newheadcnt1++;
                     newheadcnt2++;
                   }
