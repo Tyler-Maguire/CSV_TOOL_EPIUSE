@@ -23,6 +23,8 @@ sap.ui.define([
 
       var csvFile1;
       var csvFile2;
+
+      var csvfiles = [];
       
       var newCSV1 = [];
       var newCSV2 = [];
@@ -136,6 +138,9 @@ sap.ui.define([
                    var csvFileInText = await inputFile.files[0].text();
                    console.log(csvFileInText);
 
+                   csvFileInText=csvFileInText.replaceAll('\r','').replaceAll('ï»¿','');
+                   csvfiles.push(csvFileInText);
+
                    var arrObje = [];
                   // var lines = csvFileInText.split('\n');
                   csvFileInText = csvFileInText.replace(/{/g, '').replace(/}/g, '');
@@ -171,6 +176,8 @@ sap.ui.define([
                 try {
                   var csvFileInText = await inputFile.files[0].text();
                   console.log(csvFileInText);
+                  csvFileInText=csvFileInText.replaceAll('\r','').replaceAll('ï»¿','');
+                  csvfiles.push(csvFileInText);
 
                   var arrObje = [];
                  // var lines = csvFileInText.split('\n');
@@ -551,139 +558,102 @@ sap.ui.define([
               }
           },
 
-         
           dynamicCSVcompare: function(json1,json2,delimit_1,delimit_2){
-
-            debugger;
-
-          function file(file) {
-              for (var e = [], d = file, h = 0; h < d.length; h++) {
-                  file = !1;
-                  var k = d[h];
-                  k.length && k[0] == f && (2 <= k.length ? k[k.length - 1] !== f ? file = !0 : 2 < k.length && k[k.length - 2] === b && (file = !0) : file = !0);
-                  file && h !== d.length - 1 ? d[h + 1] = k + c + d[h + 1] : e.push(k)
-              }
-              return e
-          }
-          var c = delimit_1
-            , f = ""
-            , b = ''
-            , n = json1
-            , p = json2
-            , l = n.split(/\r?\n/)
-            , g = p.split(/\r?\n/);
-          result.csv = [];
-          OrderCSV.preCSV = [];
-          OrderCSV.postCSV = [];
-    
-          result.text = "";
-          result.maxColumn = 0;
-          result.nbLineDiff = 0;
-          result.nbColumnDiff = 0;
-
-         // l=Body1;
-         //g=Body2;
-          var newArray = [];
-          var newArray2 = [];
-
-          var obj = {};
-          var obj2 = {};
-
-          l.forEach(function(e, b) {
-              file(e).length > result.maxColumn && (result.maxColumn = file(e).length)
-          });
-          g.forEach(function(b, c) {
-              file(b).length > result.maxColumn && (result.maxColumn = file(b).length)
-          });
-
-          l.forEach(function(b, c) {
-              var d = {
-                  columns: [],
-                  diff: !1
-              };
-              var colmap = {
-                columns: [],
-                rows: []
-              };
-              result.csv.push(d);
-              OrderCSV.preCSV.push(colmap);
-
-              //to do reorder file coloumns -> next section is comparison headers are done
-              //Reordered col insert csv2
-              //var e = csvCompHeadArr 
-              //Reordered col insert csv1
-              //var h = csvBaseHeadArr;                 
-              var h = file(b);
-              if (g.length > c) {            
-                  var e = file(g[c])
-                    , m = 0;
-                  h.forEach(function(file, b) {
-                      e.length > b ? (b = e[b],
-                      file == b ? d.columns.push(file) : (d.columns.push({
-                          data: file + " != " + b,
-                          diff: Compare.DIFF
-                      }),
-                      result.nbColumnDiff++,
-                      m = 1)) : (d.columns.push({
-                          data: file,
-                          diff: Compare.ONLY1
-                      }),
-                      result.nbColumnDiff++,
-                      m = 1)
-                  });
-                  e.forEach(function(file, b) {
-                      b >= h.length && (d.columns.push({
-                          data: file,
-                          diff: Compare.ONLY2
-                      }),
-                      result.nbColumnDiff++,
-                      m = 1)
-                  });
-                  result.nbLineDiff += m;                 
-                  0 < m && (d.diff = !0)
-              } else
-                  h.forEach(function(file, b) {
-                      d.columns.push({
-                          data: file,
-                          diff: Compare.ONLY1
-                      });
-                      result.nbColumnDiff++
-                  }),
-                  result.nbLineDiff += 1,
-                  d.diff = !0                
-          });
-          g.forEach(function(b, c) {
-              if (c >= l.length) {
-                  var d = {
-                      columns: [],
-                      diff: !0
-                  };
-                  var line = {
+            function a(a) {
+                for (var e = [], d = a.split(c), h = 0; h < d.length; h++) {
+                    a = !1;
+                    var k = d[h];
+                    k.length && k[0] == f && (2 <= k.length ? k[k.length - 1] !== f ? a = !0 : 2 < k.length && k[k.length - 2] === b && (a = !0) : a = !0);
+                    a && h !== d.length - 1 ? d[h + 1] = k + c + d[h + 1] : e.push(k)
+                }
+                return e
+            }
+            
+            var c = delimit_1
+              , f = ""
+              , b = ''
+              , n = json1
+              , p = json2
+              , l = n.split(/\r?\n/)
+              , g = p.split(/\r?\n/);
+            result.csv = [];
+            result.text = "";
+            result.maxColumn = 0;
+            result.nbLineDiff = 0;
+            result.nbColumnDiff = 0;
+            l.forEach(function(e, b) {
+                a(e).length > result.maxColumn && (result.maxColumn = a(e).length)
+            });
+            g.forEach(function(b, c) {
+                a(b).length > result.maxColumn && (result.maxColumn = a(b).length)
+            });
+            l.forEach(function(b, c) {
+                var d = {
                     columns: [],
-                    col: 0,
-                    row: 0
-                  };
-                  result.csv.push(d);
-                 // OrderCSV.preCSV.push(line);
-                  result.nbLineDiff += 1;
-                  file(b).forEach(function(file, b) {
-                      d.columns.push({
-                          data: file,
-                          diff: Compare.ONLY2
-                      });
-                      line.columns.push({
-                        data: file,
-                        col: result.nbColumnDiff,
-                        row : result.nbLineDiff
+                    diff: !1
+                };
+                result.csv.push(d);
+                var h = a(b);
+                if (g.length > c) {
+                    var e = a(g[c])
+                      , m = 0;
+                    h.forEach(function(a, b) {
+                        e.length > b ? (b = e[b],
+                        a == b ? d.columns.push(a) : (d.columns.push({
+                            data: a + " != " + b,
+                            diff: Compare.DIFF
+                        }),
+                        result.nbColumnDiff++,
+                        m = 1)) : (d.columns.push({
+                            data: a,
+                            diff: Compare.ONLY1
+                        }),
+                        result.nbColumnDiff++,
+                        m = 1)
                     });
-                      result.nbColumnDiff++
-                  })
-              }
-          });
-          debugger; 
-          this.showDiff(delimit_1);
-          return result;   
-      },
+                    e.forEach(function(a, b) {
+                        b >= h.length && (d.columns.push({
+                            data: a,
+                            diff: Compare.ONLY2
+                        }),
+                        result.nbColumnDiff++,
+                        m = 1)
+                    });
+                    result.nbLineDiff += m;
+                    0 < m && (d.diff = !0)
+                } else
+                    h.forEach(function(a, b) {
+                        d.columns.push({
+                            data: a,
+                            diff: Compare.ONLY1
+                        });
+                        result.nbColumnDiff++
+                    }),
+                    result.nbLineDiff += 1,
+                    d.diff = !0
+            });
+            g.forEach(function(b, c) {
+                if (c >= l.length) {
+                    var d = {
+                        columns: [],
+                        diff: !0
+                    };
+                    result.csv.push(d);
+                    result.nbLineDiff += 1;
+                    a(b).forEach(function(a, b) {
+                        d.columns.push({
+                            data: a,
+                            diff: Compare.ONLY2
+                        });
+                        result.nbColumnDiff++
+                    })
+                }
+            });
+            this.showDiff(delimit_1);
+            return result;
+            
+        },  
+         
 
       copyToClipBoard :function() {
         var file = result.text;
