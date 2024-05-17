@@ -203,10 +203,6 @@ sap.ui.define([
               }
             },
 
-
-
-
-
             reOrderCSV: function(LinesCSV1,LinesCSV2){
               var len1 = LinesCSV1.length;
               len1--;
@@ -260,14 +256,14 @@ sap.ui.define([
               var tempcol = '';
               var newheadcnt1 = 0;
               var newheadcnt2 = 0;
-             // if(csvBaseHeader == csvCompareHeader){
-             // }else{
+              if(csvBaseHeader == csvCompareHeader){
+              }else{
               for(var i=0;i<csvBaseHeadCnt;i++){
                 for(var j=0;j<csvCompHeadCnt;j++){  
                   var obj = {};
                   var obj2 = {};         
                   if(csvBaseHeadArr[i]==csvCompHeadArr[j]){
-                    
+               
                     tempheader = csvBaseHeadArr[i];
 
                     //Shifting CSV1
@@ -289,6 +285,8 @@ sap.ui.define([
                     //Loop through rows newsplit2
                     
                     for(var b2=0; b2<newsplit2.length;b2++){
+                      temparray2 = JSON.parse(JSON.stringify(newsplit2[b2][i]));
+                      newsplit2[b2][i] = JSON.parse(JSON.stringify(newsplit2[b2][newheadcnt2]));
                       temparray2 = JSON.parse(JSON.stringify(newsplit2[b2][j]));
                       newsplit2[b2][j] = JSON.parse(JSON.stringify(newsplit2[b2][newheadcnt2]));
                       newsplit2[b2][newheadcnt2] = JSON.parse(JSON.stringify(temparray2));;
@@ -306,29 +304,10 @@ sap.ui.define([
                 
               } 
               
-              //
-            //}
-
-              
-            //////////////////Needs to be formatted already////////////////////
-      /*         for(var i = 1; i < newsplit1[0].length; i++) { 
-                var obj = {}; 
-                for(var j=0; j < newsplit1.length; j++) { 
-                  obj[newsplit1[j][0]] = newsplit1[j][i];  
-                }
-                NewCSV.newCSV1.push(obj);
-              }
-              for(var i = 1; i < newsplit2[0].length; i++) {
-                  var obj2 = {};
-                  for(var j=0; j < newsplit2.length; j++) { 
-                    obj2[newsplit2[j][0]] = newsplit2[j][i]; 
-                  }
-                  NewCSV.newCSV2.push(obj2);
-                } */
-
-
-
-
+              Body1 = newsplit1;
+              Body2 = newsplit2;
+            }
+            
             },
 
             onUploadBase: function(e) {
@@ -574,8 +553,11 @@ sap.ui.define([
 
          
           dynamicCSVcompare: function(json1,json2,delimit_1,delimit_2){
+
+            debugger;
+
           function file(file) {
-              for (var e = [], d = file.split(c), h = 0; h < d.length; h++) {
+              for (var e = [], d = file, h = 0; h < d.length; h++) {
                   file = !1;
                   var k = d[h];
                   k.length && k[0] == f && (2 <= k.length ? k[k.length - 1] !== f ? file = !0 : 2 < k.length && k[k.length - 2] === b && (file = !0) : file = !0);
@@ -583,7 +565,6 @@ sap.ui.define([
               }
               return e
           }
-          
           var c = delimit_1
             , f = ""
             , b = ''
@@ -600,9 +581,13 @@ sap.ui.define([
           result.nbLineDiff = 0;
           result.nbColumnDiff = 0;
 
+         // l=Body1;
+         //g=Body2;
+          var newArray = [];
+          var newArray2 = [];
 
-          l=Body1;
-          g=Body2;
+          var obj = {};
+          var obj2 = {};
 
           l.forEach(function(e, b) {
               file(e).length > result.maxColumn && (result.maxColumn = file(e).length)
@@ -623,19 +608,15 @@ sap.ui.define([
               result.csv.push(d);
               OrderCSV.preCSV.push(colmap);
 
-
               //to do reorder file coloumns -> next section is comparison headers are done
-     
-
-              //var h = file(b);
+              //Reordered col insert csv2
+              //var e = csvCompHeadArr 
               //Reordered col insert csv1
-              var h = csvBaseHeadArr;
-              if (g.length > c) {
-              //Reordered col insert csv2 
-                  /* var e = file(g[c])
-                    , m = 0; */
-                    var e = csvCompHeadArr
-                    , m = 0; 
+              //var h = csvBaseHeadArr;                 
+              var h = file(b);
+              if (g.length > c) {            
+                  var e = file(g[c])
+                    , m = 0;
                   h.forEach(function(file, b) {
                       e.length > b ? (b = e[b],
                       file == b ? d.columns.push(file) : (d.columns.push({
@@ -658,8 +639,7 @@ sap.ui.define([
                       result.nbColumnDiff++,
                       m = 1)
                   });
-                  result.nbLineDiff += m;
-                  
+                  result.nbLineDiff += m;                 
                   0 < m && (d.diff = !0)
               } else
                   h.forEach(function(file, b) {
@@ -670,8 +650,7 @@ sap.ui.define([
                       result.nbColumnDiff++
                   }),
                   result.nbLineDiff += 1,
-                  d.diff = !0
-                
+                  d.diff = !0                
           });
           g.forEach(function(b, c) {
               if (c >= l.length) {
@@ -685,8 +664,7 @@ sap.ui.define([
                     row: 0
                   };
                   result.csv.push(d);
-                  OrderCSV.preCSV.push(line);
-       
+                 // OrderCSV.preCSV.push(line);
                   result.nbLineDiff += 1;
                   file(b).forEach(function(file, b) {
                       d.columns.push({
@@ -702,10 +680,9 @@ sap.ui.define([
                   })
               }
           });
+          debugger; 
           this.showDiff(delimit_1);
-    
-          return result;
-          
+          return result;   
       },
 
       copyToClipBoard :function() {
