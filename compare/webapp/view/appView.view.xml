@@ -40,7 +40,7 @@
 	<Button id = "butt5" text="Export to CSV" press="exportResultstoFile" />
 	</HBox>
 
-	<html:div id="result" class="container-center container-action" style="" width="800px">
+	<html:div id="result" wrapping="true" class="container-center container-action" style="" width="800px">
 	<html:div id="result-diff" class="span result-diff" wrapping="true" width="800px">
 	</html:div></html:div>
 	

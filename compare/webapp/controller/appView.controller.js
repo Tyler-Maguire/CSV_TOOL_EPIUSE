@@ -18,6 +18,9 @@ sap.ui.define([
       var Body1;
       var Body2;
 
+      var newBody1 = [];
+      var newBody2 = [];
+
       var FullCSV1;
       var FullCSV2;
 
@@ -568,14 +571,42 @@ sap.ui.define([
                 }
                 return e
             }
+
+            json1 = json1.replaceAll('ï»¿','');
+            json2 = json2.replaceAll('ï»¿','');
+            //json1 = Body1.replaceAll('ï»¿','');
+            //json1 = Body2.replaceAll('ï»¿','');
             
             var c = delimit_1
               , f = ""
               , b = ''
               , n = json1
-              , p = json2
-              , l = n.split(/\r?\n/)
-              , g = p.split(/\r?\n/);
+              , p = json2;
+              //, l = n.split(/\r?\n/)
+              //, g = p.split(/\r?\n/);
+
+
+              for(var i = 0; i < Body1.length; i++) { 
+                var tempstring1 = ''; 
+                for(var j=0; j < Body1[i].length; j++) { 
+                  tempstring1 = tempstring1 +','+ Body1[i][j]
+                }
+                newBody1.push(tempstring1);
+              }
+              for(var i = 0; i < Body2.length; i++) { 
+                var tempstring2 = ''; 
+                for(var j=0; j < Body2[i].length; j++) { 
+                  tempstring2 = tempstring2 +','+ Body2[i][j]
+                }
+                newBody2.push(tempstring2);
+              }
+
+
+            var  l = newBody1;
+            var g = newBody2;
+
+
+
             result.csv = [];
             result.text = "";
             result.maxColumn = 0;
@@ -699,6 +730,7 @@ sap.ui.define([
                   var d = document.createElement("div");
                   d.classList.add("diff-col");
                   d.classList.add("diff-col-row");
+                  resultContainer.appendChild(document.createElement("br"));
                   d.appendChild(document.createTextNode("Row " + file));
                   b.appendChild(d)
               }
@@ -725,13 +757,13 @@ sap.ui.define([
           //services.billboard.emptyAndHide(["editor-error1", "editor-valid1"]);
          // for (services.billboard.emptyAndHide(["editor-error2", "editor-valid2"]); resultContainer.firstChild; )
           //    resultContainer.removeChild(resultContainer.firstChild);
-         for (var p = file(), l = 0; l <= result.maxColumn; l++) {
-             var g = document.createElement("div");
-             g.classList.add("diff-col");
-             g.classList.add("diff-col-field");
-             0 < l && g.appendChild(document.createTextNode("Field " + l));
-             p.appendChild(g)
-          }
+        //  for (var p = file(), l = 0; l <= result.maxColumn; l++) {
+        //      var g = document.createElement("div");
+        //      g.classList.add("diff-col");
+        //      g.classList.add("diff-col-field");
+        //      0 < l && g.appendChild(document.createTextNode("Field " + l));
+        //      p.appendChild(g)
+        //   }
           result.csv.forEach(function(e, g) {
               if ("diff" != b || e.diff) {
                   var d = file(g + 1);
@@ -747,7 +779,7 @@ sap.ui.define([
               }
           });
       //    resultContainer.appendChild(document.createElement("br"));
-           resultContainer.appendChild(document.createElement("br"));
+      //     resultContainer.appendChild(document.createElement("br"));
       }
       
 
