@@ -595,7 +595,7 @@ sap.ui.define([
                   if(basekey == ''){
                     basekey = csvBaseKeys[k];
                   }else{
-                    basekey = basekey +','+ csvBaseKeys[k];
+                    basekey = basekey +' + '+ csvBaseKeys[k];
                   } 
                   basekeymap++;
                 }
@@ -603,7 +603,7 @@ sap.ui.define([
                   if(compkey == ''){
                     compkey = csvCompareKeys[t];
                   }else{
-                    compkey = compkey +','+ csvCompareKeys[t];
+                    compkey = compkey +' + '+ csvCompareKeys[t];
                   } 
                   compkeymap++;
                 }
@@ -617,9 +617,9 @@ sap.ui.define([
             //while looping through 1st csv create data(base key) based on compkey then loop through other table create data(compare key)based on compkey and check then move row to match
 
 
-            
 
-             // rearrange from multidimensional array to single dimensional array 
+
+             // rearrange from multidimensional array to single dimensional array combining key coloumns?  then 
               for(var i = 0; i < Body1.length; i++) { 
                 var tempstring1 = ''; 
                 for(var j=0; j < Body1[i].length; j++) { 
