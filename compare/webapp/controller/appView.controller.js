@@ -1,339 +1,419 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",'sap/m/MessageToast','sap/ui/model/json/JSONModel'
+  "sap/ui/core/mvc/Controller",'sap/m/MessageToast','sap/ui/model/json/JSONModel'
 ],
-    /**
-     * @param {typeof sap.ui.core.mvc.Controller} Controller
-     */
-    function (Controller,MessageToast,JSONModel) {
-        "use strict";
-        var resultToDraw = {
-          json1: "",
-          json2: "",
-          colorLine: [],
-          stepDiff: [],
-          currentLine: 0,
-          tab: ""
-      };
-
-      var Body1;
-      var Body2;
-
-      var newBody1 = [];
-      var newBody2 = [];
-
-      var FullCSV1;
-      var FullCSV2;
-
-      var csvFile1;
-      var csvFile2;
-
-      var csvfiles = [];
-      
-      var newCSV1 = [];
-      var newCSV2 = [];
-      var newCSV1json = '';
-      var newCSV2json = '';
-
-      
-      var csvBaseKeys = [];
-      var csvBaseHeader = '';
-      var csvBaseHeadArr = [];
-      var csvBaseHeadCnt = 0;
-      var csvBaseKeysCnt = 0;
-      var csvBaseNewHeader = '';
-      var csvBaseNewHeadArr = [];
-
-      var csvCompareKeys = [];
-      var csvCompareHeader = '';
-      var csvCompHeadArr = [];
-      var csvCompHeadCnt = 0;
-      var csvCompareKeysCnt = 0;
-      var csvCompNewHeader = '';
-      var csvCompNewHeadArr = [];
-
-      var result = {
-          csv: [],
-          text: "",
-          maxColumn: 0,
-          nbLineDiff: 0,
-          nbColumnDiff: 0
-      };
-
-      var OrderCSV = {
-          preCSV:[],
-          postCSV:[]
-      };
-
-      var NewCSV = {
-        newCSV1:[],
-        newCSV2:[]
+  /**
+   * @param {typeof sap.ui.core.mvc.Controller} Controller
+   */
+  function (Controller,MessageToast,JSONModel) {
+      "use strict";
+      var resultToDraw = {
+        json1: "",
+        json2: "",
+        colorLine: [],
+        stepDiff: [],
+        currentLine: 0,
+        tab: ""
     };
 
-      var delimit_1 = '';
-      var delimit_2 = '';
+    var Body1;
+    var Body2;
 
-      var compareSelect = 'all'
-        //'all' or 'diff'
-        , Compare = {
-          ONLY1: 1,
-          ONLY2: 2,
-          DIFF: 3
-      };
-   
-        return Controller.extend("com.epiuse.compare.controller.appView", {
-          onInit() {
-            // set data model on view
-            const oData = {
-               Key : {
-                  Value : "",
-                  Row : "",
-                  Coloumn : "" 
-               }
-            };
-            var oCSVModel1= this.getOwnerComponent().getModel("CSVModel1");
-            const oModel1 = new JSONModel(oCSVModel1);
-            this.getView().setModel(oModel1);
-            var oCSVModel2= this.getOwnerComponent().getModel("CSVModel2");
-            const oModel2 = new JSONModel(oCSVModel2);
-            this.getView().setModel(oModel2);
-         },
+    var newBody1 = [];
+    var newBody2 = [];
 
-         getAllColumns: function() {
-          const columns = [];
-          return columns;
-        },
+    var FullCSV1;
+    var FullCSV2;
 
-       
+    var csvFile1;
+    var csvFile2;
 
-          onCompare: function(oEvent) {
+    var csvfiles = [];
+    
+    var newCSV1 = [];
+    var newCSV2 = [];
+    var newCSV1json = '';
+    var newCSV2json = '';
 
-            var rowInput = this.getView().byId("RowSelection").getValue();
-            var keyInput = this.getView().byId("KeySelection").getValue();
+    
+    var csvBaseKeys = [];
+    var csvBaseHeader = '';
+    var csvBaseHeadArr = [];
+    var csvBaseHeadCnt = 0;
+    var csvBaseKeysCnt = 0;
+    var csvBaseNewHeader = '';
+    var csvBaseNewHeadArr = [];
 
-            if(keyInput.toString() != ''){
-              csvBaseKeys = keyInput.toString().split(','); 
-              csvBaseKeysCnt = csvBaseKeys.length;        
-            }
-            if(keyInput.toString() != ''){
-              csvCompareKeys = rowInput.toString().split(','); 
-              csvCompareKeysCnt =  csvCompareKeys.length;             
-            }
+    var csvCompareKeys = [];
+    var csvCompareHeader = '';
+    var csvCompHeadArr = [];
+    var csvCompHeadCnt = 0;
+    var csvCompareKeysCnt = 0;
+    var csvCompNewHeader = '';
+    var csvCompNewHeadArr = [];
 
-            var oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModelBase");
-            var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModelCompare");
+    var result = {
+        csv: [],
+        text: "",
+        maxColumn: 0,
+        nbLineDiff: 0,
+        nbColumnDiff: 0
+    };
 
-             const internLines = oCSVModelCompare1.oData.CSVBaseJson.toString().split('\n');
-             const externLines = oCSVModelCompare2.oData.CSVCompareJson.toString().split('\n');
-   
-            this.reOrderCSV(internLines,externLines);
-            this.dynamicCSVcompare(oCSVModelCompare1.oData.CSVBaseJson.toString(),oCSVModelCompare2.oData.CSVCompareJson.toString(),delimit_1,delimit_2);
+    var OrderCSV = {
+        preCSV:[],
+        postCSV:[]
+    };
 
-            
-            //MessageToast.show(oCSVModelCompare1.toString());
-            //MessageToast.show(oCSVModelCompare2.toString());
-            
-            },
+    var NewCSV = {
+      newCSV1:[],
+      newCSV2:[]
+  };
 
-             checkFunc: async function (inputFile) {
+    var delimit_1 = '';
+    var delimit_2 = '';
 
-               if (inputFile.files.length) {
-                 try {
-                   var csvFileInText = await inputFile.files[0].text();
-                   console.log(csvFileInText);
+    var compareSelect = 'all'
+      //'all' or 'diff'
+      , Compare = {
+        ONLY1: 1,
+        ONLY2: 2,
+        DIFF: 3
+    };
+ 
+      return Controller.extend("com.epiuse.compare.controller.appView", {
+        onInit() {
+          // set data model on view
+          const oData = {
+             Key : {
+                Value : "",
+                Row : "",
+                Coloumn : "" 
+             }
+          };
+          var oCSVModel1= this.getOwnerComponent().getModel("CSVModel1");
+          const oModel1 = new JSONModel(oCSVModel1);
+          this.getView().setModel(oModel1);
+          var oCSVModel2= this.getOwnerComponent().getModel("CSVModel2");
+          const oModel2 = new JSONModel(oCSVModel2);
+          this.getView().setModel(oModel2);
+       },
 
-                   csvFileInText=csvFileInText.replaceAll('\r','').replaceAll('ï»¿','');
-                   csvfiles.push(csvFileInText);
+       getAllColumns: function() {
+        const columns = [];
+        return columns;
+      },
 
-                   var arrObje = [];
-                  // var lines = csvFileInText.split('\n');
-                  csvFileInText = csvFileInText.replace(/{/g, '').replace(/}/g, '');
-                   let lines = csvFileInText.split(/\r?\n/);
+     
 
-                  let delimit = this.delimiter(csvFileInText);
+        onCompare: function(oEvent) {
 
-                  delimit_1 = delimit;
+          var rowInput = this.getView().byId("RowSelection").getValue();
+          var keyInput = this.getView().byId("KeySelection").getValue();
 
-                   var lineA = lines[0].split(delimit);
+          if(keyInput.toString() != ''){
+            csvBaseKeys = keyInput.toString().split(','); 
+            csvBaseKeysCnt = csvBaseKeys.length;        
+          }
+          if(keyInput.toString() != ''){
+            csvCompareKeys = rowInput.toString().split(','); 
+            csvCompareKeysCnt =  csvCompareKeys.length;             
+          }
 
-                   csvBaseHeader = lines[0];
-                   csvBaseHeadArr = lineA;
+          var oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModelBase");
+          var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModelCompare");
 
-                   let linesize = lineA.length;
-                   csvBaseHeadCnt = linesize;
+           const internLines = oCSVModelCompare1.oData.CSVBaseJson.toString().split('\n');
+           const externLines = oCSVModelCompare2.oData.CSVCompareJson.toString().split('\n');
+ 
+          this.reOrderCSV(internLines,externLines);
+          this.dynamicCSVcompare(oCSVModelCompare1.oData.CSVBaseJson.toString(),oCSVModelCompare2.oData.CSVCompareJson.toString(),delimit_1,delimit_2);
 
-                   if (linesize >= 1) {
-                     return linesize;
-                   }
-                   else {
-                     return -1;
-                   }
-
-                 } catch (e) {
-                   console.error(e);
-                 }
-               }
-             },
-             checkFuncCompare: async function (inputFile) {
-
-              if (inputFile.files.length) {
-                try {
-                  var csvFileInText = await inputFile.files[0].text();
-                  console.log(csvFileInText);
-                  csvFileInText=csvFileInText.replaceAll('\r','').replaceAll('ï»¿','');
-                  csvfiles.push(csvFileInText);
-
-                  var arrObje = [];
-                 // var lines = csvFileInText.split('\n');
-                  let lines = csvFileInText.split(/\r?\n/);
-
-                 let delimit = this.delimiter(csvFileInText);
-
-                 delimit_2 = delimit;
-
-                  var lineA = lines[0].split(delimit);
-
-                  csvCompareHeader = lines[0];
-
-                  let linesize = lineA.length;
-                  csvCompHeadCnt = linesize;
-                  
-
-                  csvCompHeadArr = lineA;
-
-                  if (linesize >= 1) {
-                    return linesize;
-                  }
-                  else {
-                    return -1;
-                  }
-
-                } catch (e) {
-                  console.error(e);
-                }
-              }
-            },
-
-            reOrderCSV: function(LinesCSV1,LinesCSV2){
-              var len1 = LinesCSV1.length;
-              len1--;
-              for(var w = 0; w <= len1; w++){
-                if(LinesCSV1[w]){
-                  LinesCSV1[w]=LinesCSV1[w].replaceAll('\r','').replaceAll('ï»¿','');
-                }
-              
-              }
-              csvFile1 = LinesCSV1;
-              var len2 = LinesCSV2.length;
-              len2--;
-              for(var d = 0; d <= len2; d++){
-                if(LinesCSV2[d]){
-                  LinesCSV2[d]=LinesCSV2[d].replaceAll('\r','').replaceAll('ï»¿','');
-                }
-              }
-              csvFile2 = LinesCSV2;
-              FullCSV1 = LinesCSV1;
-              FullCSV2 = LinesCSV2;
-
-              Body1 = JSON.parse(JSON.stringify(LinesCSV1));
-              Body2 = JSON.parse(JSON.stringify(LinesCSV2));
-
-              var header1 = Body1.shift();
-              var header2 = Body2.shift();
           
-              newCSV1json = '';
-              newCSV2json = '';
+          MessageToast.show(oCSVModelCompare1.toString());
+          MessageToast.show(oCSVModelCompare2.toString());
+          
+          },
 
-              Body1 = Body1.filter(Boolean);
-              Body2 = Body2.filter(Boolean);
+           checkFunc: async function (inputFile) {
 
-              var newsplit1  = csvFile1.map((x) => x.split(delimit_1));
-              var newsplit2  = csvFile2.map((x) => x.split(delimit_2));   
-              
-              newsplit1 = newsplit1.filter(Boolean);
-              newsplit2 = newsplit2.filter(Boolean);
+             if (inputFile.files.length) {
+               try {
+                 var csvFileInText = await inputFile.files[0].text();
+                 console.log(csvFileInText);
 
-              for (var i = 0; i < newsplit1.length; i++) {
-                if(newsplit1[i]==''){newsplit1.splice(i, 1);}
-              }
+                 csvFileInText=csvFileInText.replaceAll('\r','').replaceAll('ï»¿','');
+                 csvfiles.push(csvFileInText);
 
-              for (var i = 0; i < newsplit2.length; i++) {
-                if(newsplit2[i]==''){newsplit2.splice(i, 1);}
-              }
+                 var arrObje = [];
+                // var lines = csvFileInText.split('\n');
+                csvFileInText = csvFileInText.replace(/{/g, '').replace(/}/g, '');
+                 let lines = csvFileInText.split(/\r?\n/);
 
-              var tempheader = '';
-              var temparray1;
-              var temparray2;
-              var tempcol = '';
-              var newheadcnt1 = 0;
-              var newheadcnt2 = 0;
-              if(csvBaseHeader == csvCompareHeader){
-              }else{
-              for(var i=0;i<csvBaseHeadCnt;i++){
-                for(var j=0;j<csvCompHeadCnt;j++){  
-                  var obj = {};
-                  var obj2 = {};         
-                  if(csvBaseHeadArr[i]==csvCompHeadArr[j]){
-               
-                    tempheader = csvBaseHeadArr[i];
+                let delimit = this.delimiter(csvFileInText);
 
-                    //Shifting CSV1
-                    csvBaseHeadArr[i] = csvBaseHeadArr[newheadcnt1];
-                    csvBaseHeadArr[newheadcnt1] = tempheader;
+                delimit_1 = delimit;
 
-                    //obj[newsplit1[newheadcnt1][i]] = newsplit1[newheadcnt1][j];
-                    //Loop through rows newsplit1
-                    for(var b1=0; b1<newsplit1.length;b1++){
-                    temparray1 = JSON.parse(JSON.stringify(newsplit1[b1][i]));
-                    newsplit1[b1][i] = JSON.parse(JSON.stringify(newsplit1[b1][newheadcnt1]));
-                    newsplit1[b1][newheadcnt1] = JSON.parse(JSON.stringify(temparray1));;
-                    }
-                    //Shifting CSV2
-                    csvCompHeadArr[j] = csvCompHeadArr[newheadcnt2];
-                    csvCompHeadArr[newheadcnt2] = tempheader;
+                 var lineA = lines[0].split(delimit);
 
-                    //obj2[newsplit2[j][newheadcnt2]] = newsplit2[newheadcnt2][i];
-                    //Loop through rows newsplit2
-                    
-                    for(var b2=0; b2<newsplit2.length;b2++){
-                      temparray2 = JSON.parse(JSON.stringify(newsplit2[b2][i]));
-                      newsplit2[b2][i] = JSON.parse(JSON.stringify(newsplit2[b2][newheadcnt2]));
-                      temparray2 = JSON.parse(JSON.stringify(newsplit2[b2][j]));
-                      newsplit2[b2][j] = JSON.parse(JSON.stringify(newsplit2[b2][newheadcnt2]));
-                      newsplit2[b2][newheadcnt2] = JSON.parse(JSON.stringify(temparray2));;
-                      }
+                 csvBaseHeader = lines[0];
+                 csvBaseHeadArr = lineA;
 
-                    //TO-DO Shift Cols at the same index.
-                    newheadcnt1++;
-                    newheadcnt2++;
+                 let linesize = lineA.length;
+                 csvBaseHeadCnt = linesize;
 
-                    NewCSV.newCSV1.push(obj);
-                    NewCSV.newCSV2.push(obj2);
-                  }
-        
-                }
+                 if (linesize >= 1) {
+                   return linesize;
+                 }
+                 else {
+                   return -1;
+                 }
+
+               } catch (e) {
+                 console.error(e);
+               }
+             }
+           },
+           checkFuncCompare: async function (inputFile) {
+
+            if (inputFile.files.length) {
+              try {
+                var csvFileInText = await inputFile.files[0].text();
+                console.log(csvFileInText);
+                csvFileInText=csvFileInText.replaceAll('\r','').replaceAll('ï»¿','');
+                csvfiles.push(csvFileInText);
+
+                var arrObje = [];
+               // var lines = csvFileInText.split('\n');
+                let lines = csvFileInText.split(/\r?\n/);
+
+               let delimit = this.delimiter(csvFileInText);
+
+               delimit_2 = delimit;
+
+                var lineA = lines[0].split(delimit);
+
+                csvCompareHeader = lines[0];
+
+                let linesize = lineA.length;
+                csvCompHeadCnt = linesize;
                 
-              } 
-              
-              Body1 = newsplit1;
-              Body2 = newsplit2;
+
+                csvCompHeadArr = lineA;
+
+                if (linesize >= 1) {
+                  return linesize;
+                }
+                else {
+                  return -1;
+                }
+
+              } catch (e) {
+                console.error(e);
+              }
             }
+          },
+
+          reOrderCSV: function(LinesCSV1,LinesCSV2){
+            var len1 = LinesCSV1.length;
+            len1--;
+            for(var w = 0; w <= len1; w++){
+              if(LinesCSV1[w]){
+                LinesCSV1[w]=LinesCSV1[w].replaceAll('\r','').replaceAll('ï»¿','');
+              }
             
-            },
-            onUploadBase: function(e) {
-               var oCSVModelBase = this.getOwnerComponent().getModel("CSVModelBase");
-               this.getView().setModel(oCSVModelBase, "CSVModelBase");
-               var fU = this.getView().byId("FileUploaderBase");
-               var domRef = fU.getFocusDomRef();
-               var file = fU.oFileUpload.files[0]; 
-               var reader = new FileReader();
-               var params = "";
-               var that = this;
-               reader.onload = function(oEvent) {
-                 var strCSV = oEvent.target.result;
-                 var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                 var lines = strCSV.split('\n');
-                 that.checkFunc(fU.oFileUpload).then(function(r){
-                  var noOfCols = r;
+            }
+            csvFile1 = LinesCSV1;
+            var len2 = LinesCSV2.length;
+            len2--;
+            for(var d = 0; d <= len2; d++){
+              if(LinesCSV2[d]){
+                LinesCSV2[d]=LinesCSV2[d].replaceAll('\r','').replaceAll('ï»¿','');
+              }
+            }
+            csvFile2 = LinesCSV2;
+            FullCSV1 = LinesCSV1;
+            FullCSV2 = LinesCSV2;
+
+            Body1 = JSON.parse(JSON.stringify(LinesCSV1));
+            Body2 = JSON.parse(JSON.stringify(LinesCSV2));
+
+            var header1 = Body1.shift();
+            var header2 = Body2.shift();
+        
+            newCSV1json = '';
+            newCSV2json = '';
+
+            Body1 = Body1.filter(Boolean);
+            Body2 = Body2.filter(Boolean);
+
+            var newsplit1  = csvFile1.map((x) => x.split(delimit_1));
+            var newsplit2  = csvFile2.map((x) => x.split(delimit_2));   
+            
+            newsplit1 = newsplit1.filter(Boolean);
+            newsplit2 = newsplit2.filter(Boolean);
+
+            for (var i = 0; i < newsplit1.length; i++) {
+              if(newsplit1[i]==''){newsplit1.splice(i, 1);}
+            }
+
+            for (var i = 0; i < newsplit2.length; i++) {
+              if(newsplit2[i]==''){newsplit2.splice(i, 1);}
+            }
+
+            var tempheader = '';
+            var temparray1;
+            var temparray2;
+            var tempcol = '';
+            var newheadcnt1 = 0;
+            var newheadcnt2 = 0;
+            if(csvBaseHeader == csvCompareHeader){
+            }else{
+            for(var i=0;i<csvBaseHeadCnt;i++){
+              for(var j=0;j<csvCompHeadCnt;j++){  
+                var obj = {};
+                var obj2 = {};         
+                if(csvBaseHeadArr[i]==csvCompHeadArr[j]){
+             
+                  tempheader = csvBaseHeadArr[i];
+
+                  //Shifting CSV1
+                  csvBaseHeadArr[i] = csvBaseHeadArr[newheadcnt1];
+                  csvBaseHeadArr[newheadcnt1] = tempheader;
+
+                  //obj[newsplit1[newheadcnt1][i]] = newsplit1[newheadcnt1][j];
+                  //Loop through rows newsplit1
+                  for(var b1=0; b1<newsplit1.length;b1++){
+                  temparray1 = JSON.parse(JSON.stringify(newsplit1[b1][i]));
+                  newsplit1[b1][i] = JSON.parse(JSON.stringify(newsplit1[b1][newheadcnt1]));
+                  newsplit1[b1][newheadcnt1] = JSON.parse(JSON.stringify(temparray1));;
+                  }
+                  //Shifting CSV2
+                  csvCompHeadArr[j] = csvCompHeadArr[newheadcnt2];
+                  csvCompHeadArr[newheadcnt2] = tempheader;
+
+                  //obj2[newsplit2[j][newheadcnt2]] = newsplit2[newheadcnt2][i];
+                  //Loop through rows newsplit2
+                  
+                  for(var b2=0; b2<newsplit2.length;b2++){
+                    temparray2 = JSON.parse(JSON.stringify(newsplit2[b2][i]));
+                    newsplit2[b2][i] = JSON.parse(JSON.stringify(newsplit2[b2][newheadcnt2]));
+                    temparray2 = JSON.parse(JSON.stringify(newsplit2[b2][j]));
+                    newsplit2[b2][j] = JSON.parse(JSON.stringify(newsplit2[b2][newheadcnt2]));
+                    newsplit2[b2][newheadcnt2] = JSON.parse(JSON.stringify(temparray2));;
+                    }
+
+                  //TO-DO Shift Cols at the same index.
+                  newheadcnt1++;
+                  newheadcnt2++;
+
+                  NewCSV.newCSV1.push(obj);
+                  NewCSV.newCSV2.push(obj2);
+                }
+      
+              }
+              
+            } 
+            
+            Body1 = newsplit1;
+            Body2 = newsplit2;
+          }
+          
+          },
+
+          onUploadBase: function(e) {
+             var oCSVModelBase = this.getOwnerComponent().getModel("CSVModelBase");
+             this.getView().setModel(oCSVModelBase, "CSVModelBase");
+             var fU = this.getView().byId("FileUploaderBase");
+             var domRef = fU.getFocusDomRef();
+             var file = fU.oFileUpload.files[0]; 
+             var reader = new FileReader();
+             var params = "";
+             var that = this;
+             reader.onload = function(oEvent) {
+               var strCSV = oEvent.target.result;
+               var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+               var lines = strCSV.split('\n');
+               that.checkFunc(fU.oFileUpload).then(function(r){
+                var noOfCols = r;
+                var headerRow = arrCSV.splice(0, noOfCols);
+                var data = [];
+                while (arrCSV.length > 0) {
+                  var obj = {};
+                  var row = arrCSV.splice(0, noOfCols);
+                  for (var i = 0; i < row.length; i++) {
+                    obj[headerRow[i]] = row[i].trim();
+                  }
+                  data.push(obj);
+                }
+                var Len = data.length;
+                data.reverse();
+                for (var j = 0; j < Len; j++) {
+                  params += JSON.stringify(data.pop()) + ", ";
+                }
+                params = params.substring(0, params.length - 2);
+                var jsoncsvbase = new JSONModel();
+                jsoncsvbase.setData({CSVBaseJson:strCSV});
+                that.getView().byId("FileOutBase").setText(params); 
+                that.getOwnerComponent().setModel(jsoncsvbase,"CSVModelBase");
+                that.getView().setModel(jsoncsvbase,"CSVModelBase");
+                });
+             };
+             reader.readAsBinaryString(file);
+           },
+           onUploadCompare: function(e) {
+            var oCSVModelCompare = this.getOwnerComponent().getModel("CSVModelCompare");
+            this.getView().setModel(oCSVModelCompare, "CSVModelCompare");
+            var fU = this.getView().byId("FileUploaderCompare");
+            var domRef = fU.getFocusDomRef();
+            var file = fU.oFileUpload.files[0]; 
+            var reader = new FileReader();
+            var params = "";
+            var that = this;
+            reader.onload = function(oEvent) {
+              var strCSV = oEvent.target.result;
+              var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+              var lines = strCSV.split('\n');
+              that.checkFuncCompare(fU.oFileUpload).then(function(r){
+               var noOfCols = r;
+               var headerRow = arrCSV.splice(0, noOfCols);
+               var data = [];
+               while (arrCSV.length > 0) {
+                 var obj = {};
+                 var row = arrCSV.splice(0, noOfCols);
+                 for (var i = 0; i < row.length; i++) {
+                   obj[headerRow[i]] = row[i].trim();
+                 }
+                 data.push(obj);
+               }
+               var Len = data.length;
+               data.reverse();
+               for (var j = 0; j < Len; j++) {
+                 params += JSON.stringify(data.pop()) + ", ";
+               }
+               params = params.substring(0, params.length - 2);
+               var jsoncsvcompare = new JSONModel();
+               jsoncsvcompare.setData({CSVCompareJson:strCSV});
+               that.getView().byId("FileOutCompare").setText(params); 
+               that.getOwnerComponent().setModel(jsoncsvcompare,"CSVModelCompare");
+               that.getView().setModel(jsoncsvcompare,"CSVModelCompare");
+               });
+            };
+            reader.readAsBinaryString(file);
+          },
+
+
+
+          handleUploadPress1: function(oEvent) {
+
+
+              var file;
+              var oFileUploader1 = this.byId("fileUploader1");
+              var reader1 = new FileReader();
+              file = oFileUploader1.oFileUpload.files[0];
+              reader1.onload = function(oEvent) {
+                  var strCSV = oEvent.target.result;
+                  var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+                  var noOfCols = 6;
                   var headerRow = arrCSV.splice(0, noOfCols);
                   var data = [];
                   while (arrCSV.length > 0) {
@@ -346,505 +426,364 @@ sap.ui.define([
                   }
                   var Len = data.length;
                   data.reverse();
+                  params += "[";
                   for (var j = 0; j < Len; j++) {
                     params += JSON.stringify(data.pop()) + ", ";
                   }
                   params = params.substring(0, params.length - 2);
-                  var jsoncsvbase = new JSONModel();
-                  jsoncsvbase.setData({CSVBaseJson:strCSV});
-                  that.getView().byId("FileOutBase").setText(params); 
-                  that.getOwnerComponent().setModel(jsoncsvbase,"CSVModelBase");
-                  that.getView().setModel(jsoncsvbase,"CSVModelBase");
-                  });
-               };
-               reader.readAsBinaryString(file);
-             },
-             onUploadCompare: function(e) {
-              var oCSVModelCompare = this.getOwnerComponent().getModel("CSVModelCompare");
-              this.getView().setModel(oCSVModelCompare, "CSVModelCompare");
-              var fU = this.getView().byId("FileUploaderCompare");
-              var domRef = fU.getFocusDomRef();
-              var file = fU.oFileUpload.files[0]; 
-              var reader = new FileReader();
-              var params = "";
-              var that = this;
-              reader.onload = function(oEvent) {
-                var strCSV = oEvent.target.result;
-                var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                var lines = strCSV.split('\n');
-                that.checkFuncCompare(fU.oFileUpload).then(function(r){
-                 var noOfCols = r;
-                 var headerRow = arrCSV.splice(0, noOfCols);
-                 var data = [];
-                 while (arrCSV.length > 0) {
-                   var obj = {};
-                   var row = arrCSV.splice(0, noOfCols);
-                   for (var i = 0; i < row.length; i++) {
-                     obj[headerRow[i]] = row[i].trim();
-                   }
-                   data.push(obj);
-                 }
-                 var Len = data.length;
-                 data.reverse();
-                 for (var j = 0; j < Len; j++) {
-                   params += JSON.stringify(data.pop()) + ", ";
-                 }
-                 params = params.substring(0, params.length - 2);
-                 var jsoncsvcompare = new JSONModel();
-                 jsoncsvcompare.setData({CSVCompareJson:strCSV});
-                 that.getView().byId("FileOutCompare").setText(params); 
-                 that.getOwnerComponent().setModel(jsoncsvcompare,"CSVModelCompare");
-                 that.getView().setModel(jsoncsvcompare,"CSVModelCompare");
-                 });
-              };
-              reader.readAsBinaryString(file);
-            },
+                  params += "]";
+          }
 
-            handleUploadPress1: function(oEvent) {
-                var file;
-                var oFileUploader1 = this.byId("fileUploader1");
-                var reader1 = new FileReader();
-                file = oFileUploader1.oFileUpload.files[0];
-                reader1.onload = function(oEvent) {
-                    var strCSV = oEvent.target.result;
-                    var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                    var noOfCols = 6;
-                    var headerRow = arrCSV.splice(0, noOfCols);
-                    var data = [];
-                    while (arrCSV.length > 0) {
-                      var obj = {};
-                      var row = arrCSV.splice(0, noOfCols);
-                      for (var i = 0; i < row.length; i++) {
-                        obj[headerRow[i]] = row[i].trim();
-                      }
-                      data.push(obj);
-                    }
-                    var Len = data.length;
-                    data.reverse();
-                    params += "[";
-                    for (var j = 0; j < Len; j++) {
-                      params += JSON.stringify(data.pop()) + ", ";
-                    }
-                    params = params.substring(0, params.length - 2);
-                    params += "]";
-            }
-
-            },
-            handleUploadPress2: function(oEvent) {    
-                var file;
-                var reader2 = new FileReader();
-                var oFileUploader2 = this.byId("fileUploader2");
-                if (oEvent.getParameters("files")) {
-                    file = oEvent.getParameters("files").files[0]; 
-                }
-                reader2.onload = function(oEvent) {
-                    file = oFileUploader2.oFileUpload.files[0];    
-                    var strCSV = oEvent.target.result;
-                    var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                    var arrLen = arrCSV.length;
-                    var noOfCols = arrLen;
-                    var headerRow = arrCSV.splice(0, noOfCols);
-                    var data = [];
-                    while (arrCSV.length > 0) {
-                      var obj = {};
-                      var row = arrCSV.splice(0, noOfCols);
-                      for (var i = 0; i < row.length; i++) {
-                        obj[headerRow[i]] = row[i].trim();
-                      }
-                      data.push(obj);
-                    }
-                    var Len = data.length;
-                    data.reverse();
-                    params += "[";
-                    for (var j = 0; j < Len; j++) {
-                      params += JSON.stringify(data.pop()) + ", ";
-                    }
-                    params = params.substring(0, params.length - 2);
-                    params += "]";
-            }
-            },
-            handleTypeMissmatch: function(oEvent) {
-              var aFileTypes = oEvent.getSource().getFileType();
-              jQuery.each(aFileTypes, function(key, value) {
-                aFileTypes[key] = "*." + value;
-              });
-              var sSupportedFileTypes = aFileTypes.join(", ");
-              MessageToast.show("The file type *." + oEvent.getParameter("fileType") +
-                " is not supported. Choose one of the following types: " +
-                sSupportedFileTypes);
-            },
-            handleValueChange: function(oEvent) {
-              MessageToast.show("Press 'Upload File' to upload file '" + oEvent.getParameter("newValue") + "'");
-            },
-            handleFileSize: function(oEvent) {
-              MessageToast.show("The file size should not exceed 10 MB.");
-            },
-            handleFileNameLength: function(oEvent) {
-              MessageToast.show("The file name should be less than that.");
-            },
-            exportResultstoFile: function (fileObject) {
-              fileObject.data = result.text;
-              fileObject.filename = 'results.csv';
-              var blob = (fileObject.blob ? fileObject.blob : new Blob([fileObject.data], { type: fileObject.mime }));
-              if (navigator.msSaveBlob) { // IE 10+
-                navigator.msSaveBlob(blob, fileObject.filename);
-              } else {
-                var link = document.createElement("a");
-                if (link.download !== undefined) { // feature detection
-                  // Browsers that support HTML5 download attribute
-                  var url = URL.createObjectURL(blob);
-                  link.setAttribute("href", url);
-                  link.setAttribute("download", fileObject.filename);
-                  link.style.visibility = 'hidden';
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                }
+          },
+          handleUploadPress2: function(oEvent) {
+              
+              var file;
+              var reader2 = new FileReader();
+              var oFileUploader2 = this.byId("fileUploader2");
+              if (oEvent.getParameters("files")) {
+                  file = oEvent.getParameters("files").files[0]; 
               }
-            
-            },
-            readFile: function(input){
-              let file = input.files[0];
-
-              let reader = new FileReader();
-            
-              reader.readAsText(file);
-            
-              reader.onload = function() {
-                console.log(reader.result);
-              };
-            
-              reader.onerror = function() {
-                console.log(reader.error);
-              };
-
-            },
-
-            delimiter: function(csvText) {
-              let t = csvText.split("\n")[0];
-              let delArray = [',', ';', '|', '    '];
-              let comma,samiclon,pipe,tab = 0;
-              delArray.forEach((e, i) => {
-                  if (i === 0) {
-                      comma = t.split(e).length;
-                  } else if (i === 1) {
-                      samiclon = t.split(e).length;
-                  } else if (i === 2) {
-                      pipe = t.split(e).length;
-                  } else if (i === 3) {
-                      tab = t.split(e).length;
+              reader2.onload = function(oEvent) {
+                  file = oFileUploader2.oFileUpload.files[0];    
+                  var strCSV = oEvent.target.result;
+                  var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+                  var arrLen = arrCSV.length;
+                  var noOfCols = arrLen;
+                  var headerRow = arrCSV.splice(0, noOfCols);
+                  var data = [];
+                  while (arrCSV.length > 0) {
+                    var obj = {};
+                    var row = arrCSV.splice(0, noOfCols);
+                    for (var i = 0; i < row.length; i++) {
+                      obj[headerRow[i]] = row[i].trim();
+                    }
+                    data.push(obj);
                   }
-              });
-              let tmpArray1 = [comma, samiclon, pipe, tab]
-              let tmpArray = [comma, samiclon, pipe, tab];
-              let maxLen = tmpArray.sort((file, b) => b - file)[0];
-              let delimiter_i = 0;
-              tmpArray1.forEach((e, i) => {
-                  if (maxLen === e) {
-                      delimiter_i = i;
+                  var Len = data.length;
+                  data.reverse();
+                  params += "[";
+                  for (var j = 0; j < Len; j++) {
+                    params += JSON.stringify(data.pop()) + ", ";
                   }
-              });
-              if (delimiter_i === 0) {
-                  return ',';
-              } else if (delimiter_i === 1) {
-                  return ';'
-              } else if (delimiter_i === 2) {
-                  return '|'
-              } else if (delimiter_i === 3) {
-                  return '    '
+                  params = params.substring(0, params.length - 2);
+                  params += "]";
+          }
+          },
+          handleTypeMissmatch: function(oEvent) {
+            var aFileTypes = oEvent.getSource().getFileType();
+            jQuery.each(aFileTypes, function(key, value) {
+              aFileTypes[key] = "*." + value;
+            });
+            var sSupportedFileTypes = aFileTypes.join(", ");
+            MessageToast.show("The file type *." + oEvent.getParameter("fileType") +
+              " is not supported. Choose one of the following types: " +
+              sSupportedFileTypes);
+          },
+          handleValueChange: function(oEvent) {
+            MessageToast.show("Press 'Upload File' to upload file '" + oEvent.getParameter("newValue") + "'");
+          },
+          handleFileSize: function(oEvent) {
+            MessageToast.show("The file size should not exceed 10 MB.");
+          },
+          handleFileNameLength: function(oEvent) {
+            MessageToast.show("The file name should be less than that.");
+          },
+          exportResultstoFile: function (fileObject) {
+            fileObject.data = result.text;
+            fileObject.filename = 'results.csv';
+            var blob = (fileObject.blob ? fileObject.blob : new Blob([fileObject.data], { type: fileObject.mime }));
+            if (navigator.msSaveBlob) { // IE 10+
+              navigator.msSaveBlob(blob, fileObject.filename);
+            } else {
+              var link = document.createElement("a");
+              if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", fileObject.filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
               }
+            }
+          
+          },
+          readFile: function(input){
+            let file = input.files[0];
+
+            let reader = new FileReader();
+          
+            reader.readAsText(file);
+          
+            reader.onload = function() {
+              console.log(reader.result);
+            };
+          
+            reader.onerror = function() {
+              console.log(reader.error);
+            };
+
           },
 
-          dynamicCSVcompare: function(json1,json2,delimit_1,delimit_2){
-            function a(a) {
-                for (var e = [], d = a.split(c), h = 0; h < d.length; h++) {
-                    a = !1;
-                    var k = d[h];
-                    k.length && k[0] == f && (2 <= k.length ? k[k.length - 1] !== f ? a = !0 : 2 < k.length && k[k.length - 2] === b && (a = !0) : a = !0);
-                    a && h !== d.length - 1 ? d[h + 1] = k + c + d[h + 1] : e.push(k)
+          delimiter: function(csvText) {
+            let t = csvText.split("\n")[0];
+            let delArray = [',', ';', '|', '    '];
+            let comma,samiclon,pipe,tab = 0;
+            delArray.forEach((e, i) => {
+                if (i === 0) {
+                    comma = t.split(e).length;
+                } else if (i === 1) {
+                    samiclon = t.split(e).length;
+                } else if (i === 2) {
+                    pipe = t.split(e).length;
+                } else if (i === 3) {
+                    tab = t.split(e).length;
                 }
-                return e
+            });
+            let tmpArray1 = [comma, samiclon, pipe, tab]
+            let tmpArray = [comma, samiclon, pipe, tab];
+            let maxLen = tmpArray.sort((file, b) => b - file)[0];
+            let delimiter_i = 0;
+            tmpArray1.forEach((e, i) => {
+                if (maxLen === e) {
+                    delimiter_i = i;
+                }
+            });
+            if (delimiter_i === 0) {
+                return ',';
+            } else if (delimiter_i === 1) {
+                return ';'
+            } else if (delimiter_i === 2) {
+                return '|'
+            } else if (delimiter_i === 3) {
+                return '    '
+            }
+        },
+
+        dynamicCSVcompare: function(json1,json2,delimit_1,delimit_2){
+          function a(a) {
+              for (var e = [], d = a.split(c), h = 0; h < d.length; h++) {
+                  a = !1;
+                  var k = d[h];
+                  k.length && k[0] == f && (2 <= k.length ? k[k.length - 1] !== f ? a = !0 : 2 < k.length && k[k.length - 2] === b && (a = !0) : a = !0);
+                  a && h !== d.length - 1 ? d[h + 1] = k + c + d[h + 1] : e.push(k)
+              }
+              return e
+          }
+
+          json1 = json1.replaceAll('ï»¿','');
+          json2 = json2.replaceAll('ï»¿','');
+          //json1 = Body1.replaceAll('ï»¿','');
+          //json1 = Body2.replaceAll('ï»¿','');
+          
+          var c = delimit_1
+            , f = ""
+            , b = ''
+            , n = json1
+            , p = json2;
+            //, l = n.split(/\r?\n/)
+            //, g = p.split(/\r?\n/);
+
+
+            for(var i = 0; i < Body1.length; i++) { 
+              var tempstring1 = ''; 
+              for(var j=0; j < Body1[i].length; j++) { 
+                tempstring1 = tempstring1 +','+ Body1[i][j]
+              }
+              newBody1.push(tempstring1);
+            }
+            for(var i = 0; i < Body2.length; i++) { 
+              var tempstring2 = ''; 
+              for(var j=0; j < Body2[i].length; j++) { 
+                tempstring2 = tempstring2 +','+ Body2[i][j]
+              }
+              newBody2.push(tempstring2);
             }
 
-            json1 = json1.replaceAll('ï»¿','');
-            json2 = json2.replaceAll('ï»¿','');
-            //json1 = Body1.replaceAll('ï»¿','');
-            //json1 = Body2.replaceAll('ï»¿','');
-            
-            var c = delimit_1
-              , f = ""
-              , b = ''
-              , n = json1
-              , p = json2;
-              //, l = n.split(/\r?\n/)
-              //, g = p.split(/\r?\n/);
 
-
-            var basekey = '';
-            var compkey = '';
-            var basekeymap = 0;
-            var compkeymap = 0;
-
-            //ToDo Add code for the section for key chcking ect
-            //Loop through both CSV Rows and use key Selection to match rows and line up row indexs
-            if(csvBaseKeysCnt >= 1 && csvCompareKeysCnt >= 1){
-              //Future dev to use correspnding keys regardless of text matching or number of keys. 
-               if(csvBaseKeys[0] == csvCompareKeys[0]){
-                for(var k=0;k < csvBaseKeysCnt;k++){
-                  if(basekey == ''){
-                    basekey = csvBaseKeys[k];
-                  }else{
-                    basekey = basekey +' + '+ csvBaseKeys[k];
-                  } 
-                  basekeymap++;
-                }
-                for(var t=0;t < csvCompareKeysCnt;t++){
-                  if(compkey == ''){
-                    compkey = csvCompareKeys[t];
-                  }else{
-                    compkey = compkey +' + '+ csvCompareKeys[t];
-                  } 
-                  compkeymap++;
-                }
-               }else{
-                MessageToast.show('Keys entered do not match. Please check keys.');
-               } 
-            }else{
-                MessageToast.show('Please check that you entered keys for each CSV.');
-            } 
-
-            //while looping through 1st csv create data(base key) based on compkey then loop through other table create data(compare key)based on compkey and check then move row to match
-            
+          var  l = newBody1;
+          var g = newBody2;
 
 
 
-
-             // rearrange from multidimensional array to single dimensional array combining key coloumns?  then
-             //Note for now only 2 keys allowed.
-             var stopcsv = false;
-             var stopcsv2 = false;
-           
-
-             //CSV-1
-              for(var i = 0; i < Body1.length; i++) { 
-                var tempstring1 = ''; 
-                for(var j=0; j < Body1[i].length; j++) { 
-                  if(j >= 0 && j <  basekeymap){
-                    if(stopcsv == false){
-                    tempstring1 = Body1[i][j] + ' + ' + Body1[i][j+1];
-                    stopcsv = true;
-                    }
-                  }
-
-                  if(tempstring1 == ''){
-                    tempstring1 = Body1[i][j];
-                  }
-                  else{
-                  tempstring1 = tempstring1 +','+ Body1[i][j];
-                  }
-                }
-                newBody1.push(tempstring1);
-              }
-
-            //CSV-2   
-              for(var i = 0; i < Body2.length; i++) { 
-                var tempstring2 = ''; 
-                for(var j=0; j < Body2[i].length; j++) { 
-                  if(j >= 0 && j < compkeymap){
-                    if(stopcsv2 == false){
-                    tempstring2 = Body2[i][j] + ' + ' + Body2[i][j+1];
-                    stopcsv2 = true;
-                    }
-                  }
-                  if(tempstring2 == ''){
-                    tempstring2 = Body2[i][j];
-                  }
-                  else{
-                    tempstring2 = tempstring2 +','+ Body2[i][j];
-                  }
-                }
-                newBody2.push(tempstring2);
-              }
-
-            var  l = newBody1;
-            var g = newBody2;
-            result.csv = [];
-            result.text = "";
-            result.maxColumn = 0;
-            result.nbLineDiff = 0;
-            result.nbColumnDiff = 0;
-            l.forEach(function(e, b) {
-                a(e).length > result.maxColumn && (result.maxColumn = a(e).length)
-            });
-            g.forEach(function(b, c) {
-                a(b).length > result.maxColumn && (result.maxColumn = a(b).length)
-            });
-            l.forEach(function(b, c) {
-                var d = {
-                    columns: [],
-                    diff: !1
-                };
-                result.csv.push(d);
-                var h = a(b);
-                if (g.length > c) {
-                    var e = a(g[c])
-                      , m = 0;
-                    h.forEach(function(a, b) {
-                        e.length > b ? (b = e[b],
-                        a == b ? d.columns.push(a) : (d.columns.push({
-                            data: a + " != " + b,
-                            diff: Compare.DIFF
-                        }),
-                        result.nbColumnDiff++,
-                        m = 1)) : (d.columns.push({
-                            data: a,
-                            diff: Compare.ONLY1
-                        }),
-                        result.nbColumnDiff++,
-                        m = 1)
-                    });
-                    e.forEach(function(a, b) {
-                        b >= h.length && (d.columns.push({
-                            data: a,
-                            diff: Compare.ONLY2
-                        }),
-                        result.nbColumnDiff++,
-                        m = 1)
-                    });
-                    result.nbLineDiff += m;
-                    0 < m && (d.diff = !0)
-                } else
-                    h.forEach(function(a, b) {
-                        d.columns.push({
-                            data: a,
-                            diff: Compare.ONLY1
-                        });
-                        result.nbColumnDiff++
-                    }),
-                    result.nbLineDiff += 1,
-                    d.diff = !0
-            });
-            g.forEach(function(b, c) {
-                if (c >= l.length) {
-                    var d = {
-                        columns: [],
-                        diff: !0
-                    };
-                    result.csv.push(d);
-                    result.nbLineDiff += 1;
-                    a(b).forEach(function(a, b) {
-                        d.columns.push({
-                            data: a,
-                            diff: Compare.ONLY2
-                        });
-                        result.nbColumnDiff++
-                    })
-                }
-            });
-            this.showDiff(delimit_1);
-            return result;
-            
-        },  
-         
-
-      copyToClipBoard :function() {
-        var file = result.text;
-        var b = document.createElement("textarea");
-        b.textContent = file;
-        document.body.appendChild(b);
-        let sel = document.getSelection();
-        var c = document.createRange();
-        c.selectNode(b);
-        sel.removeAllRanges();
-        sel.addRange(c);
-        document.execCommand("copy");
-        sel.removeAllRanges();
-        document.body.removeChild(b)
-    },
-
-    showTable :function() {
-
-    var myTable= "<table><tr><td style='width: 100px; color: red;'>VARR1</td>";
-    myTable+= "<td style='width: 100px; color: red; text-align: right;'>VARR2</td>";
-    myTable+="<td style='width: 100px; color: red; text-align: right;'>VARR3</td></tr>";
-    myTable+="<tr><td style='width: 100px;                   '>---------------</td>";
-    myTable+="<td     style='width: 100px; text-align: right;'>---------------</td>";
-    myTable+="<td     style='width: 100px; text-align: right;'>---------------</td></tr>";
-    myTable+="</table>";
-
-    document.write( myTable);
-
-    document.getElementById('tablePrint').innerHTML = myTable;
-
-
-    },
-      showDiff: function (delimit) {
-
-      //  var resultContainer = this.getView().byId("result-diff");
-        var resultContainer = document.getElementsByClassName('result-diff')[0];
-
-          function file(file) {
-              var b = document.createElement("div");
-              resultContainer.appendChild(b);
-              b.classList.add("diff-line");
-              if (file) {
-                  var d = document.createElement("div");
-                  d.classList.add("diff-col");
-                  d.classList.add("diff-col-row");
-                  resultContainer.appendChild(document.createElement("br"));
-                  d.appendChild(document.createTextNode("Row " + file));
-                  b.appendChild(d)
-              }
-              return b
-          }
-          function c(file, b, d) {
-              d = void 0 === d ? null : d;
-              var c = document.createElement("div");
-              file.appendChild(c);
-              c.classList.add("diff-col");
-              d === Compare.ONLY1 ? c.classList.add("column1") : d === Compare.ONLY2 ? c.classList.add("column2") : d === Compare.DIFF && c.classList.add("col-diff");
-              c.appendChild(document.createTextNode(null === b ? "" : b));
-              result.text += null === b ? "" : b;
-              return file
-          }
-          var f = delimit
-            , b = 'diff'
-            //'diff' 'all'
-            , n = true;
-            //false true
-          //document.getElementById("result").style.display = "";
-         // window.location.href = "#result";
+          result.csv = [];
           result.text = "";
-          //services.billboard.emptyAndHide(["editor-error1", "editor-valid1"]);
-         // for (services.billboard.emptyAndHide(["editor-error2", "editor-valid2"]); resultContainer.firstChild; )
-          //    resultContainer.removeChild(resultContainer.firstChild);
-        //  for (var p = file(), l = 0; l <= result.maxColumn; l++) {
-        //      var g = document.createElement("div");
-        //      g.classList.add("diff-col");
-        //      g.classList.add("diff-col-field");
-        //      0 < l && g.appendChild(document.createTextNode("Field " + l));
-        //      p.appendChild(g)
-        //   }
-          result.csv.forEach(function(e, g) {
-              if ("diff" != b || e.diff) {
-                  var d = file(g + 1);
-                  "diff" == b && n && (result.text += (g + 1).toString() + "f");
-                  e.columns.forEach(function(file, b) {
-                      "string" == typeof file ? c(d, file) : c(d, file.data, file.diff);
-                      result.maxColumn != b + 1 && (result.text += f)
+          result.maxColumn = 0;
+          result.nbLineDiff = 0;
+          result.nbColumnDiff = 0;
+          l.forEach(function(e, b) {
+              a(e).length > result.maxColumn && (result.maxColumn = a(e).length)
+          });
+          g.forEach(function(b, c) {
+              a(b).length > result.maxColumn && (result.maxColumn = a(b).length)
+          });
+          l.forEach(function(b, c) {
+              var d = {
+                  columns: [],
+                  diff: !1
+              };
+              result.csv.push(d);
+              var h = a(b);
+              if (g.length > c) {
+                  var e = a(g[c])
+                    , m = 0;
+                  h.forEach(function(a, b) {
+                      e.length > b ? (b = e[b],
+                      a == b ? d.columns.push(a) : (d.columns.push({
+                          data: a + " != " + b,
+                          diff: Compare.DIFF
+                      }),
+                      result.nbColumnDiff++,
+                      m = 1)) : (d.columns.push({
+                          data: a,
+                          diff: Compare.ONLY1
+                      }),
+                      result.nbColumnDiff++,
+                      m = 1)
                   });
-                  for (e = e.columns.length + 1; e <= result.maxColumn; e++)
-                      c(d, ""),
-                      result.maxColumn != e + 1 && (result.text += f);
-                  result.csv.length != g + 1 && (result.text += "")
+                  e.forEach(function(a, b) {
+                      b >= h.length && (d.columns.push({
+                          data: a,
+                          diff: Compare.ONLY2
+                      }),
+                      result.nbColumnDiff++,
+                      m = 1)
+                  });
+                  result.nbLineDiff += m;
+                  0 < m && (d.diff = !0)
+              } else
+                  h.forEach(function(a, b) {
+                      d.columns.push({
+                          data: a,
+                          diff: Compare.ONLY1
+                      });
+                      result.nbColumnDiff++
+                  }),
+                  result.nbLineDiff += 1,
+                  d.diff = !0
+          });
+          g.forEach(function(b, c) {
+              if (c >= l.length) {
+                  var d = {
+                      columns: [],
+                      diff: !0
+                  };
+                  result.csv.push(d);
+                  result.nbLineDiff += 1;
+                  a(b).forEach(function(a, b) {
+                      d.columns.push({
+                          data: a,
+                          diff: Compare.ONLY2
+                      });
+                      result.nbColumnDiff++
+                  })
               }
           });
-      //    resultContainer.appendChild(document.createElement("br"));
-      //     resultContainer.appendChild(document.createElement("br"));
-      }
-      
+          this.showDiff(delimit_1);
+          return result;
+          
+      },  
+       
 
-     
-    });
+    copyToClipBoard :function() {
+      var file = result.text;
+      var b = document.createElement("textarea");
+      b.textContent = file;
+      document.body.appendChild(b);
+      let sel = document.getSelection();
+      var c = document.createRange();
+      c.selectNode(b);
+      sel.removeAllRanges();
+      sel.addRange(c);
+      document.execCommand("copy");
+      sel.removeAllRanges();
+      document.body.removeChild(b)
+  },
 
+  showTable :function() {
+
+  var myTable= "<table><tr><td style='width: 100px; color: red;'>VARR1</td>";
+  myTable+= "<td style='width: 100px; color: red; text-align: right;'>VARR2</td>";
+  myTable+="<td style='width: 100px; color: red; text-align: right;'>VARR3</td></tr>";
+  myTable+="<tr><td style='width: 100px;                   '>---------------</td>";
+  myTable+="<td     style='width: 100px; text-align: right;'>---------------</td>";
+  myTable+="<td     style='width: 100px; text-align: right;'>---------------</td></tr>";
+  myTable+="</table>";
+
+  document.write( myTable);
+
+  document.getElementById('tablePrint').innerHTML = myTable;
+
+
+  },
+    showDiff: function (delimit) {
+
+    //  var resultContainer = this.getView().byId("result-diff");
+      var resultContainer = document.getElementsByClassName('result-diff')[0];
+
+        function file(file) {
+            var b = document.createElement("div");
+            resultContainer.appendChild(b);
+            b.classList.add("diff-line");
+            if (file) {
+                var d = document.createElement("div");
+                d.classList.add("diff-col");
+                d.classList.add("diff-col-row");
+                resultContainer.appendChild(document.createElement("br"));
+                d.appendChild(document.createTextNode("Row " + file));
+                b.appendChild(d)
+            }
+            return b
+        }
+        function c(file, b, d) {
+            d = void 0 === d ? null : d;
+            var c = document.createElement("div");
+            file.appendChild(c);
+            c.classList.add("diff-col");
+            d === Compare.ONLY1 ? c.classList.add("column1") : d === Compare.ONLY2 ? c.classList.add("column2") : d === Compare.DIFF && c.classList.add("col-diff");
+            c.appendChild(document.createTextNode(null === b ? "" : b));
+            result.text += null === b ? "" : b;
+            return file
+        }
+        var f = delimit
+          , b = 'all'
+          //'diff' 'all'
+          , n = true;
+          //false true
+        //document.getElementById("result").style.display = "";
+       // window.location.href = "#result";
+        result.text = "";
+        //services.billboard.emptyAndHide(["editor-error1", "editor-valid1"]);
+       // for (services.billboard.emptyAndHide(["editor-error2", "editor-valid2"]); resultContainer.firstChild; )
+        //    resultContainer.removeChild(resultContainer.firstChild);
+      //  for (var p = file(), l = 0; l <= result.maxColumn; l++) {
+      //      var g = document.createElement("div");
+      //      g.classList.add("diff-col");
+      //      g.classList.add("diff-col-field");
+      //      0 < l && g.appendChild(document.createTextNode("Field " + l));
+      //      p.appendChild(g)
+      //   }
+        result.csv.forEach(function(e, g) {
+            if ("diff" != b || e.diff) {
+                var d = file(g + 1);
+                "diff" == b && n && (result.text += (g + 1).toString() + f);
+                e.columns.forEach(function(file, b) {
+                    "string" == typeof file ? c(d, file) : c(d, file.data, file.diff);
+                    result.maxColumn != b + 1 && (result.text += f)
+                });
+                for (e = e.columns.length + 1; e <= result.maxColumn; e++)
+                    c(d, ""),
+                    result.maxColumn != e + 1 && (result.text += f);
+                result.csv.length != g + 1 && (result.text += "")
+            }
+        });
+    //    resultContainer.appendChild(document.createElement("br"));
+    //     resultContainer.appendChild(document.createElement("br"));
+    }
+    
+
+   
   });
+
+});
