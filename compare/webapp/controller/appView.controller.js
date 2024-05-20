@@ -680,12 +680,48 @@ sap.ui.define([
 
 
 
-            //Loop Through 
+            //Loop Through
+
+            var loopcnt = 0;
+            var biggercsv = [];
+            var smallercsv = [];
+            var tempstring = ""; 
+            
+            if (newBody1.length > newBody2.length){
+              loopcnt =newBody1.length;
+              biggercsv = newBody1;
+              smallercsv = newBody2;
+            }
+            else{
+              loopcnt =newBody2.length;
+              biggercsv = newBody2;
+              smallercsv = newBody1;
+            }
+            
+            for(var i=1;i <loopcnt;i++){
+
+              for(var j=1;j <smallercsv.length;j++){
+                tempstring = ""; 
+                let lineA = biggercsv[i].split(delimit_1);
+                let keyA = lineA[0];
+
+                let lineB = smallercsv[j].split(delimit_1);
+                let keyB = lineB[0];
+
+                if(keyA == keyB){
+
+                  tempstring = smallercsv[i];
+                  smallercsv[i] = smallercsv[j];
+                  smallercsv[j]= tempstring;
 
 
 
 
+                }
 
+              }
+
+            }
 
 
 
