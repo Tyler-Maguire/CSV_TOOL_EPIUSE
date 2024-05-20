@@ -620,9 +620,26 @@ sap.ui.define([
 
 
            // rearrange from multidimensional array to single dimensional array combining key coloumns?  then 
+           // rearrange from multidimensional array to single dimensional array combining key coloumns?  then
+           //Note for now only 2 keys allowed.
+             var stopcsv = false;
+             var stopcsv2 = false;
+
+
+             //CSV-1
             for(var i = 0; i < Body1.length; i++) { 
               var tempstring1 = ''; 
-              for(var j=0; j < Body1[i].length; j++) { 
+              for(var j=0; j < Body1[i].length; j++) {
+                
+                //new code
+                if(j >= 0 && j <  basekeymap){
+                  if(stopcsv == false){
+                  tempstring1 = Body1[i][j] + ' + ' + Body1[i][j+1];
+                  stopcsv = true;
+                  }
+                }
+
+                //old code
                 if(tempstring1 == ''){
                   tempstring1 = Body1[i][j];
                 }
@@ -632,9 +649,22 @@ sap.ui.define([
               }
               newBody1.push(tempstring1);
             }
+
+            //CSV-2   
             for(var i = 0; i < Body2.length; i++) { 
               var tempstring2 = ''; 
               for(var j=0; j < Body2[i].length; j++) { 
+
+                //new code
+                if(j >= 0 && j < compkeymap){
+                  if(stopcsv2 == false){
+                  tempstring2 = Body2[i][j] + ' + ' + Body2[i][j+1];
+                  stopcsv2 = true;
+                  }
+                }
+                //old code
+
+
                 if(tempstring2 == ''){
                   tempstring2 = Body2[i][j];
                 }
