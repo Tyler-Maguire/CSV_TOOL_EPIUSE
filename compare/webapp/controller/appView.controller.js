@@ -724,10 +724,11 @@ sap.ui.define([
             }
 
 
+              var l = biggercsv;
+              var g = smallercsv;
 
-
-          var  l = newBody1;
-          var g = newBody2;
+       //   var  l = newBody1;
+       //   var g = newBody2;
           result.csv = [];
           result.text = "";
           result.maxColumn = 0;
