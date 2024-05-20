@@ -13,7 +13,7 @@
      	<Button id = "butt1" text="Upload" press="onUploadBase" />
 	</HBox>
 		<Text id="FileOutBase" class="FileOut" text="{/CSVBaseJson}" wrapping="true" width="700px"/>
-		<Input id="KeySelection" class="custLabel" textFormatMode="Key" placeholder="Enter CSV Keys for Comparison." width="310px"/>
+		<Input id="KeySelection" class="custLabel" textFormatMode="Key" placeholder="File A Key Fields:" width="310px"/>
 	</VBox>	
 	<VBox id="spacer" height="20px">
 		
@@ -27,7 +27,7 @@
      	<Button id = "butt2" text="Upload" press="onUploadCompare" />
 	</HBox>	
 	<Text id="FileOutCompare" class="FileOut" text="{/CSVCompareJson}" wrapping="true" width="700px"/>
-	<Input id="RowSelection" class="custLabel,FileOut" textFormatMode="Value" placeholder="Enter CSV Keys for Comparison." width="310px"/>
+	<Input id="RowSelection" class="custLabel,FileOut" textFormatMode="Value" placeholder="File B Key Fields:" width="310px"/>
 	</VBox>
 
 	<VBox id="verticleLayKey" alignItems="Center">

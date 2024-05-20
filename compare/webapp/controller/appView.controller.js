@@ -638,14 +638,14 @@ sap.ui.define([
                   stopcsv = true;
                   }
                 }
-
-                //old code
-                if(tempstring1 == ''){
-                  tempstring1 = Body1[i][j];
-                }
                 else{
                   tempstring1 = tempstring1 + ','+ Body1[i][j];
                 }
+                //old code
+                //if(tempstring1 == ''){
+                //  tempstring1 = Body1[i][j];
+                //}
+                
               }
               newBody1.push(tempstring1);
               stopcsv = false;
@@ -663,19 +663,24 @@ sap.ui.define([
                   stopcsv2 = true;
                   }
                 }
-                //old code
-
-
-                if(tempstring2 == ''){
-                  tempstring2 = Body2[i][j];
-                }
                 else{
                   tempstring2 = tempstring2 +','+ Body2[i][j];
                 }
+                
+                //old code
+               // if(tempstring2 == ''){
+              //    tempstring2 = Body2[i][j];
+              //  }
+                
               }
               newBody2.push(tempstring2);
               stopcsv2 = false;
             }
+
+
+
+
+            //Loop Through 
 
 
 
