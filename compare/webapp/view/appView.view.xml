@@ -38,6 +38,11 @@
 	 <HBox id = "Controls">
 	<Button id = "butt4" text="Clipboard Copy" press="copyToClipBoard" />
 	<Button id = "butt5" text="Export to CSV" press="exportResultstoFile" />
+	<Switch state="false">
+				<layoutData>
+					<FlexItemData growFactor="1" />
+				</layoutData>
+	</Switch>
 	</HBox>
 
 	<html:div id="result" wrapping="true" class="container-center container-action" style="" width="800px">

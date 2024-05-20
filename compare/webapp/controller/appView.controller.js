@@ -747,7 +747,7 @@ sap.ui.define([
               return file
           }
           var f = delimit
-            , b = 'all'
+            , b = 'diff'
             //'diff' 'all'
             , n = true;
             //false true
@@ -767,7 +767,7 @@ sap.ui.define([
           result.csv.forEach(function(e, g) {
               if ("diff" != b || e.diff) {
                   var d = file(g + 1);
-                  "diff" == b && n && (result.text += (g + 1).toString() + f);
+                  "diff" == b && n && (result.text += (g + 1).toString() + "f");
                   e.columns.forEach(function(file, b) {
                       "string" == typeof file ? c(d, file) : c(d, file.data, file.diff);
                       result.maxColumn != b + 1 && (result.text += f)
