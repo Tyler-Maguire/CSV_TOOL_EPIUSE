@@ -23,3 +23,19 @@
  .pad{
     padding-top: 1rem;
  }
+
+     * {
+      box-sizing: border-box;
+    }
+
+    tr {
+       float: left;
+       width: 50%;
+       border: 1px solid black;
+    }
+
+    tbody:after {
+      content: "";
+      display: table;
+      clear: both;
+    }

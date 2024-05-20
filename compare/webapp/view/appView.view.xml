@@ -53,7 +53,10 @@
 	</VBox>
 
 
-
+<html:div class="row">
+  <html:div class="column"></html:div>
+  <html:div class="column"></html:div>
+</html:div>
 	
 
 
