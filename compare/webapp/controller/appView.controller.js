@@ -237,11 +237,8 @@ sap.ui.define([
               Body1 = JSON.parse(JSON.stringify(LinesCSV1));
               Body2 = JSON.parse(JSON.stringify(LinesCSV2));
 
-              var header1 = JSON.parse(JSON.stringify(Body1));
-              var header2 = JSON.parse(JSON.stringify(Body2));
-
-              header1.shift();
-              header2.shift();
+              var header1 = Body1.shift();
+              var header2 = Body2.shift();
           
               newCSV1json = '';
               newCSV2json = '';
@@ -252,8 +249,8 @@ sap.ui.define([
               var newsplit1  = csvFile1.map((x) => x.split(delimit_1));
               var newsplit2  = csvFile2.map((x) => x.split(delimit_2));   
               
-              newsplit1.filter(Boolean);
-              newsplit2.filter(Boolean);
+              newsplit1 = newsplit1.filter(Boolean);
+              newsplit2 = newsplit2.filter(Boolean);
 
               for (var i = 0; i < newsplit1.length; i++) {
                 if(newsplit1[i]==''){newsplit1.splice(i, 1);}
@@ -308,6 +305,7 @@ sap.ui.define([
                     //TO-DO Shift Cols at the same index.
                     newheadcnt1++;
                     newheadcnt2++;
+
                     NewCSV.newCSV1.push(obj);
                     NewCSV.newCSV2.push(obj2);
                   }
@@ -318,7 +316,8 @@ sap.ui.define([
               
               Body1 = newsplit1;
               Body2 = newsplit2;
-            }           
+            }
+            
             },
             onUploadBase: function(e) {
                var oCSVModelBase = this.getOwnerComponent().getModel("CSVModelBase");
@@ -590,7 +589,7 @@ sap.ui.define([
             //Loop through both CSV Rows and use key Selection to match rows and line up row indexs
             if(csvBaseKeysCnt >= 1 && csvCompareKeysCnt >= 1){
               //Future dev to use correspnding keys regardless of text matching or number of keys. 
-               if(csvBaseKeys == csvCompareKeys){
+               if(csvBaseKeys[0] == csvCompareKeys[0]){
                 for(var k=0;k < csvBaseKeysCnt;k++){
                   if(basekey == ''){
                     basekey = csvBaseKeys[k];
@@ -599,7 +598,7 @@ sap.ui.define([
                   } 
                   basekeymap++;
                 }
-                for(var t=0;p < csvCompareKeysCnt;t++){
+                for(var t=0;t < csvCompareKeysCnt;t++){
                   if(compkey == ''){
                     compkey = csvCompareKeys[t];
                   }else{
@@ -615,26 +614,48 @@ sap.ui.define([
             } 
 
             //while looping through 1st csv create data(base key) based on compkey then loop through other table create data(compare key)based on compkey and check then move row to match
+            
 
 
 
 
-             // rearrange from multidimensional array to single dimensional array combining key coloumns?  then 
+             // rearrange from multidimensional array to single dimensional array combining key coloumns?  then
+             //Note for now only 2 keys allowed.
+             var stopcsv = false;
+             var stopcsv2 = false;
+           
+
+             //CSV-1
               for(var i = 0; i < Body1.length; i++) { 
                 var tempstring1 = ''; 
                 for(var j=0; j < Body1[i].length; j++) { 
+                  if(j >= 0 && j <  basekeymap){
+                    if(stopcsv == false){
+                    tempstring1 = Body1[i][j] + ' + ' + Body1[i][j+1];
+                    stopcsv = true;
+                    }
+                  }
+
                   if(tempstring1 == ''){
                     tempstring1 = Body1[i][j];
                   }
                   else{
-                    tempstring1 = tempstring1 + ','+ Body1[i][j];
+                  tempstring1 = tempstring1 +','+ Body1[i][j];
                   }
                 }
                 newBody1.push(tempstring1);
               }
+
+            //CSV-2   
               for(var i = 0; i < Body2.length; i++) { 
                 var tempstring2 = ''; 
                 for(var j=0; j < Body2[i].length; j++) { 
+                  if(j >= 0 && j < compkeymap){
+                    if(stopcsv2 == false){
+                    tempstring2 = Body2[i][j] + ' + ' + Body2[i][j+1];
+                    stopcsv2 = true;
+                    }
+                  }
                   if(tempstring2 == ''){
                     tempstring2 = Body2[i][j];
                   }
@@ -644,14 +665,6 @@ sap.ui.define([
                 }
                 newBody2.push(tempstring2);
               }
-
-
-
-
-
-
-
-
 
             var  l = newBody1;
             var g = newBody2;
