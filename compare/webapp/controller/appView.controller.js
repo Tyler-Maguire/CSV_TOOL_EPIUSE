@@ -723,6 +723,8 @@ sap.ui.define([
 
             }
 
+        // TO do change to ignore colomn diff    
+
 
               var l = biggercsv;
               var g = smallercsv;
