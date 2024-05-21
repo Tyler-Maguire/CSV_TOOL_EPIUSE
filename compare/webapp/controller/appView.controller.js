@@ -1,10 +1,10 @@
 sap.ui.define([
-  "sap/ui/core/mvc/Controller",'sap/m/MessageToast','sap/ui/model/json/JSONModel'
+  "sap/ui/core/mvc/Controller",'sap/m/MessageToast','sap/ui/model/json/JSONModel','sap/ui/model/Model'
 ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (Controller,MessageToast,JSONModel) {
+  function (Controller,MessageToast,JSONModel,Model) {
       "use strict";
       var resultToDraw = {
         json1: "",
@@ -810,16 +810,73 @@ sap.ui.define([
           });
           this.showDiff(delimit_1);
 
+
+          //new code table binding
           var jsonresult = new JSONModel();
           jsonresult.setData({csv:result.csv});
-         // this.getView().byId("FileOutBase").setText(params); 
+          // this.getView().byId("FileOutBase").setText(params); 
           this.getOwnerComponent().setModel(jsonresult,"csvResult");
           this.getView().setModel(jsonresult,"csvResult");
-          
+          //new code table binding
+
+
+            var aColumnData = [{
+              columnId: "Key"
+          }, {
+              columnId: "Result"
+          }];
+          var aData = [];
+          var obj = {};
+
+
+          obj = {   
+          Key: "00000400 + 202",
+          Result: "Exists in File A only" 
+        };
+          aData.push(obj);
+          obj = {   
+            Key: "00000300 + 202",
+            Result: "Diff: Name + DateofBirth" 
+          };
+            aData.push(obj);
+         
+        
+        //Loop through results and filter the cloumn differnces out
+        var oModel2 = new sap.ui.model.json.JSONModel();
+        oModel2.setData({
+            columns: aColumnData,
+            rows: aData
+        });
+
+       var oTable = this.getView().byId("idTable");
+       oTable.setModel(oModel2);
+  
+       this.getView().byId("page").addContent(oTable);
+       var tableData = [];
+        for (var i = 0; i < result.length; i++) {
+              tableData.push(result[i]);
+        var ojSonModelT1 = new Model(tableData);
+              var dynNamedModel = "oBatchItemModel" + i;
+        }
+        oTable.setModel(ojSonModelT1, dynNamedModel);
+
+        oTable.setBindingContext(new sap.ui.model.Context(result.csv, 'csv'),'results');
+  
+
+
 
           return result;
           
       },  
+
+
+      createTable :function() {
+
+        
+
+      },
+
+
        
 
     copyToClipBoard :function() {
