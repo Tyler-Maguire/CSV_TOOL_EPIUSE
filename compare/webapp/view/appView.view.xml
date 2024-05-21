@@ -1,5 +1,5 @@
 <mvc:View controllerName="com.epiuse.compare.controller.appView"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:d="sap.ui.webc.main"
     xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml">
     <Page id="page"  title="{i18n>title}" >
 
@@ -57,9 +57,43 @@
   <html:div class="diff-col"></html:div>
   <html:div class="column"></html:div>
 </html:div>
-	
-
-
 	<content/>
+		<fiori:content>
+			<d:Toast id="demoToast" duration="1000"></d:Toast>
+			<d:Table
+				id="idProductsTable"
+				selectionChange="handleSelectionChange"
+				rows="{
+					path: '/ResultCollection',
+					sorter: {
+						path: 'csv'
+					}
+				}">
+				<d:columns>
+					<d:TableColumn>
+						<Label text="Key Fields" />
+					</d:TableColumn>
+					<d:TableColumn>
+						<Label text="Comparison Result" />
+					</d:TableColumn>
+				</d:columns>
+				<d:rows>
+					<d:TableRow>
+						<d:cells>
+							<d:TableCell>
+								<d:content>
+									<Label text="{Key}"/>
+								</d:content>
+							</d:TableCell>
+							<d:TableCell>
+								<d:content>
+									<Label text="{Diff}" />
+								</d:content>
+							</d:TableCell>
+						</d:cells>
+					</d:TableRow>
+				</d:rows>
+			</d:Table>
+		</fiori:content>
     </Page>
 </mvc:View>
