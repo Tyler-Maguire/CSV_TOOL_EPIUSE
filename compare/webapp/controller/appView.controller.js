@@ -96,6 +96,10 @@ sap.ui.define([
           var oCSVModel2= this.getOwnerComponent().getModel("CSVModel2");
           const oModel2 = new JSONModel(oCSVModel2);
           this.getView().setModel(oModel2);
+
+          var csvResult = this.getOwnerComponent().getModel("csvResult");
+          this.getView().setModel(csvResult);
+          
        },
 
        getAllColumns: function() {
@@ -805,6 +809,14 @@ sap.ui.define([
               }
           });
           this.showDiff(delimit_1);
+
+          var jsonresult = new JSONModel();
+          jsonresult.setData({csv:result.csv});
+         // this.getView().byId("FileOutBase").setText(params); 
+          this.getOwnerComponent().setModel(jsonresult,"csvResult");
+          this.getView().setModel(jsonresult,"csvResult");
+          
+
           return result;
           
       },  

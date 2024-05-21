@@ -65,7 +65,7 @@
 				id="idProductsTable"
 				selectionChange="handleSelectionChange"
 				rows="{
-					path: '/ResultCollection',
+					path: '/csvResult/oData',
 					sorter: {
 						path: 'csv'
 					}
@@ -83,12 +83,12 @@
 						<d:cells>
 							<d:TableCell>
 								<d:content>
-									<Label text="{Key}"/>
+									<Label text="{columns}"/>
 								</d:content>
 							</d:TableCell>
 							<d:TableCell>
 								<d:content>
-									<Label text="{Diff}" />
+									<Label text="{data}" />
 								</d:content>
 							</d:TableCell>
 						</d:cells>
