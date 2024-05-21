@@ -114,6 +114,13 @@
           "clearControlAggregation": false,
           "viewId": "appView",
           "viewName": "appView"
+        },
+        "TargetTabView": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "TableView",
+          "viewName": "TableView"
         }
       }
     },

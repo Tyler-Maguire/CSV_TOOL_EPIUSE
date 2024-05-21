@@ -1,4 +1,4 @@
-<mvc:View controllerName="sap.ui.webc.main.sample.Table.C" xmlns="sap.ui.webc.main" xmlns:fiori="sap.ui.webc.fiori" xmlns:mvc="sap.ui.core.mvc" height="100%">
+<mvc:View controllerName="com.epiuse.compare.controller.appView" xmlns="sap.ui.webc.main" xmlns:fiori="sap.ui.webc.fiori" xmlns:mvc="sap.ui.core.mvc" height="100%">
 	<fiori:Page>
 		<fiori:header>
 			<fiori:Bar>

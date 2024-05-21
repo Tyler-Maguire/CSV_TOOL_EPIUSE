@@ -57,10 +57,11 @@
   <html:div class="diff-col"></html:div>
   <html:div class="column"></html:div>
 </html:div>
-	<content/>
-		<fiori:content>
-			<d:Toast id="demoToast" duration="1000"></d:Toast>
-			<d:Table
+
+
+
+
+<d:Table
 				id="idProductsTable"
 				selectionChange="handleSelectionChange"
 				rows="{
@@ -94,6 +95,17 @@
 					</d:TableRow>
 				</d:rows>
 			</d:Table>
-		</fiori:content>
+
+
+
+
+
+
+
+
+
+
+
+	<content/>
     </Page>
 </mvc:View>
