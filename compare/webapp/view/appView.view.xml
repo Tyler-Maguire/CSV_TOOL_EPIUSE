@@ -53,8 +53,8 @@
 	</VBox>
 
 
-<html:div class="row">
-  <html:div class="column"></html:div>
+<html:div id="result-diff" class="result-diff">
+  <html:div class="diff-col"></html:div>
   <html:div class="column"></html:div>
 </html:div>
 	
