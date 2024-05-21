@@ -849,20 +849,8 @@ sap.ui.define([
         });
 
        var oTable = this.getView().byId("idTable");
-       oTable.setModel(oModel2);
-  
-       this.getView().byId("page").addContent(oTable);
-       var tableData = [];
-        for (var i = 0; i < result.length; i++) {
-              tableData.push(result[i]);
-        var ojSonModelT1 = new Model(tableData);
-              var dynNamedModel = "oBatchItemModel" + i;
-        }
-        oTable.setModel(ojSonModelT1, dynNamedModel);
-
-        oTable.setBindingContext(new sap.ui.model.Context(result.csv, 'csv'),'results');
-  
-
+       oTable.setBindingContext(new sap.ui.model.Context(result.csv, 'csv'),'results');
+      // oTable.setModel(result);
 
 
           return result;
