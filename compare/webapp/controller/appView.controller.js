@@ -850,7 +850,7 @@ sap.ui.define([
 
        var oTable = this.getView().byId("idTable");
        oTable.setBindingContext(new sap.ui.model.Context(result.csv, 'csv'),'results');
-      // oTable.setModel(result);
+       oTable.setModel(oModel2);
 
 
           return result;
