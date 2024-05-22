@@ -48,8 +48,7 @@
 	<html:div id="result" wrapping="true" class="container-center container-action" style="" width="800px">
 	<html:div id="result-diff" class="span result-diff" wrapping="true" width="800px">
 	</html:div></html:div>
-	
-	<html:div id="tablePrint"> </html:div>
+
 	</VBox>
 
 
@@ -58,75 +57,30 @@
   <html:div class="column"></html:div>
 </html:div>
 
-
-
-<html:table id="resultTest">
-<html:tr><html:td style='width: 100px; color: red;'>Key</html:td><html:td style='width: 100px; color: red; text-align: right;'>Result</html:td></html:tr>
-<html:tr><html:td style='width: 100px;'>---------------</html:td><html:td style='width: 100px; text-align: right;'>---------------</html:td></html:tr>
-</html:table>
-
-<t:Table id="idTable" items="{
-			path: '/result',
-			sorter: {
-				path: 'csv'
-			}
-		}" >
+<t:Table id="idTable" >
 				<t:columns>
 					<t:Column
-				width="12em">
+				width="20em">
 				<Text text="Key Fields" />
 					</t:Column>
 					<t:Column
-				width="12em">
+				width="20em">
 				<Text text="Comparison Result" />
 					</t:Column>
 				</t:columns>
 				<t:items>
 
-				<t:ColumnListItem vAlign="Middle">
-				<t:cells>
-					<t:ObjectIdentifier
-						title="{columns}"
-						text="{diff}"/>
-				</t:cells>
+				<t:ColumnListItem>
+		    <cells>
+				<Label wrapping="true" id="Key" text="Key"  width="20em" />
+				<Text  wrapping="true" id="Diff" text="Diff" width="20em"/>
+			</cells>
 			</t:ColumnListItem>
 				</t:items>
 </t:Table>
 
 
-<d:Table
-				id="idResultsTable"
-				rows="{
-					path: '/results',
-					sorter: {
-						path: 'csv'
-					}
-				}">
-				<d:columns>
-					<d:TableColumn>
-						<Label text="Key Fields" />
-					</d:TableColumn>
-					<d:TableColumn>
-						<Label text="Comparison Result" />
-					</d:TableColumn>
-				</d:columns>
-				<d:rows>
-					<d:TableRow>
-						<d:cells>
-							<d:TableCell>
-								<d:content>
-									<Label text="{columns}"/>
-								</d:content>
-							</d:TableCell>
-							<d:TableCell>
-								<d:content>
-									<Label text="{data}" />
-								</d:content>
-							</d:TableCell>
-						</d:cells>
-					</d:TableRow>
-				</d:rows>
-			</d:Table>
+
 
 
 

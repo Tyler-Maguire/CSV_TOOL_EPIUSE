@@ -811,46 +811,25 @@ sap.ui.define([
           this.showDiff(delimit_1);
 
 
-          //new code table binding
-          var jsonresult = new JSONModel();
-          jsonresult.setData({csv:result.csv});
-          // this.getView().byId("FileOutBase").setText(params); 
-          this.getOwnerComponent().setModel(jsonresult,"csvResult");
-          this.getView().setModel(jsonresult,"csvResult");
-          //new code table binding
+          var stringkeys = '';
+          var stringDiff = '';
+          var n;
 
+       for(var m = 1; m <= result.csv.length-1; m++){
+        stringkeys = stringkeys + result.csv[m].columns[0] +'\n';
+        for(n = 0; n < result.csv[m].columns.length; n++){
+        if(result.csv[m].columns[n].data){
+          stringDiff = stringDiff +'('+ result.csv[m].columns[n].data+')';
+        }
+        }
+        if(stringDiff !== ''){
+          stringDiff = stringDiff + '\n';
+        }
 
-            var aColumnData = [{
-              columnId: "Key"
-          }, {
-              columnId: "Result"
-          }];
-          var aData = [];
-          var obj = {};
+       }
 
-
-          obj = {   
-          Key: "00000400 + 202",
-          Result: "Exists in File A only" 
-        };
-          aData.push(obj);
-          obj = {   
-            Key: "00000300 + 202",
-            Result: "Diff: Name + DateofBirth" 
-          };
-            aData.push(obj);
-         
-        
-        //Loop through results and filter the cloumn differnces out
-        var oModel2 = new sap.ui.model.json.JSONModel();
-        oModel2.setData({
-            columns: aColumnData,
-            rows: aData
-        });
-
-       var oTable = this.getView().byId("idTable");
-       oTable.setBindingContext(new sap.ui.model.Context(result.csv, 'csv'),'results');
-       oTable.setModel(oModel2);
+       this.getView().byId("Key").setText(stringkeys); 
+       this.getView().byId("Diff").setText(stringDiff); 
 
 
           return result;
