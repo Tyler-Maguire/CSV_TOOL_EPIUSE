@@ -72,8 +72,8 @@
 
 				<t:ColumnListItem>
 		    <cells>
-				<Label wrapping="true" id="Key" text="Key"  width="20em" />
-				<Text  wrapping="true" id="Diff" text="Diff" width="20em"/>
+				<Text wrapping="true" wrappingType="Hyphenated" id="Key" text="Key"  width="20em" />
+				<Text wrapping="true" wrappingType="Hyphenated" id="Diff" text="Diff" width="20em"/>
 			</cells>
 			</t:ColumnListItem>
 				</t:items>

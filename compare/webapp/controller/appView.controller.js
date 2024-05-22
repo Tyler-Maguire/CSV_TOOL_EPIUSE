@@ -808,24 +808,63 @@ sap.ui.define([
                   })
               }
           });
-          this.showDiff(delimit_1);
+     //     this.showDiff(delimit_1);
 
 
           var stringkeys = '';
           var stringDiff = '';
           var n;
+          var ignorearray = [];
+          var ignorekeys = [];
+          var founddiff = false;
+          
 
-       for(var m = 1; m <= result.csv.length-1; m++){
-        stringkeys = stringkeys + result.csv[m].columns[0] +'\n';
+       for(var m = 0; m <= result.csv.length-1; m++){
+        founddiff = false;
+        if(m == 0){
+
+          for(n = 0; n < result.csv[0].columns.length; n++){
+            if(result.csv[0].columns[n].data){
+              ignorearray.push(n);
+            }
+            }
+
+
+        }else{
+
+          for(n = 0; n < result.csv[m].columns.length; n++){
+            if(result.csv[m].columns[n].data){
+              if(ignorearray.indexOf(n) > -1){
+              ignorekeys.push(m);    
+              }else{
+              founddiff = true;
+              }
+            }
+            }
+
+
+
+
+            ignorekeys = [1,2];
+        if(result.csv[m].columns[0].data){
+          stringkeys = stringkeys +'('+m+')' + result.csv[m].columns[0].data.split('!=')[0]+'(File B)'  +'\n';
+          stringkeys = stringkeys +'('+m+1+')' + result.csv[m].columns[0].data.split('!=')[1]+'(File A)'  +'\n';
+        }else{
+          if(ignorekeys.indexOf(m) > -1){}else{
+          stringkeys = stringkeys + '('+m+')' + result.csv[m].columns[0] +'\n';
+          }}
         for(n = 0; n < result.csv[m].columns.length; n++){
         if(result.csv[m].columns[n].data){
-          stringDiff = stringDiff +'('+ result.csv[m].columns[n].data+')';
+          if(ignorearray.indexOf(n) > -1){
+          }else{
+            stringDiff = stringDiff +'('+m+')' +'('+ result.csv[m].columns[n].data+')';
+          }
         }
         }
         if(stringDiff !== ''){
           stringDiff = stringDiff + '\n';
         }
-
+      }
        }
 
        this.getView().byId("Key").setText(stringkeys); 
