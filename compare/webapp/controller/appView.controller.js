@@ -817,6 +817,7 @@ sap.ui.define([
           var ignorearray = [];
           var ignorekeys = [];
           var founddiff = false;
+          var keyhandled = false;
           
 
        for(var m = 0; m <= result.csv.length-1; m++){
@@ -829,62 +830,35 @@ sap.ui.define([
             }
             }
 
-
         }else{
-
-          for(n = 0; n < result.csv[m].columns.length; n++){
-            if(result.csv[m].columns[n].data){
-              if(ignorearray.indexOf(n) > -1){
-              ignorekeys.push(m);    
-              }else{
-              founddiff = true;
-              }
-            }
-            }
-
-
-
-
-            ignorekeys = [1,2];
         if(result.csv[m].columns[0].data){
-          stringkeys = stringkeys +'('+m+')' + result.csv[m].columns[0].data.split('!=')[0]+'(File B)'  +'\n';
-          stringkeys = stringkeys +'('+m+1+')' + result.csv[m].columns[0].data.split('!=')[1]+'(File A)'  +'\n';
-        }else{
-          if(ignorekeys.indexOf(m) > -1){}else{
-          stringkeys = stringkeys + '('+m+')' + result.csv[m].columns[0] +'\n';
-          }}
+          stringDiff = stringDiff +'('+m+')' + result.csv[m].columns[0].data.split('!=')[0]+'(File B)'  +'\n';
+          stringDiff = stringDiff +'('+m+')' + result.csv[m].columns[0].data.split('!=')[1]+'(File A)'  +'\n';
+        }
         for(n = 0; n < result.csv[m].columns.length; n++){
         if(result.csv[m].columns[n].data){
           if(ignorearray.indexOf(n) > -1){
           }else{
             stringDiff = stringDiff +'('+m+')' +'('+ result.csv[m].columns[n].data+')';
+            if(keyhandled == false && result.csv[m].columns[0] !== Object(result.csv[m].columns[0])){
+              stringkeys = stringkeys + '('+m+')' + result.csv[m].columns[0] +'\n';
+              keyhandled = true;
+            }
           }
         }
+        }
+        if(keyhandled == true){
+          keyhandled = false;
         }
         if(stringDiff !== ''){
           stringDiff = stringDiff + '\n';
         }
       }
        }
-
        this.getView().byId("Key").setText(stringkeys); 
        this.getView().byId("Diff").setText(stringDiff); 
-
-
           return result;
-          
       },  
-
-
-      createTable :function() {
-
-        
-
-      },
-
-
-       
-
     copyToClipBoard :function() {
       var file = result.text;
       var b = document.createElement("textarea");
@@ -901,7 +875,6 @@ sap.ui.define([
   },
 
   showTable :function() {
-
   var myTable= "<table><tr><td style='width: 100px; color: red;'>VARR1</td>";
   myTable+= "<td style='width: 100px; color: red; text-align: right;'>VARR2</td>";
   myTable+="<td style='width: 100px; color: red; text-align: right;'>VARR3</td></tr>";
@@ -909,18 +882,12 @@ sap.ui.define([
   myTable+="<td     style='width: 100px; text-align: right;'>---------------</td>";
   myTable+="<td     style='width: 100px; text-align: right;'>---------------</td></tr>";
   myTable+="</table>";
-
   document.write( myTable);
-
   document.getElementById('tablePrint').innerHTML = myTable;
-
-
   },
     showDiff: function (delimit) {
-
     //  var resultContainer = this.getView().byId("result-diff");
       var resultContainer = document.getElementsByClassName('result-diff')[0];
-
         function file(file) {
             var b = document.createElement("div");
             resultContainer.appendChild(b);

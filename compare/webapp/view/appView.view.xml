@@ -16,7 +16,7 @@
 		<Input id="KeySelection" class="custLabel" textFormatMode="Key" placeholder="File A Key Fields:" width="310px"/>
 	</VBox>	
 	<VBox id="spacer" height="20px">
-		
+
 	</VBox>	
 	<VBox id="FileUploadCompareZone" alignItems="Center">
 		<Label id="file2" class="custLabel" text="Please upload file 2 for comparison."/>
@@ -29,68 +29,37 @@
 	<Text id="FileOutCompare" class="FileOut" text="{/CSVCompareJson}" wrapping="true" width="700px"/>
 	<Input id="RowSelection" class="custLabel,FileOut" textFormatMode="Value" placeholder="File B Key Fields:" width="310px"/>
 	</VBox>
-
 	<VBox id="verticleLayKey" alignItems="Center">
-	
 	<Button id = "butt3" text="Compare uploaded CSV files." press="onCompare" />
-	<Text id="Fileout" text="{/CSVGenDiff}" width="700px" wrapping="true"/>
+
 
 	 <HBox id = "Controls">
 	<Button id = "butt4" text="Clipboard Copy" press="copyToClipBoard" />
 	<Button id = "butt5" text="Export to CSV" press="exportResultstoFile" />
-	<Switch state="false">
-				<layoutData>
-					<FlexItemData growFactor="1" />
-				</layoutData>
-	</Switch>
+
 	</HBox>
-
-	<html:div id="result" wrapping="true" class="container-center container-action" style="" width="800px">
-	<html:div id="result-diff" class="span result-diff" wrapping="true" width="800px">
-	</html:div></html:div>
-
-	</VBox>
-
-
-<html:div id="result-diff" class="result-diff">
-  <html:div class="diff-col"></html:div>
-  <html:div class="column"></html:div>
-</html:div>
-
-<t:Table id="idTable" >
+		<t:Table class="Table" id="idTable"  >
 				<t:columns>
 					<t:Column
-				width="20em">
+				width="155px">
 				<Text text="Key Fields" />
 					</t:Column>
 					<t:Column
-				width="20em">
+				width="155px">
 				<Text text="Comparison Result" />
 					</t:Column>
 				</t:columns>
 				<t:items>
 
-				<t:ColumnListItem>
-		    <cells>
-				<Text wrapping="true" wrappingType="Hyphenated" id="Key" text="Key"  width="20em" />
-				<Text wrapping="true" wrappingType="Hyphenated" id="Diff" text="Diff" width="20em"/>
+				<t:ColumnListItem vAlign="Top">
+		    <cells >
+				<Text textAlign="Initial" wrapping="true" wrappingType="Hyphenated" id="Key" text="Key"  width="20em" />
+				<Text textAlign="Initial" wrapping="true" wrappingType="Hyphenated" id="Diff" text="Diff" width="20em"/>
 			</cells>
 			</t:ColumnListItem>
 				</t:items>
-</t:Table>
-
-
-
-
-
-
-
-
-
-
-
-
-
+		</t:Table>
+	</VBox>
 
 	<content/>
     </Page>
