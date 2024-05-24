@@ -38,14 +38,14 @@
 	<Button id = "butt5" text="Export to CSV" press="exportResultstoFile" />
 
 	</HBox>
-		<t:Table class="Table" id="idTable"  >
+		<t:Table id="idTable"  >
 				<t:columns>
 					<t:Column
-				width="155px">
+				width="300px">
 				<Text text="Key Fields" />
 					</t:Column>
 					<t:Column
-				width="155px">
+				width="300px">
 				<Text text="Comparison Result" />
 					</t:Column>
 				</t:columns>
@@ -53,8 +53,8 @@
 
 				<t:ColumnListItem vAlign="Top">
 		    <cells >
-				<Text textAlign="Initial" wrapping="true" wrappingType="Hyphenated" id="Key" text="Key"  width="20em" />
-				<Text textAlign="Initial" wrapping="true" wrappingType="Hyphenated" id="Diff" text="Diff" width="20em"/>
+				<Text textAlign="Initial" wrapping="true" wrappingType="Hyphenated" id="Key" text="Key"  width="300px" />
+				<Text textAlign="Initial" wrapping="true" wrappingType="Hyphenated" id="Diff" text="Diff" width="300px"/>
 			</cells>
 			</t:ColumnListItem>
 				</t:items>

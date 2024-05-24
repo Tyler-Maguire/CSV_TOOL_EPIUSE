@@ -832,16 +832,20 @@ sap.ui.define([
 
         }else{
         if(result.csv[m].columns[0].data){
-          stringDiff = stringDiff +'('+m+')' + result.csv[m].columns[0].data.split('!=')[0]+'(File B)'  +'\n';
-          stringDiff = stringDiff +'('+m+')' + result.csv[m].columns[0].data.split('!=')[1]+'(File A)'  +'\n';
+          stringDiff = stringDiff +'(Exists in File B only)'  +'\n';
+          stringkeys = stringkeys +result.csv[m].columns[0].data.split('!=')[0]+'\n';
+          stringDiff = stringDiff +'(Exists in File A only)'  +'\n';
+          stringkeys = stringkeys +result.csv[m].columns[0].data.split('!=')[1];
         }
         for(n = 0; n < result.csv[m].columns.length; n++){
         if(result.csv[m].columns[n].data){
           if(ignorearray.indexOf(n) > -1){
           }else{
-            stringDiff = stringDiff +'('+m+')' +'('+ result.csv[m].columns[n].data+')';
+            if(result.csv[m].columns[0].data){}else{
+            stringDiff = stringDiff +'('+ result.csv[m].columns[n].data+')';
+            }
             if(keyhandled == false && result.csv[m].columns[0] !== Object(result.csv[m].columns[0])){
-              stringkeys = stringkeys + '('+m+')' + result.csv[m].columns[0] +'\n';
+              stringkeys = stringkeys + result.csv[m].columns[0] +'\n';
               keyhandled = true;
             }
           }
