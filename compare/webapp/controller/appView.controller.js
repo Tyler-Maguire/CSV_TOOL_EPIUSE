@@ -901,7 +901,7 @@ sap.ui.define([
 
         for(var i =0; i < keySplit.length; i++){
 
-          OutputFile = OutputFile + keySplit[i] +'\t'+diffSplit[i] +'\n';
+          OutputFile = OutputFile + keySplit[i].trim() +'\t'+diffSplit[i].trim() +'\n';
           
         }
 
