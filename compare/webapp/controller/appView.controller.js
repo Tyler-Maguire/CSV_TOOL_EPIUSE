@@ -665,7 +665,17 @@ sap.ui.define([
           Variant_File = Variant_File + 'KeyList from prev Run: \n' + stringkeys.trim() +'\n';
           Variant_File = Variant_File + 'DiffList from prev Run: \n' + stringDiff ;
 
-        
+          //Testing Local Storage in the form of Browser Cashe
+          localStorage.setItem(keyInput, rowInput);
+          localStorage.setItem('Keys', JSON.stringify(keyInput));
+          localStorage.setItem('Rows', JSON.stringify(rowInput));
+
+
+          //Testing Fetching the item store:
+          var keys = localStorage.getItem('Keys');
+          var rows = localStorage.getItem('Rows');
+          debugger;
+          
 
         },
         ExportVariant: function(fileObject){
