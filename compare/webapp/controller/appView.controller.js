@@ -35,6 +35,10 @@ sap.ui.define([
     var FullCSV1;
     var FullCSV2;
 
+    //To-DO: Add in Logging functionality
+    var logdata = [];
+    var Verbose = false;
+    var basiclogging = true;
     
     var rowInput;
     var keyInput;
@@ -136,8 +140,6 @@ sap.ui.define([
      
 
         onCompare: function(oEvent) {
-
-
           // Here we are using the localStorage in order to save variant information:
           rowInput = this.getView().byId("RowSelection").getValue();
           localStorage.setItem('Rows', JSON.stringify(rowInput));
@@ -168,8 +170,10 @@ sap.ui.define([
           
           },
 
-           checkFunc: async function (inputFile) {
 
+
+          //This is an extremely important Function as here the sorting of the coloumns is done
+           checkFunc: async function (inputFile) {
              if (inputFile.files.length) {
                try {
                  var csvFileInText = await inputFile.files[0].text();
@@ -207,6 +211,9 @@ sap.ui.define([
                }
              }
            },
+
+
+           //this Function is used to first align the matching coloumns into the correct order so they can be compared in the following stage.
            checkFuncCompare: async function (inputFile) {
 
             if (inputFile.files.length) {
@@ -247,6 +254,7 @@ sap.ui.define([
             }
           },
 
+          //TO-DO Check through the ReOrder Section as the long File causes issues with matching
           reOrderCSV: function(LinesCSV1,LinesCSV2){
             var len1 = LinesCSV1.length;
             len1--;
@@ -354,6 +362,9 @@ sap.ui.define([
             Body2 = newsplit2;
           }           
           },
+
+
+          //Upload the First File and use Binary String read to pass the file contents into a stream
           onUploadBase: function(e) {
              var oCSVModelBase = this.getOwnerComponent().getModel("CSVModelBase");
              this.getView().setModel(oCSVModelBase, "CSVModelBase");
@@ -502,6 +513,8 @@ sap.ui.define([
                   params += "]";
           }
           },
+
+          //Function has not yet been implemented but considering the use it might be handy with large files
           handleTypeMissmatch: function(oEvent) {
             var aFileTypes = oEvent.getSource().getFileType();
             jQuery.each(aFileTypes, function(key, value) {
@@ -543,6 +556,8 @@ sap.ui.define([
             }
           
           },
+
+          //Generic read File class which is used as a base for readFileBase and ReadFileCompare
           readFile: function(input){
             let file = input.files[0];
 
@@ -560,6 +575,7 @@ sap.ui.define([
 
           },
 
+          //To-DO change the name of this function and then we can make use of the dlimiter function
           delimiter: function(csvText) {
             let t = csvText.split("\n")[0];
             let delArray = [',', ';', '|', '    '];
@@ -584,6 +600,8 @@ sap.ui.define([
                     delimiter_i = i;
                 }
             });
+
+            //returns the correct delimeter for the file as a return:
             if (delimiter_i === 0) {
                 return ',';
             } else if (delimiter_i === 1) {
@@ -596,7 +614,10 @@ sap.ui.define([
         },
 
 
+        // New variant Section which was added on the 10th June
         onUploadVariant: function(){
+
+
 
           var fU = this.getView().byId("FileUploaderVariant");
           var domRef = fU.getFocusDomRef();
