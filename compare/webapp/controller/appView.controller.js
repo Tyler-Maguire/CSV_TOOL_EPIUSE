@@ -634,9 +634,7 @@ sap.ui.define([
             for(var j =0; j < lines.length;j++){
 
               if(lines[j].split('KeyList from prev Run:')[1]){
-
                 keyStart = true;
-  
               }
               if(keyStart == true){
               keyText = keyText + lines[j]+'\n';
@@ -646,11 +644,15 @@ sap.ui.define([
                keyStart = false;
                diffstart = true; 
             }
-            if(diffstart = true){
+            if(diffstart == true){
               diffText =diffText + lines[j]+'\n';
             }
           }
+
+          keyText.replace('KeyList from prev Run:','');
+          keyText.replace('DiffList from prev Run:','');
           that.getView().byId("Key").setText(keyText);
+          diffText.replace('DiffList from prev Run:','');
           that.getView().byId("Diff").setText(diffText);
 
 
