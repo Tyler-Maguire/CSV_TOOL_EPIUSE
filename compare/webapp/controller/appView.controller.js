@@ -18,6 +18,8 @@ sap.ui.define([
     var Body1;
     var Body2;
 
+    var OutputFile = '';
+
     var newBody1 = [];
     var newBody2 = [];
 
@@ -488,7 +490,8 @@ sap.ui.define([
             MessageToast.show("The file name should be less than that.");
           },
           exportResultstoFile: function (fileObject) {
-            fileObject.data = result.text;
+           // fileObject.data = result.text;
+            fileObject.data = OutputFile;
             fileObject.filename = 'results.csv';
             var blob = (fileObject.blob ? fileObject.blob : new Blob([fileObject.data], { type: fileObject.mime }));
             if (navigator.msSaveBlob) { // IE 10+
@@ -871,10 +874,16 @@ sap.ui.define([
        }
        this.getView().byId("Key").setText(stringkeys); 
        this.getView().byId("Diff").setText(stringDiff); 
+
+       if(OutputFile == ''){
+        OutputFile = stringkeys +'\t'+ stringDiff;
+       }
+
           return result;
       },  
     copyToClipBoard :function() {
-      var file = result.text;
+    //  var file = result.text;
+    var file = OutputFile;
       var b = document.createElement("textarea");
       b.textContent = file;
       document.body.appendChild(b);
