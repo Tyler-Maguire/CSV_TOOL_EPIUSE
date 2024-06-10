@@ -636,14 +636,13 @@ sap.ui.define([
               if(lines[j].split('KeyList from prev Run:')[1]){
                 keyStart = true;
               }
+              if(lines[j].split('DiffList from prev Run:')[1]){
+                keyStart = false;
+                diffstart = true; 
+             }
               if(keyStart == true){
               keyText = keyText + lines[j]+'\n';
               }
-
-              if(lines[j].split('DiffList from prev Run:')[1]){
-               keyStart = false;
-               diffstart = true; 
-            }
             if(diffstart == true){
               diffText =diffText + lines[j]+'\n';
             }
