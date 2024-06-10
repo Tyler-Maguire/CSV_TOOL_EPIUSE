@@ -17,7 +17,14 @@ sap.ui.define([
 
     var Body1;
     var Body2;
+    var File1_Name = '';
+    var File2_Name = '';
+    var File1_Dir_Location = '';
+    var File2_Dir_Location = '';
 
+    var Variant_File_1;
+    var Variant_File_2;
+    var Variant_File;
     var OutputFileInLine = '';
 
     var OutputFile = '';
@@ -27,6 +34,10 @@ sap.ui.define([
 
     var FullCSV1;
     var FullCSV2;
+
+    
+    var rowInput;
+    var keyInput;
 
     var csvFile1;
     var csvFile2;
@@ -125,8 +136,8 @@ sap.ui.define([
 
         onCompare: function(oEvent) {
 
-          var rowInput = this.getView().byId("RowSelection").getValue();
-          var keyInput = this.getView().byId("KeySelection").getValue();
+          rowInput = this.getView().byId("RowSelection").getValue();
+          keyInput = this.getView().byId("KeySelection").getValue();
 
           if(keyInput.toString() != ''){
             csvBaseKeys = keyInput.toString().split(','); 
@@ -344,6 +355,8 @@ sap.ui.define([
              var fU = this.getView().byId("FileUploaderBase");
              var domRef = fU.getFocusDomRef();
              var file = fU.oFileUpload.files[0]; 
+             File1_Name = fU.oFileUpload.files[0].name;
+             File1_Dir_Location = fU.oFileUpload.files[0].param;
              var reader = new FileReader();
              var params = "";
              var that = this;
@@ -384,6 +397,8 @@ sap.ui.define([
             var fU = this.getView().byId("FileUploaderCompare");
             var domRef = fU.getFocusDomRef();
             var file = fU.oFileUpload.files[0]; 
+            File2_Name = fU.oFileUpload.files[0].name;
+            File2_Dir_Location = fU.oFileUpload.files[0].param;
             var reader = new FileReader();
             var params = "";
             var that = this;
@@ -576,7 +591,109 @@ sap.ui.define([
         },
 
 
+        onUploadVariant: function(){
 
+          var fU = this.getView().byId("FileUploaderVariant");
+          var domRef = fU.getFocusDomRef();
+          var file = fU.oFileUpload.files[0];
+
+          var fU1 = this.getView().byId("FileUploadBase");
+          var domRef = fU1.getFocusDomRef();
+         // var file1 = fU1.oFileUpload.files[0];
+
+          var fU2 = this.getView().byId("FileUploadCompare");
+          var domRef = fU2.getFocusDomRef();
+         // var file2 = f2.oFileUpload.files[0];
+
+      
+          var reader = new FileReader();
+          var params = "";
+          var that = this;
+          reader.onload = function(oEvent) {
+            var strCSV = oEvent.target.result;
+            var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+            var lines = strCSV.split('\n');
+
+            //to-do Research and test Setting oFileUpload Params from the JS Controller:
+
+           // file1.name = (lines[0].split('File_1_Resource:')[1]);
+           // file2.name = (lines[1].split('File_1_Resource:')[1]);
+
+            keyInput = lines[2].split('File_1_Input_Parameters:')[1];
+            rowInput = lines[3].split('File_2_Input_Parameters:')[1];
+
+            that.getView().byId("RowSelection").setValue(rowInput);
+            that.getView().byId("KeySelection").setValue(keyInput);
+
+            var keyText = '';
+            var keyStart = false;
+
+            var diffText = '';
+            var diffstart=false;
+
+            for(var j =0; j < lines.length;j++){
+
+              if(lines[j].split('KeyList from prev Run:')[1]){
+
+                keyStart = true;
+  
+              }
+              if(keyStart == true){
+              keyText = keyText + lines[j]+'\n';
+              }
+
+              if(lines[j].split('DiffList from prev Run:')[1]){
+               keyStart = false;
+               diffstart = true; 
+            }
+            if(diffstart = true){
+              diffText =diffText + lines[j]+'\n';
+            }
+          }
+          that.getView().byId("Key").setText(keyText);
+          that.getView().byId("Diff").setText(diffText);
+
+
+          };
+          reader.readAsBinaryString(file);
+        
+        },
+        createVariant: function(){
+          Variant_File = '';
+          Variant_File = Variant_File + 'File_1_Resource: ' + File1_Name + '\n';
+          Variant_File = Variant_File + 'File_2_Resource: ' + File2_Name + '\n';
+          Variant_File = Variant_File + 'File_1_Input_Parameters: ' + keyInput + '\n';
+          Variant_File = Variant_File + 'File_2_Input_Parameters: ' + rowInput + '\n';
+          Variant_File = Variant_File + 'Results from Prev Run: \n' + OutputFile+ '\n';
+          Variant_File = Variant_File + 'KeyList from prev Run: \n' + stringkeys.trim() +'\n';
+          Variant_File = Variant_File + 'DiffList from prev Run: \n' + stringDiff ;
+
+        
+
+        },
+        ExportVariant: function(fileObject){
+       //   Variant_File = to do structure Variant file to store set readible parameters
+            this.createVariant();
+                     fileObject.data = Variant_File;
+                     fileObject.filename = 'variant.csv';
+                     var blob = (fileObject.blob ? fileObject.blob : new Blob([fileObject.data], { type: fileObject.mime }));
+                     if (navigator.msSaveBlob) { // IE 10+
+                       navigator.msSaveBlob(blob, fileObject.filename);
+                     } else {
+                       var link = document.createElement("a");
+                       if (link.download !== undefined) { // feature detection
+                         // Browsers that support HTML5 download attribute
+                         var url = URL.createObjectURL(blob);
+                         link.setAttribute("href", url);
+                         link.setAttribute("download", fileObject.filename);
+                         link.style.visibility = 'hidden';
+                         document.body.appendChild(link);
+                         link.click();
+                         document.body.removeChild(link);
+                       }
+                     }
+        },
+        
 
         dynamicCSVcompare: function(json1,json2,delimit_1,delimit_2){
           function a(a) {

@@ -11,6 +11,7 @@
 		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
 		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
      	<Button id = "butt1" text="Upload" press="onUploadBase" />
+		
 	</HBox>
 		<Text id="FileOutBase" class="FileOut" text="{/CSVBaseJson}" wrapping="true" width="700px"/>
 		<Input id="KeySelection" class="custLabel" textFormatMode="Key" placeholder="File A Key Fields:" width="310px"/>
@@ -25,6 +26,7 @@
 		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
 		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
      	<Button id = "butt2" text="Upload" press="onUploadCompare" />
+		
 	</HBox>	
 	<Text id="FileOutCompare" class="FileOut" text="{/CSVCompareJson}" wrapping="true" width="700px"/>
 	<Input id="RowSelection" class="custLabel,FileOut" textFormatMode="Value" placeholder="File B Key Fields:" width="310px"/>
@@ -34,8 +36,16 @@
 
 
 	 <HBox id = "Controls">
-	<Button id = "butt4" text="Clipboard Copy" press="copyToClipBoard" />
-	<Button id = "butt5" text="Export to CSV" press="exportResultstoFile" />
+	<Button id = "butt4" text="Copy to Clipboard" press="copyToClipBoard" />
+	<Button id = "butt5" text="Export Result CSV" press="exportResultstoFile" />
+	<Button id = "butt6" text="Store Variant" press="createVariant" />
+	<Button id = "butt7" text="Export Variant" press="ExportVariant" />
+	<u:FileUploader id="FileUploaderVariant" typeMissmatch="handleTypeMissmatch" change="handleValueChange"
+		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
+		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Browse Variant"/>
+	<Button id = "butt8" text="Upload Variant" press="onUploadVariant" />
+
+
 
 	</HBox>
 		<t:Table id="idTable"  >
