@@ -647,17 +647,13 @@ sap.ui.define([
               diffText =diffText + lines[j]+'\n';
             }
           }
-
           keyText.replace('KeyList from prev Run:','');
           keyText.replace('DiffList from prev Run:','');
           that.getView().byId("Key").setText(keyText);
           diffText.replace('DiffList from prev Run:','');
           that.getView().byId("Diff").setText(diffText);
-
-
           };
           reader.readAsBinaryString(file);
-        
         },
         createVariant: function(){
           Variant_File = '';
