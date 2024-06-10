@@ -18,6 +18,8 @@ sap.ui.define([
     var Body1;
     var Body2;
 
+    var OutputFileInLine = '';
+
     var OutputFile = '';
 
     var newBody1 = [];
@@ -837,9 +839,13 @@ sap.ui.define([
         }else{
         if(result.csv[m].columns[0].data){
           stringDiff = stringDiff +'Exists in File B only'  +'\n';
+          OutputFileInLine = OutputFileInLine + stringDiff +'Exists in File B only';
           stringkeys = stringkeys +result.csv[m].columns[0].data.split('!=')[0]+'\n';
+          OutputFileInLine = OutputFileInLine + result.csv[m].columns[0].data.split('!=')[0];
           stringDiff = stringDiff +'Exists in File A only'  +'\n';
+          OutputFileInLine = OutputFileInLine + 'Exists in File A only';
           stringkeys = stringkeys +result.csv[m].columns[0].data.split('!=')[1];
+          OutputFileInLine = OutputFileInLine + result.csv[m].columns[0].data.split('!=')[1];
         }
         for(n = 0; n < result.csv[m].columns.length; n++){
         if(result.csv[m].columns[n].data){
@@ -850,14 +856,17 @@ sap.ui.define([
 
            if(sameline == false){
             stringDiff = stringDiff +'Diff:'+ result.csv[0].columns[n];
+            OutputFileInLine = OutputFileInLine + 'Diff:'+ result.csv[0].columns[n];
             sameline = true;
            }
            else{
             stringDiff = stringDiff +' + '+ result.csv[0].columns[n];
+            OutputFileInLine = OutputFileInLine + ' + '+ result.csv[0].columns[n];
            }  
             }
             if(keyhandled == false && result.csv[m].columns[0] !== Object(result.csv[m].columns[0])){
               stringkeys = stringkeys + result.csv[m].columns[0] +'\n';
+              OutputFileInLine = OutputFileInLine +result.csv[m].columns[0];
               keyhandled = true;
             }
           }
