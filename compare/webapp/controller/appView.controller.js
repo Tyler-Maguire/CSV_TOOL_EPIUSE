@@ -127,6 +127,7 @@ sap.ui.define([
           
        },
 
+      //Useful to get coloumns which appears in both files(Common file attributes)
        getAllColumns: function() {
         const columns = [];
         return columns;
@@ -136,8 +137,12 @@ sap.ui.define([
 
         onCompare: function(oEvent) {
 
+
+          // Here we are using the localStorage in order to save variant information:
           rowInput = this.getView().byId("RowSelection").getValue();
+          localStorage.setItem('Rows', JSON.stringify(rowInput));
           keyInput = this.getView().byId("KeySelection").getValue();
+          localStorage.setItem('Keys', JSON.stringify(keyInput));
 
           if(keyInput.toString() != ''){
             csvBaseKeys = keyInput.toString().split(','); 
@@ -674,7 +679,7 @@ sap.ui.define([
           //Testing Fetching the item store:
           var keys = localStorage.getItem('Keys');
           var rows = localStorage.getItem('Rows');
-          debugger;
+          
           
 
         },
