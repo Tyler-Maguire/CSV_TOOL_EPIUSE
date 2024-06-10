@@ -38,6 +38,16 @@ sap.ui.define([
     var newCSV1json = '';
     var newCSV2json = '';
 
+
+    var stringkeys = '';
+    var stringDiff = '';
+    var n;
+    var ignorearray = [];
+    var ignorekeys = [];
+    var founddiff = false;
+    var keyhandled = false;
+    var sameline = false;
+
     
     var csvBaseKeys = [];
     var csvBaseHeader = '';
@@ -565,6 +575,9 @@ sap.ui.define([
             }
         },
 
+
+
+
         dynamicCSVcompare: function(json1,json2,delimit_1,delimit_2){
           function a(a) {
               for (var e = [], d = a.split(c), h = 0; h < d.length; h++) {
@@ -816,14 +829,7 @@ sap.ui.define([
      //     this.showDiff(delimit_1);
 
 
-          var stringkeys = '';
-          var stringDiff = '';
-          var n;
-          var ignorearray = [];
-          var ignorekeys = [];
-          var founddiff = false;
-          var keyhandled = false;
-          var sameline = false;
+
           
 
        for(var m = 0; m <= result.csv.length-1; m++){
@@ -839,13 +845,9 @@ sap.ui.define([
         }else{
         if(result.csv[m].columns[0].data){
           stringDiff = stringDiff +'Exists in File B only'  +'\n';
-          OutputFileInLine = OutputFileInLine + stringDiff +'Exists in File B only';
-          stringkeys = stringkeys +result.csv[m].columns[0].data.split('!=')[0]+'\n';
-          OutputFileInLine = OutputFileInLine + result.csv[m].columns[0].data.split('!=')[0];
+          stringkeys = stringkeys +result.csv[m].columns[0].data.split('!=')[0]+'\n';      
           stringDiff = stringDiff +'Exists in File A only'  +'\n';
-          OutputFileInLine = OutputFileInLine + 'Exists in File A only';
           stringkeys = stringkeys +result.csv[m].columns[0].data.split('!=')[1];
-          OutputFileInLine = OutputFileInLine + result.csv[m].columns[0].data.split('!=')[1];
         }
         for(n = 0; n < result.csv[m].columns.length; n++){
         if(result.csv[m].columns[n].data){
@@ -856,17 +858,17 @@ sap.ui.define([
 
            if(sameline == false){
             stringDiff = stringDiff +'Diff:'+ result.csv[0].columns[n];
-            OutputFileInLine = OutputFileInLine + 'Diff:'+ result.csv[0].columns[n];
+            
             sameline = true;
            }
            else{
             stringDiff = stringDiff +' + '+ result.csv[0].columns[n];
-            OutputFileInLine = OutputFileInLine + ' + '+ result.csv[0].columns[n];
+         
            }  
             }
             if(keyhandled == false && result.csv[m].columns[0] !== Object(result.csv[m].columns[0])){
               stringkeys = stringkeys + result.csv[m].columns[0] +'\n';
-              OutputFileInLine = OutputFileInLine +result.csv[m].columns[0];
+            
               keyhandled = true;
             }
           }
@@ -883,16 +885,35 @@ sap.ui.define([
        }
        this.getView().byId("Key").setText(stringkeys); 
        this.getView().byId("Diff").setText(stringDiff); 
-
-       if(OutputFile == ''){
-        OutputFile = stringkeys +'\t'+ stringDiff;
-       }
+       this.TabulateOutputForExport();
 
           return result;
       },  
+
+      TabulateOutputForExport: function(){
+
+        var keySplit = [] ;
+        var diffSplit = [];
+        
+        keySplit = stringkeys.split('\n');
+        diffSplit = stringDiff.split('\n');
+
+
+        for(var i =0; i < keySplit.length; i++){
+
+          OutputFile = OutputFile + keySplit[i] +'\t'+diffSplit[i] +'\n';
+          
+        }
+
+      },
+
+
+
+
+
     copyToClipBoard :function() {
     //  var file = result.text;
-    var file = OutputFile;
+     var file = OutputFile;
       var b = document.createElement("textarea");
       b.textContent = file;
       document.body.appendChild(b);
