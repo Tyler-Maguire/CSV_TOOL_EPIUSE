@@ -62,6 +62,7 @@ sap.ui.define([
     var founddiff = false;
     var keyhandled = false;
     var sameline = false;
+    var firstdiff = true;
 
     
     var csvBaseKeys = [];
@@ -882,23 +883,23 @@ sap.ui.define([
             for(var i=1;i <loopcnt;i++){
 
               for(var j=1;j <smallercsv.length;j++){
-                tempstring = ""; 
+                tempstring = "";
+                biggercsv = biggercsv.filter(Boolean); 
                 let lineA = biggercsv[i].split(delimit_1);
                 let keyA = lineA[0];
 
+                smallercsv = smallercsv.filter(Boolean);
+                console.log(j);
+                if(j < 1265){
                 let lineB = smallercsv[j].split(delimit_1);
                 let keyB = lineB[0];
-
+                
                 if(keyA == keyB){
-
                   tempstring = smallercsv[i];
                   smallercsv[i] = smallercsv[j];
                   smallercsv[j]= tempstring;
-
-
-
-
                 }
+              }
 
               }
 
@@ -1002,7 +1003,7 @@ sap.ui.define([
           stringDiff = stringDiff +'Exists in File A only'  +'\n';
           stringkeys = stringkeys +result.csv[m].columns[0].data.split('!=')[1];
         }
-        var firstdiff = true;
+      
         for(n = 0; n < result.csv[m].columns.length; n++){
         if(result.csv[m].columns[n].data){
           if(ignorearray.indexOf(n) > -1){
@@ -1012,7 +1013,7 @@ sap.ui.define([
 
            if(sameline == false){
             if(firstdiff == false){
-              stringDiff = '\n'+stringDiff +'Diff:'+ result.csv[0].columns[n];
+              stringDiff = stringDiff+'\n'+'Diff:'+ result.csv[0].columns[n];
             }else{
               stringDiff = stringDiff +'Diff:'+ result.csv[0].columns[n];
             }

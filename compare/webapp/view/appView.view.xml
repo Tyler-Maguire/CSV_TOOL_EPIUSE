@@ -55,7 +55,7 @@
 				<Text text="Key Fields" />
 					</t:Column>
 					<t:Column
-				width="300px">
+				width="800px">
 				<Text text="Comparison Result" />
 					</t:Column>
 				</t:columns>
@@ -64,7 +64,7 @@
 				<t:ColumnListItem vAlign="Top">
 		    <cells >
 				<Text textAlign="Initial" wrapping="true" wrappingType="Hyphenated" id="Key" text="Key"  width="300px" />
-				<Text textAlign="Initial" wrapping="true" wrappingType="Hyphenated" id="Diff" text="Diff" width="300px"/>
+				<Text textAlign="Initial" wrapping="true" wrappingType="Hyphenated" id="Diff" text="Diff" width="900px"/>
 			</cells>
 			</t:ColumnListItem>
 				</t:items>
