@@ -138,6 +138,6 @@
   },
   "sap.cloud": {
     "public": true,
-    "service": "comepiuseCSVTOOLEPIUSE"
+    "service": "comepiusecompare"
   }
 }
