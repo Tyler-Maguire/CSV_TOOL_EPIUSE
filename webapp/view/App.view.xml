@@ -5,18 +5,6 @@
     <App id="app">
 			<Page id="APpShell">
 				<content>
-					<f:DynamicPage id="Dyn1">
-						<f:header>
-							<f:DynamicPageHeader id="Dynh1" pinnable="false">
-								<Input class="todoInput" id="addTodoItemInput" value="{/newTodo}" placeholder="{i18n>INPUT_PLACEHOLDER}" change=".addTodo" />
-							</f:DynamicPageHeader>
-						</f:header>
-						<f:content>
-
-					
-
-						</f:content>
-					</f:DynamicPage>
 				</content>
 
 				<footer>
