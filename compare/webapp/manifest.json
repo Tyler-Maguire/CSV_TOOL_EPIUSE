@@ -73,17 +73,19 @@
           "bundleName": "com.epiuse.compare.i18n.i18n"
         }
       },
-      "CSVModel1" : {
-        "type" : "sap.ui.model.json.JSONModel"
-    },"CSVModel2" : {
-      "type" : "sap.ui.model.json.JSONModel"
-    },"CSVModelCompare" : {
-      "type" : "sap.ui.model.json.JSONModel"
-    },"csvResult" : {
-      "type" : "sap.ui.model.json.JSONModel"
-    }
-
-  },
+      "CSVModel1": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "CSVModel2": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "CSVModelCompare": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "csvResult": {
+        "type": "sap.ui.model.json.JSONModel"
+      }
+    },
     "resources": {
       "css": [
         {
@@ -139,4 +141,3 @@
     "service": "comepiuseCSVTOOLEPIUSE"
   }
 }
-
