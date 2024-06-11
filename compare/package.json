@@ -26,7 +26,7 @@
     "compareunformatted": "csv-diff username.csv password.csv --key=id --show-unchanged",
     "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#comepiusecompare-display\"",
     "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#comepiusecompare-display\"",
-    "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "deploy": "fiori verify",
     "deploy-config": "fiori add deploy-config",
     "start-noflp": "fiori run --open \"index.html?sap-ui-xx-viewCache=false\"",
