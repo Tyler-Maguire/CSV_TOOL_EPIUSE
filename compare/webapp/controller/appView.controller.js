@@ -1002,6 +1002,7 @@ sap.ui.define([
           stringDiff = stringDiff +'Exists in File A only'  +'\n';
           stringkeys = stringkeys +result.csv[m].columns[0].data.split('!=')[1];
         }
+        var firstdiff = true;
         for(n = 0; n < result.csv[m].columns.length; n++){
         if(result.csv[m].columns[n].data){
           if(ignorearray.indexOf(n) > -1){
@@ -1010,13 +1011,19 @@ sap.ui.define([
            // stringDiff = stringDiff +'('+ result.csv[m].columns[n].data+')';
 
            if(sameline == false){
-            stringDiff = stringDiff +'Diff:'+ result.csv[0].columns[n];
+            if(firstdiff == false){
+              stringDiff = '\n'+stringDiff +'Diff:'+ result.csv[0].columns[n];
+            }else{
+              stringDiff = stringDiff +'Diff:'+ result.csv[0].columns[n];
+            }
+         //    
             
             sameline = true;
+            firstdiff = false;
            }
            else{
             stringDiff = stringDiff +' + '+ result.csv[0].columns[n];
-         
+            firstdiff = false;
            }  
             }
             if(keyhandled == false && result.csv[m].columns[0] !== Object(result.csv[m].columns[0])){
@@ -1031,9 +1038,9 @@ sap.ui.define([
         if(keyhandled == true){
           keyhandled = false;
         }
-        if(stringDiff !== ''){
-          stringDiff = stringDiff + '\n';
-        }
+       // if(stringDiff !== ''){
+       //   stringDiff = stringDiff + '\n';
+       // }
       }
        }
        this.getView().byId("Key").setText(stringkeys); 
