@@ -787,17 +787,11 @@ sap.ui.define([
           } 
 
           //while looping through 1st csv create data(base key) based on compkey then loop through other table create data(compare key)based on compkey and check then move row to match
-
-
-
-
            // rearrange from multidimensional array to single dimensional array combining key coloumns?  then 
            // rearrange from multidimensional array to single dimensional array combining key coloumns?  then
-           //Note for now only 2 keys allowed.
+           //Note for now only 2 keys allowed. --- CHECK WHAT EFFECT this Has on comparison 
              var stopcsv = false;
              var stopcsv2 = false;
-
-
              //CSV-1
             for(var i = 0; i < Body1.length; i++) { 
               var tempstring1 = ''; 
