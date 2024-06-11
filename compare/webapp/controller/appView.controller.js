@@ -98,8 +98,8 @@ sap.ui.define([
       newCSV2:[]
   };
 
-    var delimit_1 = '';
-    var delimit_2 = '';
+    var delimit_1 = ',';
+    var delimit_2 = ',';
 
     var compareSelect = 'all'
       //'all' or 'diff'
@@ -729,6 +729,12 @@ sap.ui.define([
         
 
         dynamicCSVcompare: function(json1,json2,delimit_1,delimit_2){
+
+          //NEW Bypass of Encoding
+          delimit_1 = ',';
+          delimit_2 = ',';
+
+
           function a(a) {
               for (var e = [], d = a.split(c), h = 0; h < d.length; h++) {
                   a = !1;
@@ -795,9 +801,14 @@ sap.ui.define([
              //CSV-1
             for(var i = 0; i < Body1.length; i++) { 
               var tempstring1 = ''; 
+              //New Untested Code
+              if(Array.isArray(Body1[i])){
+                console.log('CSV 1 already split');
+              }else{
+                Body1[i]=Body1[i].split(',');
+                //New Untested Code
+              }
               for(var j=0; j < Body1[i].length; j++) {
-                
-                //new code
                 if(j >= 0 && j <  basekeymap){
                   if(stopcsv == false){
                   tempstring1 = Body1[i][j] + ' + ' + Body1[i][j+1];
@@ -820,8 +831,16 @@ sap.ui.define([
             //CSV-2   
             for(var i = 0; i < Body2.length; i++) { 
               var tempstring2 = ''; 
+              //New Untested Code
+              if(Array.isArray(Body2[i])){
+                console.log('CSV 2 already split');
+              }else{
+                Body2[i]=Body2[i].split(',');
+                //New Untested Code
+              }
+            
+              
               for(var j=0; j < Body2[i].length; j++) { 
-
                 //new code
                 if(j >= 0 && j < compkeymap){
                   if(stopcsv2 == false){
@@ -842,10 +861,6 @@ sap.ui.define([
               newBody2.push(tempstring2);
               stopcsv2 = false;
             }
-
-
-
-
             //Loop Through
 
             var loopcnt = 0;
@@ -890,8 +905,6 @@ sap.ui.define([
             }
 
         // TO do change to ignore colomn diff    
-
-
               var l = biggercsv;
               var g = smallercsv;
 
@@ -971,10 +984,6 @@ sap.ui.define([
               }
           });
      //     this.showDiff(delimit_1);
-
-
-
-          
 
        for(var m = 0; m <= result.csv.length-1; m++){
         founddiff = false;
