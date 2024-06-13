@@ -39,8 +39,8 @@ sap.ui.define([
 							"tiles": [{
 								"tileType": "sap.ushell.ui.tile.StaticTile",
 								"properties": {
-									"title": "CSV_EPIUSE_TOOL",
-									"targetURL": "#comepiuseCSVTOOLEPIUSE-display"
+									"title": "CSV Compare Tool",
+									"targetURL": "#comepiusecompare-display"
 								}
 							}]
 						}]
@@ -51,18 +51,18 @@ sap.ui.define([
 				"adapter": {
 					"config": {
 						"inbounds": {
-							"comepiuseCSVTOOLEPIUSE-display": {
-								"semanticObject": "comepiuseCSVTOOLEPIUSE",
+							"comepiusecompare-display": {
+								"semanticObject": "comepiusecompare",
 								"action": "display",
-								"description": "An SAP Fiori Front end for CSV compare tool",
-								"title": "CSV_EPIUSE_TOOL",
+								"description": "CSV Compare Tool",
+								"title": "CSV Compare Tool",
 								"signature": {
 									"parameters": {}
 								},
 								"resolutionResult": {
 									"applicationType": "SAPUI5",
-									"additionalInformation": "SAPUI5.Component=com.epiuse.CSVTOOLEPIUSE",
-									"url": sap.ui.require.toUrl("com/epiuse/CSVTOOLEPIUSE")
+									"additionalInformation": "SAPUI5.Component=com.epiuse.compare",
+									"url": sap.ui.require.toUrl("com/epiuse/compare")
 								}
 							}
 						}

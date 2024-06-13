@@ -5,7 +5,7 @@ sap.ui.getCore().attachInit(function () {
 	"use strict";
 
 	sap.ui.require([
-		"comepiuse/CSV_TOOL_EPIUSE/test/unit/AllTests"
+		"comepiuse/compare/test/unit/AllTests"
 	], function () {
 		QUnit.start();
 	});

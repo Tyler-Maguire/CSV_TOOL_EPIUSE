@@ -1,19 +1,7 @@
-<mvc:View controllerName="com.epiuse.CSVTOOLEPIUSE.controller.App"
+<mvc:View controllerName="com.epiuse.compare.controller.App"
     xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m">
     <App id="app">
-			<Page id="APpShell">
-				<content>
-				</content>
-
-				<footer>
-				</footer>
-
-			</Page>
-	
-
-
-
     </App>
 </mvc:View>

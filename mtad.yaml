@@ -1,0 +1,20 @@
+_schema-version: "3.1"
+ID: compare
+version: 1.0.0
+
+modules:
+  - name: compare
+    type: staticfile
+    path: compare.zip
+    requires:
+      - name: compare-service
+    parameters:
+      memory: 64m
+      disk-quota: 64m
+
+resources:
+  - name: compare-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: application-logs
+      service-plan: lite

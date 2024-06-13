@@ -2,7 +2,7 @@
 
 specVersion: "3.1"
 metadata:
-  name: com.epiuse.compare
+  name: compare
 type: application
 server:
   customMiddleware:
@@ -24,5 +24,5 @@ server:
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:
-        component: com.epiuse.compare
+        component: compare
         ui5Theme: sap_horizon

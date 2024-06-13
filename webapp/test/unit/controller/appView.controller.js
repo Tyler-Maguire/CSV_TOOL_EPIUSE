@@ -1,13 +1,13 @@
 /*global QUnit*/
 
 sap.ui.define([
-	"comepiuse/CSV_TOOL_EPIUSE/controller/upload.controller"
+	"comepiuse/compare/controller/appView.controller"
 ], function (Controller) {
 	"use strict";
 
-	QUnit.module("upload Controller");
+	QUnit.module("appView Controller");
 
-	QUnit.test("I should test the upload controller", function (assert) {
+	QUnit.test("I should test the appView controller", function (assert) {
 		var oAppController = new Controller();
 		oAppController.onInit();
 		assert.ok(oAppController);

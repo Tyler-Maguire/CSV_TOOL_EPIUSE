@@ -1,5 +1,5 @@
 sap.ui.define([
-	"comepiuse/CSV_TOOL_EPIUSE/test/unit/controller/upload.controller"
+	"comepiuse/compare/test/unit/controller/appView.controller"
 ], function () {
 	"use strict";
 });

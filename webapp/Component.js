@@ -5,12 +5,12 @@
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
-        "com/epiuse/CSVTOOLEPIUSE/model/models"
+        "com/epiuse/compare/model/models"
     ],
     function (UIComponent, Device, models) {
         "use strict";
 
-        return UIComponent.extend("com.epiuse.CSVTOOLEPIUSE.Component", {
+        return UIComponent.extend("com.epiuse.compare.Component", {
             metadata: {
                 manifest: "json"
             },
@@ -29,6 +29,7 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
+                this.setModel(models.createCSVModel(),"CSVModelCompare");
             }
         });
     }

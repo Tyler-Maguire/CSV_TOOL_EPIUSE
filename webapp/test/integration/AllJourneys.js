@@ -7,7 +7,7 @@ sap.ui.define([
 
 	Opa5.extendConfig({
 		arrangements: new Startup(),
-		viewNamespace: "com.epiuse.CSVTOOLEPIUSE.view.",
+		viewNamespace: "com.epiuse.compare.view.",
 		autoWait: true
 	});
 });

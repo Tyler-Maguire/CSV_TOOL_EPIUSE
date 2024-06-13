@@ -14,7 +14,7 @@ sap.ui.define([
 			// start the app UI component
 			this.iStartMyUIComponent({
 				componentConfig: {
-					name: "com.epiuse.CSVTOOLEPIUSE",
+					name: "com.epiuse.compare",
 					async: true
 				},
 				hash: oOptions.hash,

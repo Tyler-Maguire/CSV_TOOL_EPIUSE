@@ -5,8 +5,11 @@ sap.ui.define(
     function(BaseController) {
       "use strict";
   
-      return BaseController.extend("com.epiuse.CSVTOOLEPIUSE.controller.App", {
+      return BaseController.extend("com.epiuse.compare.controller.App", {
         onInit: function() {
+
+          sap.ui.getCore().applyTheme('sap_horizon_dark');
+          
         }
       });
     }

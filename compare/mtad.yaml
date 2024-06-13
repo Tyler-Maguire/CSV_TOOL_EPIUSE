@@ -1,0 +1,20 @@
+_schema-version: "3.1"
+ID: comepiusecompare
+version: 1.0.0
+
+modules:
+  - name: comepiusecompare
+    type: staticfile
+    path: dist/comepiusecompare.zip
+    requires:
+      - name: comepiusecompare-service
+    parameters:
+      memory: 64m
+      disk-quota: 64m
+
+resources:
+  - name: comepiusecompare-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: application-logs
+      service-plan: lite

@@ -1,109 +1,143 @@
 {
-    "_version": "1.59.0",
-    "sap.app": {
-        "id": "com.epiuse.CSVTOOLEPIUSE",
-        "type": "application",
-        "i18n": "i18n/i18n.properties",
-        "applicationVersion": {
-            "version": "0.0.1"
-        },
-        "title": "{{appTitle}}",
-        "description": "{{appDescription}}",
-        "resources": "resources.json",
-        "sourceTemplate": {
-            "id": "@sap/generator-fiori:basic",
-            "version": "1.13.2",
-            "toolsId": "2f8fcd11-6e16-4882-b03d-12982cd76cd7"
-        }
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "compare",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
     },
-    "sap.ui": {
-        "technology": "UI5",
-        "icons": {
-            "icon": "",
-            "favIcon": "",
-            "phone": "",
-            "phone@2": "",
-            "tablet": "",
-            "tablet@2": ""
-        },
-        "deviceTypes": {
-            "desktop": true,
-            "tablet": true,
-            "phone": true
-        }
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.13.2",
+      "toolsId": "3b80bb03-2663-4905-ab11-eb855c542789"
     },
-    "sap.ui5": {
-        "flexEnabled": true,
-        "dependencies": {
-            "minUI5Version": "1.123.1",
-            "libs": {
-                "sap.m": {},
-                "sap.ui.core": {},
-                "sap.f": {},
-                "sap.suite.ui.generic.template": {},
-                "sap.ui.comp": {},
-                "sap.ui.generic.app": {},
-                "sap.ui.table": {},
-                "sap.ushell": {}
-            }
-        },
-        "contentDensities": {
-            "compact": true,
-            "cozy": true
-        },
-        "models": {
-            "i18n": {
-                "type": "sap.ui.model.resource.ResourceModel",
-                "settings": {
-                    "bundleName": "com.epiuse.CSVTOOLEPIUSE.i18n.i18n"
-                }
-            }
-        },
-        "resources": {
-            "css": [
-                {
-                    "uri": "css/style.css"
-                }
-            ]
-        },
-        "routing": {
-            "config": {
-                "routerClass": "sap.m.routing.Router",
-                "viewType": "XML",
-                "async": true,
-                "viewPath": "com.epiuse.CSVTOOLEPIUSE.view",
-                "controlAggregation": "pages",
-                "controlId": "app",
-                "clearControlAggregation": false
-            },
-            "routes": [
-                {
-                    "name": "Routeupload",
-                    "pattern": ":?query:",
-                    "target": [
-                        "Targetupload"
-                    ]
-                }
-            ],
-            "targets": {
-                "Targetupload": {
-                    "viewType": "XML",
-                    "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "upload",
-                    "viewName": "upload"
-                }
-            }
-        },
-        "rootView": {
-            "viewName": "com.epiuse.CSVTOOLEPIUSE.view.App",
-            "type": "XML",
-            "async": true,
-            "id": "App"
+    "crossNavigation": {
+      "inbounds": {
+        "compare-Display": {
+          "semanticObject": "compare",
+          "action": "Display",
+          "title": "{{flpTitle}}",
+          "subTitle": "{{flpSubtitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
         }
-    },
-    "sap.cloud": {
-        "public": true,
-        "service": "comepiuseCSVTOOLEPIUSE"
+      }
     }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.123.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.suite.ui.generic.template": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.ushell": {},
+        "sap.ui.webc.main": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "compare.i18n.i18n"
+        }
+      },
+      "CSVModel1": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "CSVModel2": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "CSVModelCompare": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "csvResult": {
+        "type": "sap.ui.model.json.JSONModel"
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "compare.view",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "name": "RouteappView",
+          "pattern": ":?query:",
+          "target": [
+            "TargetappView"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetappView": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "appView",
+          "viewName": "appView"
+        },
+        "TargetTabView": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "TableView",
+          "viewName": "TableView"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "compare.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "comepiusecompare"
+  }
 }

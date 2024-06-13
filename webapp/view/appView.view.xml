@@ -1,0 +1,76 @@
+<mvc:View controllerName="com.epiuse.compare.controller.appView"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:d="sap.ui.webc.main"
+    xmlns="sap.m" xmlns:t="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml">
+    <Page id="page"  title="{i18n>title}" >
+
+
+	<VBox id="FileUploadBaseZone" alignItems="Center" class="pad">	
+		 <Label labelFor="FileUploadBase" class="custLabel" id="file1" text="Please upload file 1 for comparison."/>
+		 <HBox id = "FileUploadBase" >
+     	<u:FileUploader id="FileUploaderBase" typeMissmatch="handleTypeMissmatch" change="handleValueChange"
+		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
+		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
+     	<Button id = "butt1" text="Upload" press="onUploadBase" />
+		
+	</HBox>
+		<Text id="FileOutBase" class="FileOut" text="{/CSVBaseJson}" wrapping="true" width="700px"/>
+		<Input id="KeySelection" class="custLabel" textFormatMode="Key" placeholder="File A Key Fields:" width="310px"/>
+	</VBox>	
+	<VBox id="spacer" height="20px">
+
+	</VBox>	
+	<VBox id="FileUploadCompareZone" alignItems="Center">
+		<Label id="file2" class="custLabel" text="Please upload file 2 for comparison."/>
+		<HBox id = "FileUploadCompare">
+     	<u:FileUploader id="FileUploaderCompare" typeMissmatch="handleTypeMissmatch" change="handleValueChange"
+		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
+		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Choose a CSV file"/>
+     	<Button id = "butt2" text="Upload" press="onUploadCompare" />
+		
+	</HBox>	
+	<Text id="FileOutCompare" class="FileOut" text="{/CSVCompareJson}" wrapping="true" width="700px"/>
+	<Input id="RowSelection" class="custLabel,FileOut" textFormatMode="Value" placeholder="File B Key Fields:" width="310px"/>
+	</VBox>
+	<VBox id="verticleLayKey" alignItems="Center">
+	<Button id = "butt3" text="Compare uploaded CSV files." press="onCompare" />
+
+
+	 <HBox id = "Controls">
+	<Button id = "butt4" text="Copy to Clipboard" press="copyToClipBoard" />
+	<Button id = "butt5" text="Export Result CSV" press="exportResultstoFile" />
+	<Button id = "butt6" text="Store Variant" press="createVariant" />
+	<Button id = "butt7" text="Export Variant" press="ExportVariant" />
+	<u:FileUploader id="FileUploaderVariant" typeMissmatch="handleTypeMissmatch" change="handleValueChange"
+		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
+		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Browse Variant"/>
+	<Button id = "butt8" text="Upload Variant" press="onUploadVariant" />
+
+
+
+	</HBox>
+		<t:Table id="idTable"  >
+				<t:columns>
+					<t:Column
+				width="300px">
+				<Text text="Key Fields" />
+					</t:Column>
+					<t:Column
+				width="800px">
+				<Text text="Comparison Result" />
+					</t:Column>
+				</t:columns>
+				<t:items>
+
+				<t:ColumnListItem vAlign="Top">
+		    <cells >
+				<Text textAlign="Initial" wrapping="true" wrappingType="Hyphenated" id="Key" text="Key"  width="300px" />
+				<Text textAlign="Initial" wrapping="true" wrappingType="Hyphenated" id="Diff" text="Diff" width="900px"/>
+			</cells>
+			</t:ColumnListItem>
+				</t:items>
+		</t:Table>
+	</VBox>
+
+	<content/>
+    </Page>
+</mvc:View>
