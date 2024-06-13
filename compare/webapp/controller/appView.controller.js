@@ -767,28 +767,53 @@ sap.ui.define([
 
           //ToDo Add code for the section for key chcking ect
           //Loop through both CSV Rows and use key Selection to match rows and line up row indexs
+
+          //Check If any Keys have been given from the user: 
           if(csvBaseKeysCnt >= 1 && csvCompareKeysCnt >= 1){
-            //Future dev to use correspnding keys regardless of text matching or number of keys. 
-             if(csvBaseKeys[0] == csvCompareKeys[0] && csvBaseKeys[1] == csvCompareKeys[1]){
-              for(var k=0;k < csvBaseKeysCnt;k++){
-                if(basekey == ''){
-                  basekey = csvBaseKeys[k];
-                }else{
-                  basekey = basekey +' + '+ csvBaseKeys[k];
-                } 
-                basekeymap++;
+            //Future dev to use correspnding keys regardless of text matching or number of keys.
+            //New Key Hard Override Code Complete
+            for(var l=0;l<csvBaseKeys.length;l++){
+              for(var g=0;g<csvCompareKeys.length;g++){
+                if(csvBaseKeys[l] == csvCompareKeys[g]){
+                  if(basekey == ''){
+                    basekey = csvBaseKeys[l];
+                  }else{
+                    basekey = basekey +' + '+ csvBaseKeys[l];
+                  } 
+                  if(compkey == ''){
+                    compkey = csvCompareKeys[g];
+                  }else{
+                    compkey = compkey +' + '+ csvCompareKeys[g];
+                  } 
+                  compkeymap++;
+                  basekeymap++;
+                }
               }
-              for(var t=0;t < csvCompareKeysCnt;t++){
-                if(compkey == ''){
-                  compkey = csvCompareKeys[t];
-                }else{
-                  compkey = compkey +' + '+ csvCompareKeys[t];
-                } 
-                compkeymap++;
-              }
-             }else{
-              MessageToast.show('Keys entered do not match. Please check keys.');
-             } 
+            }
+             //New Key Hard Override Code Complete
+            //Future dev to use correspnding keys regardless of text matching or number of keys.
+            //  if(csvBaseKeys[0] == csvCompareKeys[0] && csvBaseKeys[1] == csvCompareKeys[1]){
+            //   for(var k=0;k < csvBaseKeysCnt;k++){
+            //     if(basekey == ''){
+            //       basekey = csvBaseKeys[k];
+            //     }else{
+            //       basekey = basekey +' + '+ csvBaseKeys[k];
+            //     } 
+            //     basekeymap++;
+            //   }
+            //   for(var t=0;t < csvCompareKeysCnt;t++){
+            //     if(compkey == ''){
+            //       compkey = csvCompareKeys[t];
+            //     }else{
+            //       compkey = compkey +' + '+ csvCompareKeys[t];
+            //     } 
+            //     compkeymap++;
+            //   }
+            //  }else{
+            //   MessageToast.show('Keys entered do not match. Please check keys.');
+            //  } 
+
+
           }else{
               MessageToast.show('Please check that you entered keys for each CSV.');
           } 
