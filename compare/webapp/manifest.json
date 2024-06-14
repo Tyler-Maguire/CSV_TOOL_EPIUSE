@@ -1,11 +1,11 @@
 {
   "_version": "1.59.0",
   "sap.app": {
-    "id": "comepiusecompare",
+    "id": "onlinecsv",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
-      "version": "0.0.1"
+      "version": "0.0.3"
     },
     "title": "{{appTitle}}",
     "description": "{{appDescription}}",
@@ -18,7 +18,7 @@
     "crossNavigation": {
       "inbounds": {
         "compare-Display": {
-          "semanticObject": "comepiusecompare",
+          "semanticObject": "onlinecsv",
           "action": "Display",
           "title": "{{flpTitle}}",
           "subTitle": "{{flpSubtitle}}",
@@ -138,6 +138,6 @@
   },
   "sap.cloud": {
     "public": true,
-    "service": "comepiusecompare"
+    "service": "onlinecsv"
   }
 }

@@ -1,19 +1,19 @@
 _schema-version: "3.1"
-ID: comepiusecompare
-version: 1.0.0
+ID: onlinecsv
+version: 0.0.3
 
 modules:
-  - name: comepiusecompare
+  - name: onlinecsv
     type: staticfile
-    path: dist/comepiusecompare.zip
+    path: dist/onlinecsv.zip
     requires:
-      - name: comepiusecompare-service
+      - name: onlinecsv-service
     parameters:
       memory: 64m
       disk-quota: 64m
 
 resources:
-  - name: comepiusecompare-service
+  - name: onlinecsv-service
     type: org.cloudfoundry.managed-service
     parameters:
       service: application-logs
