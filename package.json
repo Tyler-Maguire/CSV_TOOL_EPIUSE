@@ -25,7 +25,7 @@
     "rimraf": "^3.0.2"
   },
   "scripts": {
-    "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#compare-display\"",
+    "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#comepiusecompare-Display\"",
     "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#compare-display\"",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "lint": "eslint ./",
