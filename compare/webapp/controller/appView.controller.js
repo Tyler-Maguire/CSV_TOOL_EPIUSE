@@ -1,9 +1,6 @@
 sap.ui.define([
   "sap/ui/core/mvc/Controller",'sap/m/MessageToast','sap/ui/model/json/JSONModel','sap/ui/model/Model'
 ],
-  /**
-   * @param {typeof sap.ui.core.mvc.Controller} Controller
-   */
   function (Controller,MessageToast,JSONModel,Model) {
       "use strict";
       var resultToDraw = {
@@ -110,7 +107,7 @@ sap.ui.define([
         DIFF: 3
     };
  
-      return Controller.extend("com.epiuse.compare.controller.appView", {
+    return Controller.extend("com.epiuse.compare.controller.appView", {
         onInit() {
           // set data model on view
           const oData = {
@@ -312,8 +309,10 @@ sap.ui.define([
             var tempcol = '';
             var newheadcnt1 = 0;
             var newheadcnt2 = 0;
-            if(csvBaseHeader == csvCompareHeader){
-            }else{
+
+            //comment out if headers match
+            // if(csvBaseHeader == csvCompareHeader){
+            // }else{
             for(var i=0;i<csvBaseHeadCnt;i++){
               for(var j=0;j<csvCompHeadCnt;j++){  
                 var obj = {};
@@ -361,7 +360,7 @@ sap.ui.define([
             
             Body1 = newsplit1;
             Body2 = newsplit2;
-          }           
+          //}IF headers match           
           },
 
 
@@ -767,11 +766,7 @@ sap.ui.define([
 
           //ToDo Add code for the section for key chcking ect
           //Loop through both CSV Rows and use key Selection to match rows and line up row indexs
-
-          //Check If any Keys have been given from the user: 
           if(csvBaseKeysCnt >= 1 && csvCompareKeysCnt >= 1){
-            //Future dev to use correspnding keys regardless of text matching or number of keys.
-            //New Key Hard Override Code Complete
             for(var l=0;l<csvBaseKeys.length;l++){
               for(var g=0;g<csvCompareKeys.length;g++){
                 if(csvBaseKeys[l] == csvCompareKeys[g]){
@@ -789,32 +784,8 @@ sap.ui.define([
                   basekeymap++;
                 }
               }
-            }
-             //New Key Hard Override Code Complete
-            //Future dev to use correspnding keys regardless of text matching or number of keys.
-            //  if(csvBaseKeys[0] == csvCompareKeys[0] && csvBaseKeys[1] == csvCompareKeys[1]){
-            //   for(var k=0;k < csvBaseKeysCnt;k++){
-            //     if(basekey == ''){
-            //       basekey = csvBaseKeys[k];
-            //     }else{
-            //       basekey = basekey +' + '+ csvBaseKeys[k];
-            //     } 
-            //     basekeymap++;
-            //   }
-            //   for(var t=0;t < csvCompareKeysCnt;t++){
-            //     if(compkey == ''){
-            //       compkey = csvCompareKeys[t];
-            //     }else{
-            //       compkey = compkey +' + '+ csvCompareKeys[t];
-            //     } 
-            //     compkeymap++;
-            //   }
-            //  }else{
-            //   MessageToast.show('Keys entered do not match. Please check keys.');
-            //  } 
-
-
-          }else{
+             }
+            }else{
               MessageToast.show('Please check that you entered keys for each CSV.');
           } 
 
@@ -859,7 +830,7 @@ sap.ui.define([
               var tempstring2 = ''; 
               //New Untested Code
               if(Array.isArray(Body2[i])){
-                console.log('CSV 2 already split');
+      
               }else{
                 Body2[i]=Body2[i].split(',');
                 //New Untested Code
@@ -914,7 +885,7 @@ sap.ui.define([
                 let keyA = lineA[0];
 
                 smallercsv = smallercsv.filter(Boolean);
-                console.log(j);
+             
                 if(j < 1265){
                 let lineB = smallercsv[j].split(delimit_1);
                 let keyB = lineB[0];
@@ -1023,9 +994,9 @@ sap.ui.define([
 
         }else{
         if(result.csv[m].columns[0].data){
-          stringDiff = stringDiff +'Exists in File B only'  +'\n';
+          stringDiff = stringDiff  +'\n'+'Exists in File B only'  +'\n';
           stringkeys = stringkeys +result.csv[m].columns[0].data.split('!=')[0]+'\n';      
-          stringDiff = stringDiff +'Exists in File A only'  +'\n';
+          stringDiff = stringDiff +'Exists in File A only';
           stringkeys = stringkeys +result.csv[m].columns[0].data.split('!=')[1];
         }
       
@@ -1039,8 +1010,13 @@ sap.ui.define([
            if(sameline == false){
             if(firstdiff == false){
               stringDiff = stringDiff+'\n'+'Diff:'+ result.csv[0].columns[n];
+              var keys = Body1[m].toString().split(',',csvBaseKeys.length);
+              stringkeys = stringkeys + keys;
             }else{
               stringDiff = stringDiff +'Diff:'+ result.csv[0].columns[n];
+              var keys = Body1[m].toString().split(',',csvBaseKeys.length);
+              stringkeys = stringkeys + keys;
+    
             }
          //    
             
@@ -1049,15 +1025,23 @@ sap.ui.define([
            }
            else{
             stringDiff = stringDiff +' + '+ result.csv[0].columns[n];
+            stringkeys = stringkeys + Body1[m].toString();
+            stringDiff = stringDiff + result.csv[m].columns[l].data;
             firstdiff = false;
            }  
             }
-            if(keyhandled == false && result.csv[m].columns[0] !== Object(result.csv[m].columns[0])){
-              stringkeys = stringkeys + result.csv[m].columns[0] +'\n';
-            
+       
+        
+                if(result.csv[m].columns[l]){
+                  stringDiff = stringDiff + result.csv[m].columns[l].data;
+                  stringkeys = stringkeys + Body1[m].toString();
+                }
+               
+
+        
               keyhandled = true;
             }
-          }
+          
         }
         }
         sameline = false;
