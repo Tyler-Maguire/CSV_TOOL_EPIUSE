@@ -138,6 +138,6 @@
   },
   "sap.cloud": {
     "public": true,
-    "service": "comepiusecompare"
+    "service": "compare"
   }
 }
