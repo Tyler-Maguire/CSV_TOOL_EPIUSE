@@ -55,8 +55,22 @@ modules:
       - onlinecsv.zip
       name: onlinecsv
       target-path: resources/
+    - artifacts:
+      - compare.zip
+      name: compare
+      target-path: resources/
     supported-platforms: []
 - name: onlinecsv
+  type: html5
+  path: .
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: compare
   type: html5
   path: .
   build-parameters:

@@ -1,7 +1,7 @@
 {
   "_version": "1.59.0",
   "sap.app": {
-    "id": "comepiusecompare",
+    "id": "compare",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -18,8 +18,8 @@
     "crossNavigation": {
       "inbounds": {
         "comepiusecompare-Display": {
-          "semanticObject": "comepiusecompare",
-          "action": "Display",
+          "semanticObject": "compare",
+          "action": "display",
           "title": "{{flpTitle}}",
           "subTitle": "{{flpSubtitle}}",
           "signature": {

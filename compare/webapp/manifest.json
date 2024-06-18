@@ -1,7 +1,7 @@
 {
   "_version": "1.59.0",
   "sap.app": {
-    "id": "onlinecsv",
+    "id": "compare",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -18,8 +18,8 @@
     "crossNavigation": {
       "inbounds": {
         "compare-Display": {
-          "semanticObject": "onlinecsv",
-          "action": "Display",
+          "semanticObject": "compare",
+          "action": "display",
           "title": "{{flpTitle}}",
           "subTitle": "{{flpSubtitle}}",
           "signature": {
@@ -138,6 +138,6 @@
   },
   "sap.cloud": {
     "public": true,
-    "service": "onlinecsv"
+    "service": "compare"
   }
 }
