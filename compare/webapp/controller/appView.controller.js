@@ -18,6 +18,11 @@ sap.ui.define([
     var File2_Name = '';
     var File1_Dir_Location = '';
     var File2_Dir_Location = '';
+    var newsplit1;
+    var newsplit2;   
+
+    var suggestedmapping = '';
+    var suggestedkeys ='';
 
     var Variant_File_1;
     var Variant_File_2;
@@ -300,8 +305,8 @@ sap.ui.define([
             Body1 = Body1.filter(Boolean);
             Body2 = Body2.filter(Boolean);
 
-            var newsplit1  = csvFile1.map((x) => x.split(delimit_1));
-            var newsplit2  = csvFile2.map((x) => x.split(delimit_2));   
+            newsplit1  = csvFile1.map((x) => x.split(delimit_1));
+            newsplit2  = csvFile2.map((x) => x.split(delimit_2));   
             
             newsplit1.filter(Boolean);
             newsplit2.filter(Boolean);
@@ -372,46 +377,46 @@ sap.ui.define([
             Body1 = newsplit1;
             Body2 = newsplit2;
 
+          //}IF headers match           
+          },
+
+
+          suggestMappings: function(e){
           //NEW CODE*****************************************
+          var suggestedmapping = '';
+          var suggestedkeys ='';
+          for(var i=0; i < newsplit1[0].length;i++){
+            for(var j=0; j < newsplit2[0].length;j++){
+              for(var k=0;k<newsplit1.length;k++){
+                for(var l=0; l< newsplit2.length;l++){
 
-            var suggestedmapping = '';
-            var suggestedkeys ='';
-            for(var i=0; i < newsplit1[0].length;i++){
-              for(var j=0; j < newsplit2[0].length;j++){
-                for(var k=0;k<newsplit1.length;k++){
-                  for(var l=0; l< newsplit2.length;l++){
+                    if(newsplit1[i][k] == newsplit2[j][l]){
 
-                      if(newsplit1[i][k] == newsplit2[j][l]){
-
-                        suggestedmapping = suggestedmapping + newsplit1[i][0] + '----->' + newsplit2[j][0];
+                      suggestedmapping = suggestedmapping + newsplit1[i][0] + '----->' + newsplit2[j][0];
 
 
-                      }
+                    }
 
-                  }
                 }
               }
             }
+          }
 
 
-            console.log(suggestedmapping);
+          console.log(suggestedmapping);
 
-            MessageToast.show(suggestedmapping);
+          MessageToast.show(suggestedmapping);
 
+          var SM = this.getView().byId("SuggestedMappings");
+          var CM = this.getView().byId("CorrectedMappings");
+          
+          SM.setText(suggestedmapping);
+          CM.setText(suggestedmapping);
 
-
-
-
-
-
-
-
-
+        //NEW CODE*****************************************
 
 
 
-          //NEW CODE*****************************************
-          //}IF headers match           
           },
 
 

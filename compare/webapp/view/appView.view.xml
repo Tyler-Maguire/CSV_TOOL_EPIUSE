@@ -44,7 +44,11 @@
 		 maximumFileSize="10" fileSizeExceed="handleFileSize" maximumFilenameLength="50" filenameLengthExceed="handleFileNameLength"
 		  multiple="false" sameFilenameAllowed="false" buttonText="Browse" fileType="CSV" style="Emphasized" placeholder="Browse Variant"/>
 	<Button id = "butt8" text="Upload Variant" press="onUploadVariant" />
+	<Button id = "butt9" text="Suggest Possible Mappings" press="suggestMappings" />
+	<Text id="SuggestedMappings" class="FileOut,custLabel" text="{}" wrapping="true" width="700px" visible="true"/>
+	<Input id="CorrectedMappings" class="FileOut,custLabel" placeholder="{}"  width="700px"/>
 
+	
 
 
 	</HBox>
