@@ -253,7 +253,18 @@ sap.ui.define([
           },
 
           //TO-DO Check through the ReOrder Section as the long File causes issues with matching
+
+          //To-Do Check through couloumn information first to make an Educated guess on possible mappings based on the Coloumn Information.
+
           reOrderCSV: function(LinesCSV1,LinesCSV2){
+
+            debugger;
+
+
+
+
+
+
             var len1 = LinesCSV1.length;
             len1--;
             for(var w = 0; w <= len1; w++){
@@ -360,6 +371,46 @@ sap.ui.define([
             
             Body1 = newsplit1;
             Body2 = newsplit2;
+
+          //NEW CODE*****************************************
+
+            var suggestedmapping = '';
+            var suggestedkeys ='';
+            for(var i=0; i < newsplit1[0].length;i++){
+              for(var j=0; j < newsplit2[0].length;j++){
+                for(var k=0;k<newsplit1.length;k++){
+                  for(var l=0; l< newsplit2.length;l++){
+
+                      if(newsplit1[i][k] == newsplit2[j][l]){
+
+                        suggestedmapping = suggestedmapping + newsplit1[i][0] + '----->' + newsplit2[j][0];
+
+
+                      }
+
+                  }
+                }
+              }
+            }
+
+
+            console.log(suggestedmapping);
+
+            MessageToast.show(suggestedmapping);
+
+
+
+
+
+
+
+
+
+
+
+
+
+          //NEW CODE*****************************************
           //}IF headers match           
           },
 

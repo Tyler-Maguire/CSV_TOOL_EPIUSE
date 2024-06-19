@@ -17,7 +17,7 @@
     },
     "crossNavigation": {
       "inbounds": {
-        "comepiusecompare-Display": {
+        "compare-display": {
           "semanticObject": "compare",
           "action": "display",
           "title": "{{flpTitle}}",

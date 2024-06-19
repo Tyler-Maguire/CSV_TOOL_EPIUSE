@@ -19,7 +19,7 @@
       "inbounds": {
         "compare-Display": {
           "semanticObject": "compare",
-          "action": "display",
+          "action": "Display",
           "title": "{{flpTitle}}",
           "subTitle": "{{flpSubtitle}}",
           "signature": {

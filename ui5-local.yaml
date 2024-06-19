@@ -16,7 +16,7 @@ framework:
     - name: sap.ui.generic.app
     - name: sap.ui.table
     - name: sap.ushell
-    - name: themelib_sap_horizon_dark
+    - name: themelib_sap_horizon
 server:
   customMiddleware:
     - name: fiori-tools-appreload
@@ -34,4 +34,4 @@ server:
       afterMiddleware: fiori-tools-appreload
       configuration:
         component: compare
-        ui5Theme: sap_horizon_dark
+        ui5Theme: sap_horizon
