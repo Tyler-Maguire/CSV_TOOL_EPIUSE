@@ -1,0 +1,129 @@
+{
+	"d": {
+		"__count": "10",
+		"results": [{
+			"__metadata": {
+				"id": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412042014120400012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"uri": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412042014120400012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"type": "com.sap.GL.zrha.LineItems"
+			},
+			"Bukrs": "0001",
+			"CalendarYear": "2014",
+			"Kunnr": "C1",
+			"Name1": "Example Corp 1.",
+			"OfficeId": "1",
+			"Id": "1"
+
+		}, {
+			"__metadata": {
+				"id": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412052014120500012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"uri": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412052014120500012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"type": "com.sap.GL.zrha.LineItems"
+			},
+			"Bukrs": "0002",
+			"CalendarYear": "2014",
+			"Kunnr": "C2",
+			"Name1": "Example Corp 2.",
+			"Id": "2",
+			"OfficeId": "1"
+		}, {
+			"__metadata": {
+				"id": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412302014123000012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"uri": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412302014123000012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"type": "com.sap.GL.zrha.LineItems"
+			},
+			"Bukrs": "0003",
+			"CalendarYear": "2014",
+			"Kunnr": "C3",
+			"Name1": "Example Corp 3.",
+			"OfficeId": "1",
+			"Id": "3"
+
+		}, {
+			"__metadata": {
+				"id": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412112014121100012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"uri": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412112014121100012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"type": "com.sap.GL.zrha.LineItems"
+			},
+			"Bukrs": "0004",
+			"CalendarYear": "2014",
+			"Kunnr": "C4",
+			"Name1": "Example Corp 4.",
+			"OfficeId": "1",
+			"Id": "4"
+
+		}, {
+			"__metadata": {
+				"id": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412032014120300012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"uri": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412032014120300012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"type": "com.sap.GL.zrha.LineItems"
+			},
+			"Bukrs": "0005",
+			"CalendarYear": "2014",
+			"Kunnr": "C5",
+			"Name1": "Example Corp 5.",
+			"OfficeId": "1",
+			"Id": "5"
+		}, {
+			"__metadata": {
+				"id": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412082014120800012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"uri": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412082014120800012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"type": "com.sap.GL.zrha.LineItems"
+			},
+			"Bukrs": "0006",
+			"CalendarYear": "2014",
+			"Kunnr": "C6",
+			"Name1": "Example Corp 6.",
+			"OfficeId": "1",
+			"Id": "6"
+		}, {
+			"__metadata": {
+				"id": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.7.-.-.-.-.-.-._.201412052014120500012014EURJS_TEST._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"uri": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.7.-.-.-.-.-.-._.201412052014120500012014EURJS_TEST._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"type": "com.sap.GL.zrha.LineItems"
+			},
+			"Bukrs": "0007",
+			"CalendarYear": "2014",
+			"Kunnr": "C7",
+			"Name1": "Example Corp 7.",
+			"OfficeId": "2",
+			"Id": "7"
+		}, {
+			"__metadata": {
+				"id": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412092014120900012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"uri": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201412092014120900012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"type": "com.sap.GL.zrha.LineItems"
+			},
+			"Bukrs": "0008",
+			"CalendarYear": "2014",
+			"Kunnr": "C8",
+			"Name1": "Example Corp 8.",
+			"OfficeId": "1",
+			"Id": "8"
+		}, {
+			"__metadata": {
+				"id": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201411082014110800012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"uri": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201411082014110800012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"type": "com.sap.GL.zrha.LineItems"
+			},
+			"Bukrs": "0009",
+			"CalendarYear": "2014",
+			"Kunnr": "C9",
+			"Name1": "Example Corp 9.",
+			"OfficeId": "1",
+			"Id": "9"
+		}, {
+			"__metadata": {
+				"id": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201411142014111400012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"uri": "foo/LineItemsSet('-.-.-.-.-.-.8.8.4.-.4.-.-.3.-.4.-.-.-.-.-.-._.201411142014111400012014EURJ001._.R%28%20GJAHR%20%3D%20''2014''%20AND%20BUKRS%20%3D%20''0001''%20%29')",
+				"type": "com.sap.GL.zrha.LineItems"
+			},
+			"Bukrs": "0010",
+			"CalendarYear": "2014",
+			"Kunnr": "C10",
+			"Name1": "Example Corp 10.",
+			"OfficeId": "1",
+			"Id": "10"
+		}]
+	}
+}

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+			<EntityType Name="Company" sap:label="Company" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="Bukrs"/>
+				</Key>
+				<Property Name="Bukrs" Type="Edm.String" Nullable="false" MaxLength="4" sap:text="Butxt" sap:label="Company Code" sap:creatable="false"
+					sap:updatable="false"/>
+			</EntityType>
+			<EntityType Name="LineItems" sap:label="Line Item" sap:semantics="aggregate" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="Id"/>
+				</Key>
+				<Property Name="Id" Type="Edm.String" Nullable="false" sap:visible="false" sap:label="SADL Key Field" sap:creatable="false"/>
+				<Property Name="Kunnr" Type="Edm.String" MaxLength="10" sap:aggregation-role="dimension" sap:text="Name1" sap:label="Customer"
+					sap:creatable="false"/>
+				<Property Name="Name1" Type="Edm.String" MaxLength="35" sap:visible="true" sap:label="Name" sap:creatable="false" sap:updatable="false"/>
+				<Property Name="Bukrs" Type="Edm.String" Nullable="false" MaxLength="4" sap:aggregation-role="dimension" sap:required-in-filter="true"
+					sap:label="Company Code" sap:creatable="false"/>
+				<Property Name="CalendarYear" Type="Edm.String" Nullable="false" MaxLength="4" sap:aggregation-role="dimension" sap:label="Calendar Year"
+					sap:creatable="false"/>
+				<Property Name="OfficeId" Type="Edm.String" Nullable="false" sap:visible="true" sap:label="Location" sap:creatable="true"/>
+				<NavigationProperty Name="to_Locations" ToRole="ToRole_LineItemsToLocation" FromRole="FromRole_LineItemsToLocation"
+					Relationship="com.sap.GL.zrha.LineItemsToLocation"/>
+			</EntityType>
+			<EntityType Name="Location" sap:label="Location" sap:semantics="aggregate" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="Id"/>
+				</Key>
+				<Property Name="Id" Type="Edm.String" Nullable="false" sap:filterable="false" sap:visible="true" sap:label="Location id"
+					sap:creatable="true"/>
+				<Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="100" sap:label="Location name" sap:creatable="true"/>
+				<Property Name="OfficeId" Type="Edm.String" Nullable="false" sap:filterable="false" sap:visible="false"/>
+			</EntityType>
+			<EntityType Name="VL_Location" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="Id"/>
+				</Key>
+				<Property Name="Id" Type="Edm.String" Nullable="false" sap:filterable="false" sap:label="Id"/>
+				<Property Name="Name" Type="Edm.String" Nullable="false" sap:filterable="false" sap:display-format="UpperCase" sap:label="Name"/>
+			</EntityType>
+			<Association sap:content-version="1" Name="LineItemsToLocation">
+				<End Type="com.sap.GL.zrha.LineItems" Role="FromRole_LineItemsToLocation" Multiplicity="1"/>
+				<End Type="com.sap.GL.zrha.Location" Role="ToRole_LineItemsToLocation" Multiplicity="*"/>
+				<ReferentialConstraint>
+					<Principal Role="FromRole_LineItemsToLocation">
+						<PropertyRef Name="OfficeId"/>
+					</Principal>
+					<Dependent Role="ToRole_LineItemsToLocation">
+						<PropertyRef Name="OfficeId"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<EntityContainer Name="com_sap_GL_zrha_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+				<EntitySet Name="Locations" EntityType="com.sap.GL.zrha.Location" sap:pageable="false" sap:deletable="true" sap:updatable="true"
+					sap:creatable="true" sap:filterable="true"/>
+				<AssociationSet sap:content-version="1" Name="LineItemsToLocationSet" sap:filterable="false" sap:deletable="true" sap:updatable="true"
+					sap:creatable="true" Association="com.sap.GL.zrha.LineItemsToLocation">
+					<End Role="FromRole_LineItemsToLocation" EntitySet="LineItemsSet"/>
+					<End Role="ToRole_LineItemsToLocation" EntitySet="Locations"/>
+				</AssociationSet>
+				<EntitySet Name="Companies" EntityType="com.sap.GL.zrha.Company" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+					sap:pageable="false" sap:content-version="1"/>
+				<EntitySet Name="LineItemsSet" EntityType="com.sap.GL.zrha.LineItems" sap:pageable="false" sap:deletable="true" sap:updatable="true"
+					sap:creatable="true" sap:filterable="true" sap:content-version="1"/>
+				<EntitySet Name="VL_Location" EntityType="com.sap.GL.zrha.VL_Location" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+					sap:content-version="1" sap:countable="false"/>
+			</EntityContainer>
+			<Annotations Target="com.sap.GL.zrha.Location/Name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation Term="com.sap.vocabularies.Common.v1.ValueList">
+					<Record>
+						<PropertyValue Property="Label" String="Value help for categories"/>
+						<PropertyValue Property="CollectionPath" String="VL_Location"/>
+						<PropertyValue Property="SearchSupported" Bool="true"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="Id"/>
+									<PropertyValue Property="ValueListProperty" String="Id"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="Name"/>
+									<PropertyValue Property="ValueListProperty" String="Name"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="com.sap.vocabularies.Common.v1.ValueListWithFixedValues" Bool="true"/>
+			</Annotations>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

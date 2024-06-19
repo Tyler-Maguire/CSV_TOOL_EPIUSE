@@ -1,0 +1,13 @@
+[{
+	"Id": "1",
+	"Name": "Example Location 1.",
+	"OfficeId": "1"
+}, {
+	"Id": "2",
+	"Name": "Example Location 2.",
+	"OfficeId": "1"
+}, {
+	"Id": "3",
+	"Name": "Example Location 3.",
+	"OfficeId": "2"
+}]
