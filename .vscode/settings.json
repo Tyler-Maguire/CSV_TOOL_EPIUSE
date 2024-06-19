@@ -1,3 +1,5 @@
 {
-    "ApplicationWizard.Workspace": "Open the project in a stand-alone folder"
+    "ApplicationWizard.Workspace": "Open the project in a stand-alone folder",
+    "sap.ux.applicationModeler.showFioriToolsProjectsInMigrationView": true,
+    "sap.ux.applicationModeler.showJsonSchemas": true
 }
