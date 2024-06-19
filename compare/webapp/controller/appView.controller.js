@@ -12,78 +12,160 @@ sap.ui.define([
         tab: ""
     };
 
-    var Body1;
-    var Body2;
-    var File1_Name = '';
-    var File2_Name = '';
-    var File1_Dir_Location = '';
-    var File2_Dir_Location = '';
-    var newsplit1;
-    var newsplit2;   
-
-    var suggestedmapping = '';
-    var suggestedkeys ='';
-
-    var Variant_File_1;
-    var Variant_File_2;
-    var Variant_File;
-    var OutputFileInLine = '';
-
-    var OutputFile = '';
-
-    var newBody1 = [];
-    var newBody2 = [];
-
-    var FullCSV1;
-    var FullCSV2;
-
-    //To-DO: Add in Logging functionality
-    var logdata = [];
-    var Verbose = false;
-    var basiclogging = true;
-    
-    var rowInput;
-    var keyInput;
-
-    var csvFile1;
-    var csvFile2;
-
-    var csvfiles = [];
-    
-    var newCSV1 = [];
-    var newCSV2 = [];
-    var newCSV1json = '';
-    var newCSV2json = '';
-
-
-    var stringkeys = '';
-    var stringDiff = '';
-    var n;
-    var ignorearray = [];
-    var ignorekeys = [];
-    var founddiff = false;
-    var keyhandled = false;
-    var sameline = false;
-    var firstdiff = true;
-
-    
-    var csvBaseKeys = [];
-    var csvBaseHeader = '';
-    var csvBaseHeadArr = [];
-    var csvBaseHeadCnt = 0;
-    var csvBaseKeysCnt = 0;
-    var csvBaseNewHeader = '';
-    var csvBaseNewHeadArr = [];
-
-    var csvCompareKeys = [];
-    var csvCompareHeader = '';
-    var csvCompHeadArr = [];
-    var csvCompHeadCnt = 0;
-    var csvCompareKeysCnt = 0;
-    var csvCompNewHeader = '';
-    var csvCompNewHeadArr = [];
-
-    var result = {
+//Variable Decloration***************************    
+var oCSVModel1;
+var oCSVModel2;
+var csvResult;
+var oCSVModelCompare;
+var oCSVModelCompare1; 
+var oCSVModelCompare2;
+var csvFileInText;
+var arrObje = [];
+var lineA;
+var csvFileInText;
+var len1;
+var len2; 
+var header1;
+var header2;
+var tempheader;
+var temparray1;
+var temparray2;
+var tempcol;
+var newheadcnt1;
+var newheadcnt2;
+var obj;
+var obj2;
+var suggestedmapping;
+var suggestedkeys;
+var SM;
+var CM;
+var oCSVModelBase;
+var fU;
+var fU1;
+var fU2; 
+var domRef;
+var file;
+var reader; 
+var params; 
+var that; 
+var strCSV; 
+var arrCSV; 
+var lines;
+var noOfCols; 
+var headerRow;
+var data;
+var obj;
+var row;
+var Len;
+var jsoncsvbase;
+var jsoncsvcompare;
+var file;
+var oFileUploader1
+var reader1;
+var strCSV; 
+var arrCSV; 
+var noOfCols; 
+var headerRow; 
+var obj;
+var row;
+var file;
+var reader2;
+var oFileUploader2;
+var strCSV;
+var arrLen; 
+var noOfCols; 
+var headerRow;
+var data;
+var aFileTypes;
+var sSupportedFileTypes; 
+var blob;
+var link; 
+var url;
+var keyText;
+var keyStart;
+var diffText; 
+var diffstart;
+var keys;
+var rows;
+var c;
+var f; 
+var b;
+var n;
+var p; 
+var basekey; 
+var compkey;
+var basekeymap;
+var compkeymap;
+var stopcsv; 
+var stopcsv2;
+var tempstring1;
+var tempstring2; 
+var loopcnt; 
+var biggercsv; 
+var smallercsv;
+var tempstring;
+var keySplit = [];
+var diffSplit = [];
+var file;
+var b;
+var resultContainer;
+var Body1;
+var Body2;
+var File1_Name = '';
+var File2_Name = '';
+var File1_Dir_Location = '';
+var File2_Dir_Location = '';
+var newsplit1;
+var newsplit2;   
+var SM;
+var CM;
+var suggestedmapping;
+var suggestedkeys
+var Variant_File_1;
+var Variant_File_2;
+var Variant_File;
+var OutputFileInLine = ''
+var OutputFile = ''
+var newBody1 = [];
+var newBody2 = []
+var FullCSV1;
+var FullCSV2
+var logdata = [];
+var Verbose = false;
+var basiclogging = true;
+var rowInput;
+var keyInput
+var csvFile1;
+var csvFile2
+var csvfiles = [];
+var newCSV1 = [];
+var newCSV2 = [];
+var newCSV1json = '';
+var newCSV2json = ''
+var stringkeys = '';
+var stringDiff = '';
+var n;
+var ignorearray = [];
+var ignorekeys = [];
+var founddiff = false;
+var keyhandled = false;
+var sameline = false;
+var firstdiff = true
+var csvBaseKeys = [];
+var csvBaseHeader = '';
+var csvBaseHeadArr = [];
+var csvBaseHeadCnt = 0;
+var csvBaseKeysCnt = 0;
+var csvBaseNewHeader = '';
+var csvBaseNewHeadArr = []
+var csvCompareKeys = [];
+var csvCompareHeader = '';
+var csvCompHeadArr = [];
+var csvCompHeadCnt = 0;
+var csvCompareKeysCnt = 0;
+var csvCompNewHeader = '';
+var csvCompNewHeadArr = [];
+var result = {
         csv: [],
         text: "",
         maxColumn: 0,
@@ -91,27 +173,25 @@ sap.ui.define([
         nbColumnDiff: 0
     };
 
-    var OrderCSV = {
+var OrderCSV = {
         preCSV:[],
         postCSV:[]
     };
 
-    var NewCSV = {
+var NewCSV = {
       newCSV1:[],
       newCSV2:[]
   };
-
-    var delimit_1 = ',';
-    var delimit_2 = ',';
-
-    var compareSelect = 'all'
+var delimit_1 = ',';
+var delimit_2 = ',';
+var compareSelect = 'all'
       //'all' or 'diff'
       , Compare = {
         ONLY1: 1,
         ONLY2: 2,
         DIFF: 3
     };
- 
+//Variable Decloration***************************     
     return Controller.extend("com.epiuse.compare.controller.appView", {
         onInit() {
           // set data model on view
@@ -122,14 +202,14 @@ sap.ui.define([
                 Coloumn : "" 
              }
           };
-          var oCSVModel1= this.getOwnerComponent().getModel("CSVModel1");
+          oCSVModel1= this.getOwnerComponent().getModel("CSVModel1");
           const oModel1 = new JSONModel(oCSVModel1);
           this.getView().setModel(oModel1);
-          var oCSVModel2= this.getOwnerComponent().getModel("CSVModel2");
+          oCSVModel2= this.getOwnerComponent().getModel("CSVModel2");
           const oModel2 = new JSONModel(oCSVModel2);
           this.getView().setModel(oModel2);
 
-          var csvResult = this.getOwnerComponent().getModel("csvResult");
+          csvResult = this.getOwnerComponent().getModel("csvResult");
           this.getView().setModel(csvResult);
           
        },
@@ -147,6 +227,9 @@ sap.ui.define([
           rowInput = this.getView().byId("RowSelection").getValue();
           localStorage.setItem('Rows', JSON.stringify(rowInput));
           keyInput = this.getView().byId("KeySelection").getValue();
+          CM = this.getView().byId("CorrectedMappings");
+
+
           localStorage.setItem('Keys', JSON.stringify(keyInput));
 
           if(keyInput.toString() != ''){
@@ -158,8 +241,8 @@ sap.ui.define([
             csvCompareKeysCnt =  csvCompareKeys.length;             
           }
 
-          var oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModelBase");
-          var oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModelCompare");
+          oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModelBase");
+          oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModelCompare");
 
            const internLines = oCSVModelCompare1.oData.CSVBaseJson.toString().split('\n');
            const externLines = oCSVModelCompare2.oData.CSVCompareJson.toString().split('\n');
@@ -173,19 +256,50 @@ sap.ui.define([
           
           },
 
+          onCompareDueToSuggested: function(oEvent) {
+            // Here we are using the localStorage in order to save variant information:
+            rowInput = this.getView().byId("RowSelection").getValue();
+            localStorage.setItem('Rows', JSON.stringify(rowInput));
+            keyInput = this.getView().byId("KeySelection").getValue();
+            localStorage.setItem('Keys', JSON.stringify(keyInput));
+  
+            if(keyInput.toString() != ''){
+              csvBaseKeys = keyInput.toString().split(','); 
+              csvBaseKeysCnt = csvBaseKeys.length;        
+            }
+            if(keyInput.toString() != ''){
+              csvCompareKeys = rowInput.toString().split(','); 
+              csvCompareKeysCnt =  csvCompareKeys.length;             
+            }
+  
+            oCSVModelCompare1 = this.getOwnerComponent().getModel("CSVModelBase");
+            oCSVModelCompare2 = this.getOwnerComponent().getModel("CSVModelCompare");
+  
+             const internLines = oCSVModelCompare1.oData.CSVBaseJson.toString().split('\n');
+             const externLines = oCSVModelCompare2.oData.CSVCompareJson.toString().split('\n');
+   
+            this.reOrderCSV(internLines,externLines);
+            this.SuggestCSVcompare(oCSVModelCompare1.oData.CSVBaseJson.toString(),oCSVModelCompare2.oData.CSVCompareJson.toString(),delimit_1,delimit_2);
+  
+            
+            //MessageToast.show(oCSVModelCompare1.toString());
+            //MessageToast.show(oCSVModelCompare2.toString());
+            
+            },
+
 
 
           //This is an extremely important Function as here the sorting of the coloumns is done
            checkFunc: async function (inputFile) {
              if (inputFile.files.length) {
                try {
-                 var csvFileInText = await inputFile.files[0].text();
+                 csvFileInText = await inputFile.files[0].text();
                  console.log(csvFileInText);
 
                  csvFileInText=csvFileInText.replaceAll('\r','').replaceAll('ï»¿','');
                  csvfiles.push(csvFileInText);
 
-                 var arrObje = [];
+                 arrObje = [];
                 // var lines = csvFileInText.split('\n');
                 csvFileInText = csvFileInText.replace(/{/g, '').replace(/}/g, '');
                  let lines = csvFileInText.split(/\r?\n/);
@@ -194,7 +308,7 @@ sap.ui.define([
 
                 delimit_1 = delimit;
 
-                 var lineA = lines[0].split(delimit);
+                 lineA = lines[0].split(delimit);
 
                  csvBaseHeader = lines[0];
                  csvBaseHeadArr = lineA;
@@ -234,7 +348,7 @@ sap.ui.define([
 
                delimit_2 = delimit;
 
-                var lineA = lines[0].split(delimit);
+                lineA = lines[0].split(delimit);
 
                 csvCompareHeader = lines[0];
 
@@ -265,12 +379,7 @@ sap.ui.define([
 
             debugger;
 
-
-
-
-
-
-            var len1 = LinesCSV1.length;
+            len1 = LinesCSV1.length;
             len1--;
             for(var w = 0; w <= len1; w++){
               if(LinesCSV1[w]){
@@ -279,7 +388,7 @@ sap.ui.define([
             
             }
             csvFile1 = LinesCSV1;
-            var len2 = LinesCSV2.length;
+            len2 = LinesCSV2.length;
             len2--;
             for(var d = 0; d <= len2; d++){
               if(LinesCSV2[d]){
@@ -319,20 +428,20 @@ sap.ui.define([
               if(newsplit2[i]==''){newsplit2.splice(i, 1);}
             }
 
-            var tempheader = '';
-            var temparray1;
-            var temparray2;
-            var tempcol = '';
-            var newheadcnt1 = 0;
-            var newheadcnt2 = 0;
+            tempheader = '';
+            temparray1;
+            temparray2;
+            tempcol = '';
+            newheadcnt1 = 0;
+            newheadcnt2 = 0;
 
             //comment out if headers match
             // if(csvBaseHeader == csvCompareHeader){
             // }else{
             for(var i=0;i<csvBaseHeadCnt;i++){
               for(var j=0;j<csvCompHeadCnt;j++){  
-                var obj = {};
-                var obj2 = {};         
+                obj = {};
+                obj2 = {};         
                 if(csvBaseHeadArr[i]==csvCompHeadArr[j]){
              
                   tempheader = csvBaseHeadArr[i];
@@ -383,8 +492,8 @@ sap.ui.define([
 
           suggestMappings: function(e){
           //NEW CODE*****************************************
-          var suggestedmapping = '';
-          var suggestedkeys ='';
+          suggestedmapping = '';
+          suggestedkeys ='';
           for(var i=0; i < newsplit1[0].length;i++){
             for(var j=0; j < newsplit2[0].length;j++){
               for(var k=0;k<newsplit1.length;k++){
@@ -407,8 +516,8 @@ sap.ui.define([
 
           MessageToast.show(suggestedmapping);
 
-          var SM = this.getView().byId("SuggestedMappings");
-          var CM = this.getView().byId("CorrectedMappings");
+          SM = this.getView().byId("SuggestedMappings");
+          CM = this.getView().byId("CorrectedMappings");
           
           SM.setText(suggestedmapping);
           CM.setText(suggestedmapping);
@@ -422,39 +531,39 @@ sap.ui.define([
 
           //Upload the First File and use Binary String read to pass the file contents into a stream
           onUploadBase: function(e) {
-             var oCSVModelBase = this.getOwnerComponent().getModel("CSVModelBase");
+             oCSVModelBase = this.getOwnerComponent().getModel("CSVModelBase");
              this.getView().setModel(oCSVModelBase, "CSVModelBase");
-             var fU = this.getView().byId("FileUploaderBase");
-             var domRef = fU.getFocusDomRef();
-             var file = fU.oFileUpload.files[0]; 
+             fU = this.getView().byId("FileUploaderBase");
+             domRef = fU.getFocusDomRef();
+             file = fU.oFileUpload.files[0]; 
              File1_Name = fU.oFileUpload.files[0].name;
              File1_Dir_Location = fU.oFileUpload.files[0].param;
-             var reader = new FileReader();
-             var params = "";
-             var that = this;
+             reader = new FileReader();
+             params = "";
+             that = this;
              reader.onload = function(oEvent) {
-               var strCSV = oEvent.target.result;
-               var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-               var lines = strCSV.split('\n');
+               strCSV = oEvent.target.result;
+               arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+               lines = strCSV.split('\n');
                that.checkFunc(fU.oFileUpload).then(function(r){
-                var noOfCols = r;
-                var headerRow = arrCSV.splice(0, noOfCols);
-                var data = [];
+                noOfCols = r;
+                headerRow = arrCSV.splice(0, noOfCols);
+                data = [];
                 while (arrCSV.length > 0) {
-                  var obj = {};
-                  var row = arrCSV.splice(0, noOfCols);
+                  obj = {};
+                  row = arrCSV.splice(0, noOfCols);
                   for (var i = 0; i < row.length; i++) {
                     obj[headerRow[i]] = row[i].trim();
                   }
                   data.push(obj);
                 }
-                var Len = data.length;
+                Len = data.length;
                 data.reverse();
                 for (var j = 0; j < Len; j++) {
                   params += JSON.stringify(data.pop()) + ", ";
                 }
                 params = params.substring(0, params.length - 2);
-                var jsoncsvbase = new JSONModel();
+                jsoncsvbase = new JSONModel();
                 jsoncsvbase.setData({CSVBaseJson:strCSV});
                 that.getView().byId("FileOutBase").setText(params); 
                 that.getOwnerComponent().setModel(jsoncsvbase,"CSVModelBase");
@@ -464,39 +573,39 @@ sap.ui.define([
              reader.readAsBinaryString(file);
            },
            onUploadCompare: function(e) {
-            var oCSVModelCompare = this.getOwnerComponent().getModel("CSVModelCompare");
+            oCSVModelCompare = this.getOwnerComponent().getModel("CSVModelCompare");
             this.getView().setModel(oCSVModelCompare, "CSVModelCompare");
-            var fU = this.getView().byId("FileUploaderCompare");
-            var domRef = fU.getFocusDomRef();
-            var file = fU.oFileUpload.files[0]; 
+            fU = this.getView().byId("FileUploaderCompare");
+            domRef = fU.getFocusDomRef();
+            file = fU.oFileUpload.files[0]; 
             File2_Name = fU.oFileUpload.files[0].name;
             File2_Dir_Location = fU.oFileUpload.files[0].param;
-            var reader = new FileReader();
-            var params = "";
-            var that = this;
+            reader = new FileReader();
+            params = "";
+            that = this;
             reader.onload = function(oEvent) {
-              var strCSV = oEvent.target.result;
-              var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-              var lines = strCSV.split('\n');
+              strCSV = oEvent.target.result;
+              arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+              lines = strCSV.split('\n');
               that.checkFuncCompare(fU.oFileUpload).then(function(r){
-               var noOfCols = r;
-               var headerRow = arrCSV.splice(0, noOfCols);
-               var data = [];
+               noOfCols = r;
+               headerRow = arrCSV.splice(0, noOfCols);
+               data = [];
                while (arrCSV.length > 0) {
-                 var obj = {};
-                 var row = arrCSV.splice(0, noOfCols);
+                  obj = {};
+                  row = arrCSV.splice(0, noOfCols);
                  for (var i = 0; i < row.length; i++) {
                    obj[headerRow[i]] = row[i].trim();
                  }
                  data.push(obj);
                }
-               var Len = data.length;
+               Len = data.length;
                data.reverse();
                for (var j = 0; j < Len; j++) {
                  params += JSON.stringify(data.pop()) + ", ";
                }
                params = params.substring(0, params.length - 2);
-               var jsoncsvcompare = new JSONModel();
+               jsoncsvcompare = new JSONModel();
                jsoncsvcompare.setData({CSVCompareJson:strCSV});
                that.getView().byId("FileOutCompare").setText(params); 
                that.getOwnerComponent().setModel(jsoncsvcompare,"CSVModelCompare");
@@ -507,25 +616,25 @@ sap.ui.define([
           },
 
           handleUploadPress1: function(oEvent) {
-              var file;
-              var oFileUploader1 = this.byId("fileUploader1");
-              var reader1 = new FileReader();
+              file;
+              oFileUploader1 = this.byId("fileUploader1");
+              reader1 = new FileReader();
               file = oFileUploader1.oFileUpload.files[0];
               reader1.onload = function(oEvent) {
-                  var strCSV = oEvent.target.result;
-                  var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                  var noOfCols = 6;
-                  var headerRow = arrCSV.splice(0, noOfCols);
-                  var data = [];
+                  strCSV = oEvent.target.result;
+                  arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+                  noOfCols = 6;
+                  headerRow = arrCSV.splice(0, noOfCols);
+                  data = [];
                   while (arrCSV.length > 0) {
-                    var obj = {};
-                    var row = arrCSV.splice(0, noOfCols);
+                    obj = {};
+                    row = arrCSV.splice(0, noOfCols);
                     for (var i = 0; i < row.length; i++) {
                       obj[headerRow[i]] = row[i].trim();
                     }
                     data.push(obj);
                   }
-                  var Len = data.length;
+                  Len = data.length;
                   data.reverse();
                   params += "[";
                   for (var j = 0; j < Len; j++) {
@@ -537,29 +646,29 @@ sap.ui.define([
 
           },
           handleUploadPress2: function(oEvent) {    
-              var file;
-              var reader2 = new FileReader();
-              var oFileUploader2 = this.byId("fileUploader2");
+              file;
+              reader2 = new FileReader();
+              oFileUploader2 = this.byId("fileUploader2");
               if (oEvent.getParameters("files")) {
                   file = oEvent.getParameters("files").files[0]; 
               }
               reader2.onload = function(oEvent) {
                   file = oFileUploader2.oFileUpload.files[0];    
-                  var strCSV = oEvent.target.result;
-                  var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-                  var arrLen = arrCSV.length;
-                  var noOfCols = arrLen;
-                  var headerRow = arrCSV.splice(0, noOfCols);
-                  var data = [];
+                  strCSV = oEvent.target.result;
+                  arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+                  arrLen = arrCSV.length;
+                  noOfCols = arrLen;
+                  headerRow = arrCSV.splice(0, noOfCols);
+                  data = [];
                   while (arrCSV.length > 0) {
-                    var obj = {};
-                    var row = arrCSV.splice(0, noOfCols);
+                    obj = {};
+                    row = arrCSV.splice(0, noOfCols);
                     for (var i = 0; i < row.length; i++) {
                       obj[headerRow[i]] = row[i].trim();
                     }
                     data.push(obj);
                   }
-                  var Len = data.length;
+                  Len = data.length;
                   data.reverse();
                   params += "[";
                   for (var j = 0; j < Len; j++) {
@@ -572,11 +681,11 @@ sap.ui.define([
 
           //Function has not yet been implemented but considering the use it might be handy with large files
           handleTypeMissmatch: function(oEvent) {
-            var aFileTypes = oEvent.getSource().getFileType();
+            aFileTypes = oEvent.getSource().getFileType();
             jQuery.each(aFileTypes, function(key, value) {
               aFileTypes[key] = "*." + value;
             });
-            var sSupportedFileTypes = aFileTypes.join(", ");
+            sSupportedFileTypes = aFileTypes.join(", ");
             MessageToast.show("The file type *." + oEvent.getParameter("fileType") +
               " is not supported. Choose one of the following types: " +
               sSupportedFileTypes);
@@ -594,14 +703,14 @@ sap.ui.define([
            // fileObject.data = result.text;
             fileObject.data = OutputFile;
             fileObject.filename = 'results.csv';
-            var blob = (fileObject.blob ? fileObject.blob : new Blob([fileObject.data], { type: fileObject.mime }));
+            blob = (fileObject.blob ? fileObject.blob : new Blob([fileObject.data], { type: fileObject.mime }));
             if (navigator.msSaveBlob) { // IE 10+
               navigator.msSaveBlob(blob, fileObject.filename);
             } else {
-              var link = document.createElement("a");
+              link = document.createElement("a");
               if (link.download !== undefined) { // feature detection
                 // Browsers that support HTML5 download attribute
-                var url = URL.createObjectURL(blob);
+                url = URL.createObjectURL(blob);
                 link.setAttribute("href", url);
                 link.setAttribute("download", fileObject.filename);
                 link.style.visibility = 'hidden';
@@ -675,26 +784,26 @@ sap.ui.define([
 
 
 
-          var fU = this.getView().byId("FileUploaderVariant");
-          var domRef = fU.getFocusDomRef();
-          var file = fU.oFileUpload.files[0];
+          fU = this.getView().byId("FileUploaderVariant");
+          domRef = fU.getFocusDomRef();
+          file = fU.oFileUpload.files[0];
 
-          var fU1 = this.getView().byId("FileUploadBase");
-          var domRef = fU1.getFocusDomRef();
+          fU1 = this.getView().byId("FileUploadBase");
+          domRef = fU1.getFocusDomRef();
          // var file1 = fU1.oFileUpload.files[0];
 
-          var fU2 = this.getView().byId("FileUploadCompare");
-          var domRef = fU2.getFocusDomRef();
+          fU2 = this.getView().byId("FileUploadCompare");
+          domRef = fU2.getFocusDomRef();
          // var file2 = f2.oFileUpload.files[0];
 
       
-          var reader = new FileReader();
-          var params = "";
-          var that = this;
+          reader = new FileReader();
+          params = "";
+          that = this;
           reader.onload = function(oEvent) {
-            var strCSV = oEvent.target.result;
-            var arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
-            var lines = strCSV.split('\n');
+            strCSV = oEvent.target.result;
+            arrCSV = strCSV.match(/[\w .]+(?=,?)/g);
+            lines = strCSV.split('\n');
 
             //to-do Research and test Setting oFileUpload Params from the JS Controller:
 
@@ -707,11 +816,10 @@ sap.ui.define([
             that.getView().byId("RowSelection").setValue(rowInput);
             that.getView().byId("KeySelection").setValue(keyInput);
 
-            var keyText = '';
-            var keyStart = false;
-
-            var diffText = '';
-            var diffstart=false;
+            keyText = '';
+            keyStart = fal
+            diffText = '';
+            diffstart=false;
 
             for(var j =0; j < lines.length;j++){
 
@@ -754,8 +862,8 @@ sap.ui.define([
 
 
           //Testing Fetching the item store:
-          var keys = localStorage.getItem('Keys');
-          var rows = localStorage.getItem('Rows');
+          keys = localStorage.getItem('Keys');
+          rows = localStorage.getItem('Rows');
           
           
 
@@ -765,14 +873,14 @@ sap.ui.define([
             this.createVariant();
                      fileObject.data = Variant_File;
                      fileObject.filename = 'variant.csv';
-                     var blob = (fileObject.blob ? fileObject.blob : new Blob([fileObject.data], { type: fileObject.mime }));
+                     blob = (fileObject.blob ? fileObject.blob : new Blob([fileObject.data], { type: fileObject.mime }));
                      if (navigator.msSaveBlob) { // IE 10+
                        navigator.msSaveBlob(blob, fileObject.filename);
                      } else {
-                       var link = document.createElement("a");
+                        link = document.createElement("a");
                        if (link.download !== undefined) { // feature detection
                          // Browsers that support HTML5 download attribute
-                         var url = URL.createObjectURL(blob);
+                         url = URL.createObjectURL(blob);
                          link.setAttribute("href", url);
                          link.setAttribute("download", fileObject.filename);
                          link.style.visibility = 'hidden';
@@ -806,19 +914,19 @@ sap.ui.define([
           //json1 = Body1.replaceAll('ï»¿','');
           //json1 = Body2.replaceAll('ï»¿','');
           
-          var c = delimit_1
-            , f = ""
-            , b = ''
-            , n = json1
-            , p = json2;
+            c = delimit_1;
+            f = "";
+            b = '';
+            n = json1;
+            p = json2;
             //, l = n.split(/\r?\n/)
             //, g = p.split(/\r?\n/);
 
 
-          var basekey = '';
-          var compkey = '';
-          var basekeymap = 0;
-          var compkeymap = 0;
+          basekey = '';
+          compkey = '';
+          basekeymap = 0;
+          compkeymap = 0;
 
           //ToDo Add code for the section for key chcking ect
           //Loop through both CSV Rows and use key Selection to match rows and line up row indexs
@@ -849,11 +957,11 @@ sap.ui.define([
            // rearrange from multidimensional array to single dimensional array combining key coloumns?  then 
            // rearrange from multidimensional array to single dimensional array combining key coloumns?  then
            //Note for now only 2 keys allowed. --- CHECK WHAT EFFECT this Has on comparison 
-             var stopcsv = false;
-             var stopcsv2 = false;
+             stopcsv = false;
+             stopcsv2 = false;
              //CSV-1
             for(var i = 0; i < Body1.length; i++) { 
-              var tempstring1 = ''; 
+              tempstring1 = ''; 
               //New Untested Code
               if(Array.isArray(Body1[i])){
                 console.log('CSV 1 already split');
@@ -883,7 +991,7 @@ sap.ui.define([
 
             //CSV-2   
             for(var i = 0; i < Body2.length; i++) { 
-              var tempstring2 = ''; 
+              tempstring2 = ''; 
               //New Untested Code
               if(Array.isArray(Body2[i])){
       
@@ -916,10 +1024,10 @@ sap.ui.define([
             }
             //Loop Through
 
-            var loopcnt = 0;
-            var biggercsv = [];
-            var smallercsv = [];
-            var tempstring = ""; 
+            loopcnt = 0;
+            biggercsv = [];
+            smallercsv = [];
+            tempstring = ""; 
             
             if (newBody1.length > newBody2.length){
               loopcnt =newBody1.length;
@@ -958,8 +1066,8 @@ sap.ui.define([
             }
 
         // TO do change to ignore colomn diff    
-              var l = biggercsv;
-              var g = smallercsv;
+             var p = biggercsv;
+             var q = smallercsv;
 
        //   var  l = newBody1;
        //   var g = newBody2;
@@ -968,20 +1076,20 @@ sap.ui.define([
           result.maxColumn = 0;
           result.nbLineDiff = 0;
           result.nbColumnDiff = 0;
-          l.forEach(function(e, b) {
+          p.forEach(function(e, b) {
               a(e).length > result.maxColumn && (result.maxColumn = a(e).length)
           });
-          g.forEach(function(b, c) {
+          q.forEach(function(b, c) {
               a(b).length > result.maxColumn && (result.maxColumn = a(b).length)
           });
-          l.forEach(function(b, c) {
+          p.forEach(function(b, c) {
               var d = {
                   columns: [],
                   diff: !1
               };
               result.csv.push(d);
               var h = a(b);
-              if (g.length > c) {
+              if (q.length > c) {
                   var e = a(g[c])
                     , m = 0;
                   h.forEach(function(a, b) {
@@ -1019,8 +1127,8 @@ sap.ui.define([
                   result.nbLineDiff += 1,
                   d.diff = !0
           });
-          g.forEach(function(b, c) {
-              if (c >= l.length) {
+          q.forEach(function(b, c) {
+              if (c >= p.length) {
                   var d = {
                       columns: [],
                       diff: !0
@@ -1066,11 +1174,11 @@ sap.ui.define([
            if(sameline == false){
             if(firstdiff == false){
               stringDiff = stringDiff+'\n'+'Diff:'+ result.csv[0].columns[n];
-              var keys = Body1[m].toString().split(',',csvBaseKeys.length);
+              keys = Body1[m].toString().split(',',csvBaseKeys.length);
               stringkeys = stringkeys + keys;
             }else{
               stringDiff = stringDiff +'Diff:'+ result.csv[0].columns[n];
-              var keys = Body1[m].toString().split(',',csvBaseKeys.length);
+              keys = Body1[m].toString().split(',',csvBaseKeys.length);
               stringkeys = stringkeys + keys;
     
             }
@@ -1116,10 +1224,340 @@ sap.ui.define([
           return result;
       },  
 
+      SuggestCSVcompare: function(json1,json2,delimit_1,delimit_2){
+
+        //NEW Bypass of Encoding
+        delimit_1 = ',';
+        delimit_2 = ',';
+
+
+        function a(a) {
+            for (var e = [], d = a.split(c), h = 0; h < d.length; h++) {
+                a = !1;
+                var k = d[h];
+                k.length && k[0] == f && (2 <= k.length ? k[k.length - 1] !== f ? a = !0 : 2 < k.length && k[k.length - 2] === b && (a = !0) : a = !0);
+                a && h !== d.length - 1 ? d[h + 1] = k + c + d[h + 1] : e.push(k)
+            }
+            return e
+        }
+
+        json1 = json1.replaceAll('ï»¿','');
+        json2 = json2.replaceAll('ï»¿','');
+        //json1 = Body1.replaceAll('ï»¿','');
+        //json1 = Body2.replaceAll('ï»¿','');
+        
+        var c = delimit_1
+          , f = ""
+          , b = ''
+          , n = json1
+          , p = json2;
+          //, l = n.split(/\r?\n/)
+          //, g = p.split(/\r?\n/);
+
+
+        basekey = '';
+        compkey = '';
+        basekeymap = 0;
+        compkeymap = 0;
+
+        //ToDo Add code for the section for key chcking ect
+        //Loop through both CSV Rows and use key Selection to match rows and line up row indexs
+        if(csvBaseKeysCnt >= 1 && csvCompareKeysCnt >= 1){
+          for(var l=0;l<csvBaseKeys.length;l++){
+            for(var g=0;g<csvCompareKeys.length;g++){
+              if(csvBaseKeys[l] == csvCompareKeys[g]){
+                if(basekey == ''){
+                  basekey = csvBaseKeys[l];
+                }else{
+                  basekey = basekey +' + '+ csvBaseKeys[l];
+                } 
+                if(compkey == ''){
+                  compkey = csvCompareKeys[g];
+                }else{
+                  compkey = compkey +' + '+ csvCompareKeys[g];
+                } 
+                compkeymap++;
+                basekeymap++;
+              }
+            }
+           }
+          }else{
+            MessageToast.show('Please check that you entered keys for each CSV.');
+        } 
+
+        //while looping through 1st csv create data(base key) based on compkey then loop through other table create data(compare key)based on compkey and check then move row to match
+         // rearrange from multidimensional array to single dimensional array combining key coloumns?  then 
+         // rearrange from multidimensional array to single dimensional array combining key coloumns?  then
+         //Note for now only 2 keys allowed. --- CHECK WHAT EFFECT this Has on comparison 
+           stopcsv = false;
+           stopcsv2 = false;
+           //CSV-1
+          for(var i = 0; i < Body1.length; i++) { 
+            tempstring1 = ''; 
+            //New Untested Code
+            if(Array.isArray(Body1[i])){
+              console.log('CSV 1 already split');
+            }else{
+              Body1[i]=Body1[i].split(',');
+              //New Untested Code
+            }
+            for(var j=0; j < Body1[i].length; j++) {
+              if(j >= 0 && j <  basekeymap){
+                if(stopcsv == false){
+                tempstring1 = Body1[i][j] + ' + ' + Body1[i][j+1];
+                stopcsv = true;
+                }
+              }
+              else{
+                tempstring1 = tempstring1 + ','+ Body1[i][j];
+              }
+              //old code
+              //if(tempstring1 == ''){
+              //  tempstring1 = Body1[i][j];
+              //}
+              
+            }
+            newBody1.push(tempstring1);
+            stopcsv = false;
+          }
+
+          //CSV-2   
+          for(var i = 0; i < Body2.length; i++) { 
+            var tempstring2 = ''; 
+            //New Untested Code
+            if(Array.isArray(Body2[i])){
+    
+            }else{
+              Body2[i]=Body2[i].split(',');
+              //New Untested Code
+            }
+          
+            
+            for(var j=0; j < Body2[i].length; j++) { 
+              //new code
+              if(j >= 0 && j < compkeymap){
+                if(stopcsv2 == false){
+                tempstring2 = Body2[i][j] + ' + ' + Body2[i][j+1];
+                stopcsv2 = true;
+                }
+              }
+              else{
+                tempstring2 = tempstring2 +','+ Body2[i][j];
+              }
+              
+              //old code
+             // if(tempstring2 == ''){
+            //    tempstring2 = Body2[i][j];
+            //  }
+              
+            }
+            newBody2.push(tempstring2);
+            stopcsv2 = false;
+          }
+          //Loop Through
+
+          loopcnt = 0;
+          biggercsv = [];
+          smallercsv = [];
+          tempstring = ""; 
+          
+          if (newBody1.length > newBody2.length){
+            loopcnt =newBody1.length;
+            biggercsv = newBody1;
+            smallercsv = newBody2;
+          }
+          else{
+            loopcnt =newBody2.length;
+            biggercsv = newBody2;
+            smallercsv = newBody1;
+          }
+          
+          for(var i=1;i <loopcnt;i++){
+
+            for(var j=1;j <smallercsv.length;j++){
+              tempstring = "";
+              biggercsv = biggercsv.filter(Boolean); 
+              let lineA = biggercsv[i].split(delimit_1);
+              let keyA = lineA[0];
+
+              smallercsv = smallercsv.filter(Boolean);
+           
+              if(j < 1265){
+              let lineB = smallercsv[j].split(delimit_1);
+              let keyB = lineB[0];
+              
+              if(keyA == keyB){
+                tempstring = smallercsv[i];
+                smallercsv[i] = smallercsv[j];
+                smallercsv[j]= tempstring;
+              }
+            }
+
+            }
+
+          }
+
+      // TO do change to ignore colomn diff    
+          p = biggercsv;
+          var  q = smallercsv;
+
+     //   var  l = newBody1;
+     //   var g = newBody2;
+        result.csv = [];
+        result.text = "";
+        result.maxColumn = 0;
+        result.nbLineDiff = 0;
+        result.nbColumnDiff = 0;
+        p.forEach(function(e, b) {
+            a(e).length > result.maxColumn && (result.maxColumn = a(e).length)
+        });
+        q.forEach(function(b, c) {
+            a(b).length > result.maxColumn && (result.maxColumn = a(b).length)
+        });
+        p.forEach(function(b, c) {
+            var d = {
+                columns: [],
+                diff: !1
+            };
+            result.csv.push(d);
+            var h = a(b);
+            if (q.length > c) {
+                var e = a(g[c])
+                  , m = 0;
+                h.forEach(function(a, b) {
+                    e.length > b ? (b = e[b],
+                    a == b ? d.columns.push(a) : (d.columns.push({
+                        data: a + " != " + b,
+                        diff: Compare.DIFF
+                    }),
+                    result.nbColumnDiff++,
+                    m = 1)) : (d.columns.push({
+                        data: a,
+                        diff: Compare.ONLY1
+                    }),
+                    result.nbColumnDiff++,
+                    m = 1)
+                });
+                e.forEach(function(a, b) {
+                    b >= h.length && (d.columns.push({
+                        data: a,
+                        diff: Compare.ONLY2
+                    }),
+                    result.nbColumnDiff++,
+                    m = 1)
+                });
+                result.nbLineDiff += m;
+                0 < m && (d.diff = !0)
+            } else
+                h.forEach(function(a, b) {
+                    d.columns.push({
+                        data: a,
+                        diff: Compare.ONLY1
+                    });
+                    result.nbColumnDiff++
+                }),
+                result.nbLineDiff += 1,
+                d.diff = !0
+        });
+        q.forEach(function(b, c) {
+            if (c >= p.length) {
+                var d = {
+                    columns: [],
+                    diff: !0
+                };
+                result.csv.push(d);
+                result.nbLineDiff += 1;
+                a(b).forEach(function(a, b) {
+                    d.columns.push({
+                        data: a,
+                        diff: Compare.ONLY2
+                    });
+                    result.nbColumnDiff++
+                })
+            }
+        });
+   //     this.showDiff(delimit_1);
+
+     for(var m = 0; m <= result.csv.length-1; m++){
+      founddiff = false;
+      if(m == 0){
+
+        for(n = 0; n < result.csv[0].columns.length; n++){
+          if(result.csv[0].columns[n].data){
+            ignorearray.push(n);
+          }
+          }
+
+      }else{
+      if(result.csv[m].columns[0].data){
+        stringDiff = stringDiff  +'\n'+'Exists in File B only'  +'\n';
+        stringkeys = stringkeys +result.csv[m].columns[0].data.split('!=')[0]+'\n';      
+        stringDiff = stringDiff +'Exists in File A only';
+        stringkeys = stringkeys +result.csv[m].columns[0].data.split('!=')[1];
+      }
+    
+      for(n = 0; n < result.csv[m].columns.length; n++){
+      if(result.csv[m].columns[n].data){
+        if(ignorearray.indexOf(n) > -1){
+        }else{
+          if(result.csv[m].columns[0].data){}else{
+         // stringDiff = stringDiff +'('+ result.csv[m].columns[n].data+')';
+
+         if(sameline == false){
+          if(firstdiff == false){
+            stringDiff = stringDiff+'\n'+'Diff:'+ result.csv[0].columns[n];
+            var keys = Body1[m].toString().split(',',csvBaseKeys.length);
+            stringkeys = stringkeys + keys;
+          }else{
+            stringDiff = stringDiff +'Diff:'+ result.csv[0].columns[n];
+            var keys = Body1[m].toString().split(',',csvBaseKeys.length);
+            stringkeys = stringkeys + keys;
+  
+          }
+       //    
+          
+          sameline = true;
+          firstdiff = false;
+         }
+         else{
+          stringDiff = stringDiff +' + '+ result.csv[0].columns[n];
+          stringkeys = stringkeys + Body1[m].toString();
+          stringDiff = stringDiff + result.csv[m].columns[l].data;
+          firstdiff = false;
+         }  
+          }
+     
+      
+              if(result.csv[m].columns[l]){
+                stringDiff = stringDiff + result.csv[m].columns[l].data;
+                stringkeys = stringkeys + Body1[m].toString();
+              }
+             
+
+      
+            keyhandled = true;
+          }
+        
+      }
+      }
+      sameline = false;
+      if(keyhandled == true){
+        keyhandled = false;
+      }
+     // if(stringDiff !== ''){
+     //   stringDiff = stringDiff + '\n';
+     // }
+    }
+     }
+
+      this.suggestMappings();
+      return result;
+    }, 
+
       TabulateOutputForExport: function(){
 
-        var keySplit = [] ;
-        var diffSplit = [];
+        keySplit = [] ;
+        diffSplit = [];
         
         keySplit = stringkeys.split('\n');
         diffSplit = stringDiff.split('\n');
@@ -1139,8 +1577,8 @@ sap.ui.define([
 
     copyToClipBoard :function() {
     //  var file = result.text;
-     var file = OutputFile;
-      var b = document.createElement("textarea");
+      file = OutputFile;
+      b = document.createElement("textarea");
       b.textContent = file;
       document.body.appendChild(b);
       let sel = document.getSelection();
