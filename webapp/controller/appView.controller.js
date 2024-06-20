@@ -1019,7 +1019,7 @@ sap.ui.define([
     
             }
          //    
-            
+          
             sameline = true;
             firstdiff = false;
            }
